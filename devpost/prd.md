@@ -19,7 +19,7 @@ Font: `scope.md > The Core Loop` i `What "Working" Looks Like`.
 4. S’espera una única generació compartida que combini totes dues idees en una il·lustració en blanc i negre per pintar.
 5. Quan apareix la imatge, es mostren les dues idees. Des d’aquest primer moment cadascú només veu el seu 50% del dibuix; no hi ha vista completa inicial.
 6. Cadascú pinta la seva meitat amb cubell o pinzell i pot desfer o netejar la pintura pròpia, conservant el dibuix base.
-7. Cada persona indica que ha acabat. La seva versió s’ha de desar i ser vàlida abans que es confirmi la finalització. La primera persona acabada espera sense veure el resultat complet. Falta decidir si pot tornar a editar.
+7. Cada persona prem «He acabat» i confirma que vol tancar la seva pintura. Només després d’un desament correcte es confirma la finalització i es bloqueja l’edició per a aquesta ronda. Qui acaba primer pot mirar la seva meitat desada mentre espera, sense veure el resultat complet.
 8. Amb dues finalitzacions vàlides de la mateixa ronda, totes dues sessions veuen la mateixa obra completa i poden descarregar-la. No hi ha galeria.
 
 ## Screens and Layout
@@ -30,7 +30,7 @@ Superfícies conegudes del recorregut; no impliquen una pàgina separada per a c
 - **Sala i idees:** codi per comunicar a l’altra persona i aportació d’una idea cadascú. Controls de confirmació i distribució exacta pendents.
 - **Generació:** estat d’espera comprensible; un error no s’ha de presentar com una imatge generada correctament. L’acció de recuperació està pendent.
 - **Pintura:** meitat pròpia com a element central, dues idees visibles, selecció de color, cubell, pinzell, desfer, netejar i acció per acabar. Distribució dels controls i dispositiu prioritari pendents.
-- **Espera final:** la primera finalització no ensenya pintura aliena ni el resultat complet. El retorn a edició està pendent.
+- **Espera final:** la meitat pròpia desada es pot mirar sense editar-la, amb el missatge «La teva part està desada. Esperem l’altra persona». No s’ensenya pintura aliena ni el resultat complet. No s’afegeix un altre editor o activitat mentre s’espera.
 - **Revelació:** obra completa i acció per descarregar-la, disponible després de dues finalitzacions vàlides.
 
 ## Look and Feel
@@ -72,9 +72,11 @@ Criteris: tant el cubell com el pinzell queden dins de la meitat assignada, tamb
 
 Font: `scope.md > What "Working" Looks Like`.
 
-No es confirma que algú ha acabat fins que la seva versió s’ha desat correctament. La revelació exigeix dues versions finals vàlides de participants diferents, de la mateixa ronda i il·lustració base.
+«He acabat» demana confirmació i explica que la pintura quedarà tancada. Cancel·lar aquesta confirmació deixa la persona pintant. Confirmar-la inicia el desament: no es confirma que ha acabat ni es bloqueja definitivament l’edició fins que la seva versió s’ha desat correctament. Després queda tancada per a aquesta ronda; qui acaba primer pot contemplar només la seva meitat desada amb el missatge d’espera.
 
-Criteris: la primera finalització no revela res de l’altra pintura; un error de desament no compta com a finalització; repeticions de l’acció no compten com una segona persona; finalitzacions gairebé simultànies donen el mateix resultat complet a les dues sessions. Encara s’ha de decidir si acabar bloqueja l’edició i com es reprèn una ronda interrompuda.
+La revelació exigeix dues versions finals vàlides de participants diferents, de la mateixa ronda i il·lustració base. No s’inclou llenç lliure ni pintura de predicció durant l’espera.
+
+Criteris: la primera finalització no revela res de l’altra pintura; un error de desament no compta com a finalització i permet recuperar el desament sense perdre la pintura; la versió final desada ja no es pot modificar; repeticions de l’acció no compten com una segona persona; finalitzacions gairebé simultànies donen el mateix resultat complet a les dues sessions. Com es reprèn una ronda interrompuda encara està pendent.
 
 ### Descarregar el resultat
 
@@ -88,7 +90,7 @@ Després de la revelació, cadascú pot descarregar l’obra completa. L’arxiu
 - **Generació en curs o fallida:** no es pot començar a pintar una base absent. Falta decidir el reintent i l’edició de les idees.
 - **Pintura:** només la meitat pròpia; cap previsualització completa ni pintura aliena.
 - **Desament fallit:** no es confirma el final ni s’activa la revelació.
-- **Una persona acabada:** espera; retorn a edició pendent de decisió.
+- **Una persona acabada:** pintura desada i bloquejada; pot mirar només la seva meitat fins a la revelació, sense retornar a edició ni iniciar una activitat addicional.
 - **Dues finalitzacions vàlides:** revelació coherent i descàrrega habilitada.
 - **Recarregar, desconnectar-se o abandonar:** comportament de recuperació pendent; no inventar finalitzacions per arribar a la revelació.
 - **Cost de generació:** l’usuari ha plantejat ajornar les quotes diàries. El topall global petit i els reintents limitats són recomanacions encara no aprovades. Cap pressupost o límit s’ha configurat.
@@ -103,8 +105,9 @@ Confirmades durant l’entrevista:
 - Cubell i pinzell dins de la primera versió, més desfer i netejar.
 - Veure només el 50% propi des de l’aparició del dibuix, també abans del primer traç; cap vista completa inicial.
 - Descàrrega de l’obra final dins de la primera versió; la galeria continua fora. És una modificació explícita de l’ajornament inicial de l’exportació al scope.
+- Confirmar «He acabat», desar correctament i després bloquejar la pintura per a la ronda. Durant l’espera només es contempla la meitat pròpia desada. L’usuari ha acceptat explícitament aquesta recomanació després d’explorar altres possibles activitats; no s’hi afegeix un segon editor.
 
-Les quatre regles del nucli ja estaven acordades abans de l’entrevista. L’assignació de costat, el tancament de l’edició i les polítiques de recuperació o cost encara no estan acordades.
+Les quatre regles del nucli ja estaven acordades abans de l’entrevista. L’assignació de costat i les polítiques de recuperació o cost encara no estan acordades.
 
 ## What We're Building
 
@@ -130,10 +133,9 @@ Abans d’aprovar el PRD i passar a spec cal resoldre els punts de comportament 
 
 1. Com s’assignen esquerra i dreta a les dues persones?
 2. Com es confirmen les idees, fins quan poden canviar i què inicia la generació? Què poden fer si falla o el contingut no és acceptable?
-3. Què passa amb l’edició quan algú indica que ha acabat i espera l’altra persona?
-4. Què es conserva si es recarrega la pàgina, es perd la connexió o algú abandona?
-5. Quin és el dispositiu prioritari i quin idioma tindrà la interfície?
-6. Quin mínim de controls de color, gruix i correcció necessita la primera versió?
-7. S’ajornen les quotes diàries per persona? Quin control mínim de generació s’inclou i què veu qui arriba al límit?
+3. Què es conserva si es recarrega la pàgina, es perd la connexió o algú abandona?
+4. Quin és el dispositiu prioritari i quin idioma tindrà la interfície?
+5. Quin mínim de controls de color, gruix i correcció necessita la primera versió?
+6. S’ajornen les quotes diàries per persona? Quin control mínim de generació s’inclou i què veu qui arriba al límit?
 
 La spec concretarà format de codi, credencials, dimensions, format de descàrrega, proveïdor/model, pressupost, topalls numèrics i mecanismes tècnics, després dels acords de producte. Encara no s’ha triat arquitectura ni s’ha implementat l’app.
