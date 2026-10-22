@@ -15,11 +15,11 @@ Font: `scope.md > The Core Loop` i `What "Working" Looks Like`.
 
 1. La persona obre una home neta que explica breument l’activitat i permet crear una sala o entrar-hi amb un codi curt. No cal compte.
 2. Qui crea la sala obté el codi i pinta l’esquerra; la segona persona l’introdueix des de la seva sessió i pinta la dreta. La ronda és per a dues persones, amb assignació fixa de costats.
-3. Cada persona escriu la seva idea en text lliure, prem «Fet» o «Confirmar» i fa una segona confirmació de la idea pròpia. Abans de començar la generació, «Editar» permet modificar-la retirant la confirmació pròpia; cal confirmar-la de nou. No es pot confirmar text buit. Si una aportació no és interpretable, el prompt dona llibertat creativa per inventar un objecte estrany i combinar-lo amb l’altra aportació.
-4. Amb totes dues idees confirmades s’inicia una única generació compartida, enviant-les juntes a l’API de generació d’imatges. Totes dues persones veuen «La imatge s’està generant. Espereu un moment». Recarregar la pàgina ha de recuperar aquesta mateixa ronda i generació, sense duplicar-la.
+3. Cada persona escriu la seva idea en text lliure, prem «Confirm idea» i fa una segona confirmació de la idea pròpia. Abans de començar la generació, «Edit» permet modificar-la retirant la confirmació pròpia; cal confirmar-la de nou. No es pot confirmar text buit. Si una aportació no és interpretable, el prompt dona llibertat creativa per inventar un objecte estrany i combinar-lo amb l’altra aportació.
+4. Amb totes dues idees confirmades s’inicia una única generació compartida, enviant-les juntes a l’API de generació d’imatges. Totes dues persones veuen «Your drawing is being generated. Please wait.». Recarregar la pàgina ha de recuperar aquesta mateixa ronda i generació, sense duplicar-la.
 5. Quan apareix la imatge, es mostren les dues idees. Des d’aquest primer moment cadascú només veu el seu 50% del dibuix; no hi ha vista completa inicial.
 6. Cadascú pinta la seva meitat amb cubell o pinzell i pot desfer o netejar la pintura pròpia, conservant el dibuix base. La pintura es desa automàticament abans d’acabar, perquè es pugui recuperar en recarregar la mateixa sessió.
-7. Cada persona prem «He acabat» i confirma que vol tancar la seva pintura. Només després d’un desament correcte es confirma la finalització i es bloqueja l’edició per a aquesta ronda. Qui acaba primer pot mirar la seva meitat desada mentre espera, sense veure el resultat complet.
+7. Cada persona prem «I’m done» i confirma que vol tancar la seva pintura. Només després d’un desament correcte es confirma la finalització i es bloqueja l’edició per a aquesta ronda. Qui acaba primer pot mirar la seva meitat desada mentre espera, sense veure el resultat complet.
 8. Amb dues finalitzacions vàlides de la mateixa ronda, totes dues sessions veuen la mateixa obra completa i poden descarregar-la. No hi ha galeria.
 
 ## Screens and Layout
@@ -27,10 +27,10 @@ Font: `scope.md > The Core Loop` i `What "Working" Looks Like`.
 Superfícies conegudes del recorregut; no impliquen una pàgina separada per a cada estat:
 
 - **Home:** informació breu de Half & Half, acció principal per crear sala i entrada per codi curt. L’usuari ha acceptat aquesta proposta d’inici. No s’ha definit cap opció concreta de configuració.
-- **Sala i idees:** codi per comunicar a l’altra persona, entrada de text per a la idea pròpia, botó «Fet» o «Confirmar» i segona confirmació. No es confirma una entrada buida. El text no interpretable activa la llibertat creativa prevista al prompt. Presentació exacta dels controls pendent.
-- **Generació:** missatge «La imatge s’està generant. Espereu un moment» per a totes dues persones, sense percentatges inventats. En cas d’error confirmat, explicació senzilla i recuperació amb intents limitats o edició de les idees; cap error tècnic cru com a missatge principal.
+- **Sala i idees:** codi per comunicar a l’altra persona, entrada de text per a la idea pròpia, botó «Confirm idea» i segona confirmació. No es confirma una entrada buida. El text no interpretable activa la llibertat creativa prevista al prompt. Presentació exacta dels controls pendent.
+- **Generació:** missatge «Your drawing is being generated. Please wait.» per a totes dues persones, sense percentatges inventats. En cas d’error confirmat, explicació senzilla i recuperació amb intents limitats o edició de les idees; cap error tècnic cru com a missatge principal.
 - **Pintura:** meitat pròpia com a element central, dues idees visibles, selecció de color, cubell, pinzell, desfer, netejar i acció per acabar. Distribució pensada primer per a ordinador; la col·locació exacta dels controls encara s’ha de concretar.
-- **Espera final:** la meitat pròpia desada es pot mirar sense editar-la, amb el missatge «La teva part està desada. Esperem l’altra persona». No s’ensenya pintura aliena ni el resultat complet. No s’afegeix un altre editor o activitat mentre s’espera.
+- **Espera final:** la meitat pròpia desada es pot mirar sense editar-la, amb el missatge «Your half is saved. Waiting for your partner.». No s’ensenya pintura aliena ni el resultat complet. No s’afegeix un altre editor o activitat mentre s’espera.
 - **Revelació:** obra completa i acció per descarregar-la, disponible després de dues finalitzacions vàlides.
 
 ### Prioritat de dispositius
@@ -43,6 +43,7 @@ Aquesta priorització no elimina automàticament mòbil o tauleta de l’abast n
 
 Font: `scope.md > Inspiration & Identity`, concretada per les respostes de l’usuari.
 
+- Interfície en anglès: textos, botons, confirmacions, estat de desament i errors. La conversa de treball i la documentació de planificació continuen en català. No es demana selector d’idioma ni funcionalitat multilingüe.
 - Home neta, minimalista i maca, amb informació breu.
 - Direcció de taller creatiu acceptada: fons clar amb toc de paper, espai generós, tipografia cuidada i color concentrat en la il·lustració. No hi ha encara paleta ni font concreta seleccionades.
 - Es vol explorar una il·lustració generada pròpia per donar personalitat a la home. Cap asset concret creat o escollit; l’exemple de la home no és la generació de la ronda.
@@ -64,15 +65,15 @@ Criteri: dues sessions independents entren a la mateixa ronda mitjançant el cod
 
 Font: `scope.md > The Core Loop`, concretada durant l’entrevista.
 
-Cada persona introdueix una idea en text lliure i la confirma en dos passos. La segona confirmació revisa la idea pròpia; no anticipa la revelació de l’aportació de l’altra persona. L’etiqueta exacta del botó encara pot ser «Fet» o «Confirmar».
+Cada persona introdueix una idea en text lliure i la confirma en dos passos. La segona confirmació revisa la idea pròpia; no anticipa la revelació de l’aportació de l’altra persona. «Confirm idea» és l’etiqueta anglesa de treball per al botó; la segona confirmació també serà en anglès.
 
-Mentre no hagi començat la generació, una idea confirmada mostra «Editar». Activar-lo retira la confirmació d’aquella persona i torna el text propi a edició; la idea de l’altra persona manté el seu estat. Cal repetir la confirmació després d’editar. Durant aquesta edició ja no hi ha dues idees confirmades i no es pot iniciar la generació. Les idees que s’estan generant o ja s’estan pintant no es poden canviar. Si la generació falla, es permet tornar a editar les aportacions pròpies i tornar-les a confirmar, dins del mateix límit d’intents de la ronda.
+Mentre no hagi començat la generació, una idea confirmada mostra «Edit». Activar-lo retira la confirmació d’aquella persona i torna el text propi a edició; la idea de l’altra persona manté el seu estat. Cal repetir la confirmació després d’editar. Durant aquesta edició ja no hi ha dues idees confirmades i no es pot iniciar la generació. Les idees que s’estan generant o ja s’estan pintant no es poden canviar. Si la generació falla, es permet tornar a editar les aportacions pròpies i tornar-les a confirmar, dins del mateix límit d’intents de la ronda.
 
 Una entrada buida, inclòs text format només per espais, no pot quedar confirmada ni iniciar generació. Per a text no buit però incomprensible, com una seqüència aleatòria de lletres, l’usuari ha definit una alternativa creativa: el prompt dona llibertat per inventar un objecte especialment estrany o original i combinar-lo amb l’altra idea, mantenint una sola escena en blanc i negre pintable. Aquest cas no s’ha de tractar com si fos text buit ni exigeix que la persona reformuli l’aportació.
 
 La regla orienta la generació; no pressuposa una classificació semàntica perfecta ni un resultat determinista. Una idea surrealista que sí que es pot interpretar s’ha de respectar. Les dues aportacions originals es conserven com a text i es mostren en el moment acordat; no s’inventa una nova aportació atribuïda a la persona. Encara no s’ha redactat ni provat el prompt definitiu.
 
-Criteris coneguts: no hi ha confirmació de text buit; el text propi es pot revisar en el segon pas; una única persona llesta no basta per generar la composició de dues aportacions. Si s’accepta «Editar», la confirmació pròpia queda retirada i no es genera amb una idea que s’està modificant, tampoc quan l’altra persona confirma gairebé alhora. Amb totes dues idees confirmades comença la generació, sense un botó addicional. Provar visualment una combinació amb una idea comprensible i una seqüència de lletres per comprovar la resposta creativa i el format pintable.
+Criteris coneguts: no hi ha confirmació de text buit; el text propi es pot revisar en el segon pas; una única persona llesta no basta per generar la composició de dues aportacions. Si s’accepta «Edit», la confirmació pròpia queda retirada i no es genera amb una idea que s’està modificant, tampoc quan l’altra persona confirma gairebé alhora. Amb totes dues idees confirmades comença la generació, sense un botó addicional. Provar visualment una combinació amb una idea comprensible i una seqüència de lletres per comprovar la resposta creativa i el format pintable.
 
 ### Generació i recuperació de la ronda
 
@@ -82,7 +83,7 @@ S’envien totes dues idees juntes per obtenir una sola imatge comuna; les dues 
 
 Si algú recarrega, recupera la mateixa sala, plaça, costat i fase, així com les idees confirmades i la generació que ja s’està fent o ha acabat. Si torna durant l’espera final o després de revelar, veu l’estat real de la mateixa ronda. No es creen una ronda nova, una tercera plaça o una generació addicional per la recàrrega. Desconnectar-se no equival a acabar ni permet saltar-se les dues finalitzacions vàlides.
 
-Criteris: en dues sessions independents, recarregar A mentre B espera manté una única generació; si la imatge acaba durant la recàrrega, A arriba a la pintura de la mateixa base; recarregar després d’una finalització manté el bloqueig ja confirmat; recarregar després de dues finalitzacions vàlides mostra el mateix resultat. Durant la pintura es recupera la versió pròpia desada automàticament, sense haver de prémer «He acabat». Retenció i mecanismes de recuperació pendents de spec.
+Criteris: en dues sessions independents, recarregar A mentre B espera manté una única generació; si la imatge acaba durant la recàrrega, A arriba a la pintura de la mateixa base; recarregar després d’una finalització manté el bloqueig ja confirmat; recarregar després de dues finalitzacions vàlides mostra el mateix resultat. Durant la pintura es recupera la versió pròpia desada automàticament, sense haver de prémer «I’m done». Retenció i mecanismes de recuperació pendents de spec.
 
 ### Errors de generació i intents limitats
 
@@ -92,7 +93,7 @@ Un error confirmat de generació mostra una explicació breu i senzilla i els in
 
 Concreció proposada en aquest esborrany, dins del rang indicat per l’usuari: **3 intents totals per ronda**, l’inicial i un màxim de **2 reintents**. El límit és compartit, no per persona. Canviar les idees o recarregar no reinicia el comptador. Sense intents disponibles no es permet una altra generació d’aquesta ronda i s’explica que s’han esgotat; no s’afegeixen noves rondes automàtiques per esquivar-lo.
 
-Exemples de text d’interfície: «No hem pogut crear el dibuix. Podeu tornar-ho a provar o canviar les idees. Queden 2 intents.» i «S’han esgotat els intents d’aquesta ronda.» S’han d’adaptar a l’estat real; no s’inventa la causa de l’error. El redactat i l’idioma definitius encara s’han de concretar.
+Exemples de text d’interfície: «We couldn’t create your drawing. Try again or edit your ideas. 2 attempts left.» i «There are no attempts left for this round.» S’han d’adaptar a l’estat real; no s’inventa la causa de l’error. La interfície serà en anglès, segons la decisió de l’usuari. El redactat es pot polir sense canviar-ne el comportament.
 
 Criteris: dos clics o reintents simultanis no creen dos intents nous; només hi ha una generació activa alhora; el comptador persisteix en recarregar i en editar idees; assolir el màxim impedeix noves peticions d’aquesta ronda. Una pèrdua de connexió per si sola no prova que la generació hagi fallat: primer cal recuperar l’estat compartit, sense reintentar cegament una generació que continua activa. No es regenera una base que ja s’està pintant.
 
@@ -114,7 +115,7 @@ Criteris: tant el cubell com el pinzell queden dins de la meitat assignada, tamb
 
 ### Desament automàtic de la pintura pròpia
 
-Font: `scope.md > What "Working" Looks Like`, ampliada per la petició explícita de recuperar allò pintat abans de prémer «He acabat».
+Font: `scope.md > What "Working" Looks Like`, ampliada per la petició explícita de recuperar allò pintat abans de prémer «I’m done».
 
 L’objectiu expressat per l’usuari és conservar tot el que ja havia pintat en recarregar la mateixa sessió. Ha suggerit desar al navegador cada segon o cada cert temps; mecanisme i freqüència exactes no estan triats. El desament automàtic forma part de la primera versió i no marca la persona com a acabada.
 
@@ -128,7 +129,7 @@ L’objectiu de conservar-ho tot no és una garantia de persistir un canvi que e
 
 Font: `scope.md > What "Working" Looks Like`.
 
-«He acabat» demana confirmació i explica que la pintura quedarà tancada. Cancel·lar aquesta confirmació deixa la persona pintant. Confirmar-la inicia el desament: no es confirma que ha acabat ni es bloqueja definitivament l’edició fins que la seva versió s’ha desat correctament. Després queda tancada per a aquesta ronda; qui acaba primer pot contemplar només la seva meitat desada amb el missatge d’espera.
+«I’m done» demana confirmació i explica que la pintura quedarà tancada. Cancel·lar aquesta confirmació deixa la persona pintant. Confirmar-la inicia el desament: no es confirma que ha acabat ni es bloqueja definitivament l’edició fins que la seva versió s’ha desat correctament. Després queda tancada per a aquesta ronda; qui acaba primer pot contemplar només la seva meitat desada amb el missatge d’espera.
 
 La revelació exigeix dues versions finals vàlides de participants diferents, de la mateixa ronda i il·lustració base. No s’inclou llenç lliure ni pintura de predicció durant l’espera.
 
@@ -158,12 +159,13 @@ Després de la revelació, cadascú pot descarregar l’obra completa. L’arxiu
 
 Confirmades durant l’entrevista:
 
+- Interfície en anglès, escollida per l’usuari per arribar a un públic internacional. Els exemples d’interfície anteriors en català s’han adaptat; l’idioma de treball continua sent el català.
 - Prioritat de dispositius: ordinador, després mòbil i finalment tauleta; validar primer la pintura a l’ordinador.
 - Inici sense compte, amb crear sala i codi curt com a via principal d’entrada; l’usuari vol poder comunicar-lo fàcilment des d’ordinadors.
 - Assignació fixa: creador de sala a l’esquerra, persona que s’uneix a la dreta. L’usuari ha proposat aquest repartiment i ha considerat poc important l’elecció manual alternativa; s’adopta el repartiment simple per a la primera versió.
-- Idea en text lliure amb botó «Fet» o «Confirmar» i segona confirmació de la idea pròpia. Les entrades buides no s’accepten. Si una aportació no buida no s’entén, l’usuari vol que el prompt permeti inventar un objecte estrany i creatiu per combinar-lo amb l’altra idea.
-- «Editar» després de confirmar retira la confirmació pròpia i permet canviar el text abans de generar. Cal confirmar-lo de nou; la confirmació de l’altra persona no es retira.
-- Amb totes dues idees confirmades s’envien juntes a l’API per a una única generació. Durant l’espera es mostra «La imatge s’està generant. Espereu un moment», normalització del text proposat per l’usuari.
+- Idea en text lliure amb botó «Confirm idea» i segona confirmació de la idea pròpia. Les entrades buides no s’accepten. Si una aportació no buida no s’entén, l’usuari vol que el prompt permeti inventar un objecte estrany i creatiu per combinar-lo amb l’altra idea.
+- «Edit» després de confirmar retira la confirmació pròpia i permet canviar el text abans de generar. Cal confirmar-lo de nou; la confirmació de l’altra persona no es retira.
+- Amb totes dues idees confirmades s’envien juntes a l’API per a una única generació. Durant l’espera es mostra «Your drawing is being generated. Please wait.», adaptació a l’anglès del text proposat per l’usuari.
 - Recarregar ha de recuperar la mateixa sala, participant i estat compartit, sense desincronitzar les dues persones ni tornar a generar. L’usuari ha demanat recuperar també tot el que ja havia pintat, abans d’acabar; s’inclou desament automàtic amb freqüència i mecanisme pendents de spec, sense prometre persistència de canvis encara no desats.
 - En un error de generació, reintents limitats, explicació senzilla i possibilitat de canviar les idees. L’usuari ha indicat «2 o 3 cops»; la concreció d’esborrany a revisar és 3 intents totals per ronda, sense reiniciar el comptador per canviar idees.
 - Direcció visual neta i minimalista, amb aire de taller creatiu i interès per imatges generades pròpies.
@@ -171,7 +173,7 @@ Confirmades durant l’entrevista:
 - Cubell i pinzell dins de la primera versió, més desfer i netejar.
 - Veure només el 50% propi des de l’aparició del dibuix, també abans del primer traç; cap vista completa inicial.
 - Descàrrega de l’obra final dins de la primera versió; la galeria continua fora. És una modificació explícita de l’ajornament inicial de l’exportació al scope.
-- Confirmar «He acabat», desar correctament i després bloquejar la pintura per a la ronda. Durant l’espera només es contempla la meitat pròpia desada. L’usuari ha acceptat explícitament aquesta recomanació després d’explorar altres possibles activitats; no s’hi afegeix un segon editor.
+- Confirmar «I’m done», desar correctament i després bloquejar la pintura per a la ronda. Durant l’espera només es contempla la meitat pròpia desada. L’usuari ha acceptat explícitament aquesta recomanació després d’explorar altres possibles activitats; no s’hi afegeix un segon editor.
 
 Les quatre regles del nucli ja estaven acordades abans de l’entrevista. La revisió del PRD ha de validar la concreció numèrica dels intents i el control global de cost encara pendent. La spec concretarà la persistència de la pintura i la frontera observable del desament automàtic.
 
@@ -199,9 +201,8 @@ No demostrar la integració d’IA amb una imatge fixa presentada com si s’hag
 
 Abans d’aprovar el PRD i passar a spec cal resoldre els punts de comportament que afecten la ronda:
 
-1. Quin idioma tindrà la interfície?
-2. Quin mínim de controls de color, gruix i correcció necessita la primera versió?
-3. S’ajornen les quotes diàries per persona? Quin control mínim global de generació s’inclou i què veu qui arriba al límit?
+1. Quin mínim de controls de color, gruix i correcció necessita la primera versió?
+2. S’ajornen les quotes diàries per persona? Quin control mínim global de generació s’inclou i què veu qui arriba al límit?
 
 La revisió també ha de validar la concreció de 3 intents totals per ronda dins del rang de reintents indicat per l’usuari; encara no equival a un PRD aprovat.
 
