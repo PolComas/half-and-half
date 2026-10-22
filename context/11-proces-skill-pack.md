@@ -22,6 +22,8 @@ Cap etapa consta com a completada. No hi ha perfil d’aprenent, plans, checklis
 
 **Estat posterior a la revisió del mateix dia:** l’usuari ha triat revisions en text o Markdown, ha revisat l’abast i l’ha aprovat explícitament per a la primera versió. `scope.md` consta com a `status: approved`; s’ha completat `2-scope` i comença l’entrevista de `3-prd`. Les millores futures queden condicionades al temps disponible, després del nucli. PRD i spec encara no existeixen i no s’ha iniciat `5-build`.
 
+**Estat posterior durant l’entrevista de producte:** l’usuari ha concretat entrada sense compte per codi curt, direcció visual, cubell i pinzell, controls de correcció i absència de vista completa inicial. Ha afegit explícitament la descàrrega de l’obra final a la primera versió, mantenint la galeria fora; `scope.md` reflecteix aquest canvi. S’ha desat el primer `devpost/prd.md` amb `status: draft` i preguntes obertes. La revisió del PRD encara no està completada; no hi ha spec ni construcció.
+
 ## Aplicació al nostre projecte
 
 El context evita haver de repetir acords, però no substitueix les converses de planificació. Proposar un stack no l’aprova. La frase històrica sobre una “segona decisió” no autoritza inventar-la.
