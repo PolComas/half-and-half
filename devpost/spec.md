@@ -1,6 +1,6 @@
 ---
 doc: spec
-status: draft
+status: approved
 ---
 
 # Half & Half — Pla tècnic
@@ -11,7 +11,7 @@ React mostra la sala i l’editor al navegador. Un petit servidor Node rep les d
 
 Per a la demo, React i Node s’executaran al mateix ordinador; Supabase i OpenAI requereixen Internet. Dos perfils de navegador representaran dues sessions independents. Una cookie amb una credencial aleatòria permet reprendre la plaça al mateix navegador, sense compte. Per participar des d’una altra xarxa caldrà una via d’accés al servidor, que no és necessària per gravar la demo local.
 
-**Esborrany real de `4-spec`, 2026-10-22.** Scope i PRD estan aprovats. L’usuari ha indicat React, Supabase, plans gratuïts, fins a 7 USD dels seus crèdits d’OpenAI i desplegament opcional; ha acceptat explícitament la recuperació amb cookie al mateix navegador. Els detalls i compromisos proposats en aquest document **encara s’han de revisar**. No s’ha executat `5-build`, creat infraestructura ni fet cap crida de generació. Aquest document no afirma que les proves ja passin.
+**Pla real de `4-spec`, aprovat explícitament el 2026-10-22.** Després de mostrar l’enllaç al pla complet i destacar model, pressupost, cubell i resposta perduda, l’usuari ha respost: «Em sembla tot bé, podem seguir endevant». Aquesta aprovació inclou els detalls proposats en aquesta spec; no són acords anteriors al procés. `4-spec` està completat i l’usuari demana continuar amb `5-build`. Encara no hi ha implementació, infraestructura creada ni cap crida de generació; les comprovacions descrites són pendents, no proves superades.
 
 ## The Core Journey Through the System
 
@@ -39,7 +39,7 @@ flowchart LR
 
 ## Stack
 
-Les preferències de React i Supabase provenen de l’usuari. La resta és una proposta d’implementació proporcionada al PRD; l’aprovació d’aquesta spec n’autoritzaria el pla, no un desplegament.
+Les preferències de React i Supabase provenen de l’usuari. La resta són detalls d’implementació proposats durant `4-spec` i acceptats amb l’aprovació del pla complet. L’aprovació autoritza aquest pla i continuar amb el procés de construcció; no un desplegament.
 
 | Peça | Proposta i motiu | Documentació |
 | --- | --- | --- |
@@ -137,7 +137,7 @@ En rebre la imatge, desar primer el PNG original amb una clau privada derivada d
 
 Error definitiu de l’API: registrar un error curt i filtrat, conservar el comptador i habilitar reintent explícit, amb 3 intents totals per ronda. Després d’editar, cal reconfirmar. Les dues sessions comparteixen el mateix intent i límit; no hi ha reintents automàtics del transport HTTP.
 
-**Compromís proposat que requereix revisió:** una recàrrega de navegador es recupera; una caiguda de Node, timeout o pèrdua de resposta d’OpenAI pot deixar l’intent en `uncertain`. En arrencar, cercar primer un arxiu ja desat per aquell intent. Si existeix i és vàlid, reprendre la preparació. Si no hi és, no es pot deduir si OpenAI ha acabat o cobrat: conservar reserva i bloquejar reintents de la ronda. No convertir el timeout en un error definitiu ni reenviar una petició a cegues. Missatge: «We couldn’t recover your drawing. This round can’t continue safely.» No prometre recuperació que la API directa no acredita. Canviar aquest compromís exigiria revisar el mecanisme de generació; no fingir una garantia d’execució exactament una vegada del proveïdor.
+**Compromís acceptat en aprovar aquesta spec:** una recàrrega de navegador es recupera; una caiguda de Node, timeout o pèrdua de resposta d’OpenAI pot deixar l’intent en `uncertain`. En arrencar, cercar primer un arxiu ja desat per aquell intent. Si existeix i és vàlid, reprendre la preparació. Si no hi és, no es pot deduir si OpenAI ha acabat o cobrat: conservar reserva i bloquejar reintents de la ronda. No convertir el timeout en un error definitiu ni reenviar una petició a cegues. Missatge: «We couldn’t recover your drawing. This round can’t continue safely.» No prometre recuperació que la API directa no acredita. Canviar aquest compromís exigiria revisar el mecanisme de generació; no fingir una garantia d’execució exactament una vegada del proveïdor.
 
 ### Preparació de base i tall exacte
 
@@ -155,7 +155,7 @@ Tres capes lògiques: blanc de fons, colors editables i contorns negres immutabl
 
 Pinzell amb traços rodons interpolats i captura del punter fins a finalitzar o cancel·lar el gest. Proposta de gruix: 2–48 píxels del dibuix, inicial 12. Paleta inicial de 12 colors (`#E45756`, `#F28E2B`, `#EDC948`, `#59A14F`, `#76B7B2`, `#4E79A7`, `#7B61A8`, `#B07AA1`, `#FF9DA7`, `#9C755F`, `#FFFFFF`, `#333333`) i selector visual amb degradat de matís/saturació/lluminositat per a colors RGB sòlids. El control de gruix mostra la mida circular i no afecta el cubell.
 
-Cubell: components connexos de píxels blancs de la **base**, amb quatre veïns, calculats només dins de la meitat pròpia. El marge de la meitat actua com a límit, inclòs el tall central. Un clic sobre contorn no pinta. Omplir assigna el color a tota aquella regió, inclosos colors previs; els traços de pinzell no creen noves regions per al cubell en aquesta proposta. Aquesta concreció s’ha de mostrar a la revisió perquè pot diferir del comportament de Paint.
+Cubell: components connexos de píxels blancs de la **base**, amb quatre veïns, calculats només dins de la meitat pròpia. El marge de la meitat actua com a límit, inclòs el tall central. Un clic sobre contorn no pinta. Omplir assigna el color a tota aquella regió, inclosos colors previs; els traços de pinzell no creen noves regions per al cubell en aquesta proposta. Aquesta concreció s’ha destacat a la revisió i s’ha acceptat amb l’aprovació del pla complet; pot diferir del comportament de Paint.
 
 «Undo» recupera la instantània anterior a l’última acció completada, inclosa la neteja; conservar una acció de desfer en aquesta primera versió. Una nova acció substitueix aquesta instantània. «Clear colors» demana confirmació i deixa transparent només la capa pròpia. Desfer i netejar entren al mateix circuit de desament. No afegir goma, redo, zoom o eines no acordades.
 
@@ -236,7 +236,7 @@ Límits inicials proposats al servidor: JSON màxim 16 KiB, PNG 8 MiB, entrada p
 
 ### OpenAI: petició, prompt i resposta
 
-Proposta per revisar: **`gpt-image-2.5-flare-2026-09-08`**, `quality: low`, `size: 1024x1024`, `n: 1`, `output_format: png`, `background: opaque`, `moderation: auto`, sense streaming. La [referència actual](https://developers.openai.com/api/reference/resources/images/methods/generate) enumera aquest snapshot; la [guia](https://developers.openai.com/api/docs/guides/image-generation) inclou Flare per a noves integracions. L’accés d’aquest compte i la qualitat per pintar **encara no estan verificats**. No canviar de model automàticament si falla l’accés.
+Model acceptat en la revisió: **`gpt-image-2.5-flare-2026-09-08`**, `quality: low`, `size: 1024x1024`, `n: 1`, `output_format: png`, `background: opaque`, `moderation: auto`, sense streaming. La [referència actual](https://developers.openai.com/api/reference/resources/images/methods/generate) enumera aquest snapshot; la [guia](https://developers.openai.com/api/docs/guides/image-generation) inclou Flare per a noves integracions. L’accés d’aquest compte i la qualitat per pintar **encara no estan verificats**. No canviar de model automàticament si falla l’accés.
 
 Contracte: `POST https://api.openai.com/v1/images/generations`, `Authorization: Bearer OPENAI_API_KEY`, JSON amb els paràmetres anteriors i `prompt`. `fetch` de Node sense reintents automàtics; timeout de 5 minuts com a límit local d’espera, no com a prova que el proveïdor ha aturat el treball. Validar que hi ha exactament una imatge decodificable a `data[0].b64_json`; registrar `usage` si la resposta el proporciona. No retornar la resposta crua o el base64 complet al navegador ni als logs.
 
@@ -246,7 +246,7 @@ El prompt versionat combinarà les dues idees, amb text total màxim de 2.000 ca
 
 Implementa `prd.md > Topall global de generació de la demo`.
 
-Límit de l’usuari: 7 USD de crèdits que declara disponibles, cap càrrec addicional. **Proposta per revisar:** 20 peticions reals com a màxim per a tota la demo, comptant proves d’OpenAI, intents inicials, reintents i assets si s’utilitza aquesta API. Reserva interna de 0,25 USD per intent: 20 × 0,25 = 5 USD planificats, amb 2 USD de marge. Aquesta reserva és una mesura de planificació, **no un preu per imatge ni una garantia de facturació**. Les peticions de test amb un proveïdor simulat no consumeixen crèdit i no serveixen d’evidència de la IA real.
+Límit de l’usuari: 7 USD de crèdits que declara disponibles, cap càrrec addicional. **Topall acceptat en aprovar la spec:** 20 peticions reals com a màxim per a tota la demo, comptant proves d’OpenAI, intents inicials, reintents i assets si s’utilitza aquesta API. Reserva interna de 0,25 USD per intent: 20 × 0,25 = 5 USD planificats, amb 2 USD de marge. Aquesta reserva és una mesura de planificació, **no un preu per imatge ni una garantia de facturació**. Les peticions de test amb un proveïdor simulat no consumeixen crèdit i no serveixen d’evidència de la IA real.
 
 Abans de la primera petició de pagament: comprovar saldo real, accés al model i estimació per la mida, qualitat i prompt fixats al [calculador oficial](https://developers.openai.com/api/docs/guides/image-generation#calculating-costs) i [preus](https://developers.openai.com/api/docs/pricing). Si l’estimació excedeix la reserva, aturar i revisar els paràmetres o el topall, sense gastar per sobre del pressupost aprovat. Després de la primera mostra revisar ús i despesa observats abans de fer-ne més. No executar proves de generació massives.
 
@@ -337,7 +337,7 @@ half-and-half/
 | Fallada | Comportament proposat |
 | --- | --- |
 | Recarregar o perdre connexió amb Node | Tornar a consultar mateixa sala amb cookie; no reenviar la generació. La pintura recupera el darrer desament local confirmat |
-| Node perd la resposta d’OpenAI | Recuperar arxiu privat si existeix; altrament intent incert i ronda bloquejada sense reintent a cegues. Compromís pendent d’aprovació |
+| Node perd la resposta d’OpenAI | Recuperar arxiu privat si existeix; altrament intent incert i ronda bloquejada sense reintent a cegues. Compromís acceptat a la revisió |
 | OpenAI rebutja definitivament la petició | Error simple i comptador real; reintent explícit o editar/reconfirmar dins dels límits |
 | Supabase no respon o es pausa | No inventar canvis d’estat; si ja es pinta, conservar/desar localment. Finalització i revelació esperen el servidor de dades |
 | IndexedDB no desa | No mostrar «Saved» ni finalitzar; conservar llenç i permetre reintentar |
@@ -386,14 +386,14 @@ Els tests han de cobrir aquestes regles i fallades, no només repetir funcions d
 - En resposta a la proposta de credencial privada en cookie i recuperació al mateix navegador: «Si, em sembla perfecte». No incloure recuperació entre dispositius ni després d’esborrar dades.
 - Revisió en text o Markdown, conversa en català, interfície en anglès. No generar companyó HTML.
 
-### Propostes d’aquesta revisió, encara no aprovades
+### Detalls acceptats en la revisió del pla complet
 
 - React/TypeScript amb Vite, Node/Express local, Supabase només des del servidor, consultes periòdiques i Canvas natiu.
 - Model Flare fixat, qualitat baixa, base quadrada 1024 × 1024 i descàrrega PNG.
 - 20 intents globals amb reserva de 5 USD i marge de 2 USD; controls del proveïdor verificats abans de gastar.
 - Recuperació del navegador garantida respecte dels estats desats; intent incert del proveïdor bloquejat si la imatge no es pot recuperar.
 - Cubell basat en regions del dibuix original; els traços afegits no en creen de noves. Un pas de desfer persistent.
-- Durades, límits d’entrada, retenció i resta de detalls derivats descrits a la spec. No tractar-los com a acords anteriors al procés.
+- Durades, límits d’entrada, retenció i resta de detalls derivats descrits a la spec. Acceptats en aquesta revisió; no són acords anteriors al procés.
 
 ### Incertesa real i comprovacions inicials
 
@@ -401,4 +401,4 @@ L’usuari vol aprendre a fer les crides d’imatges amb la seva clau i crèdits
 
 Comprovacions abans o al principi del build: compte/projecte Supabase i quota; permisos efectius de taules, funcions i bucket; saldo, recàrrega i límit OpenAI; accés al model; instal·lació de Sharp amb Node 24; cost/temps reals d’una mostra i contorns pintables; suport de l’exclusió entre pestanyes. Són comprovacions d’accés i viabilitat amb criteris d’aturada, no funcionalitats donades per fetes. Si obliguen a canviar stack, cost, eines de pintura o compromisos del producte, tornar a revisar abans de continuar.
 
-**Pendent ara:** revisar aquesta proposta, especialment cost, cubell i resposta perduda. Només una aprovació explícita del pla complet permetrà marcar `status: approved`. El punt d’aturada d’aquest procés és el final de la planificació; no començar `5-build` automàticament en aprovar-lo. Després es decidirà el següent pas amb l’usuari. A la candidatura, respectar l’autoria del text: ajudar-lo a identificar què ha d’explicar i revisar buits o llengua segons el pack, sense escriure una candidatura atribuïda a ell.
+**Estat actual:** pla complet aprovat amb «Em sembla tot bé, podem seguir endevant». Aquesta mateixa resposta autoritza continuar amb `5-build`; no cal tornar a aprovar la spec. Correspon preparar i revisar l’ordre de construcció segons el skill real abans d’implementar. El desplegament i la publicació continuen fora de l’abast autoritzat. A la candidatura, respectar l’autoria del text: ajudar-lo a identificar què ha d’explicar i revisar buits o llengua segons el pack, sense escriure una candidatura atribuïda a ell.
