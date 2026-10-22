@@ -14,7 +14,7 @@ Primer esborrany de `3-prd`, basat en l’entrevista real i en `scope.md > The U
 Font: `scope.md > The Core Loop` i `What "Working" Looks Like`.
 
 1. La persona obre una home neta que explica breument l’activitat i permet crear una sala o entrar-hi amb un codi curt. No cal compte.
-2. Qui crea la sala obté el codi; la segona persona l’introdueix des de la seva sessió. La ronda és per a dues persones. L’assignació esquerra/dreta encara està pendent.
+2. Qui crea la sala obté el codi i pinta l’esquerra; la segona persona l’introdueix des de la seva sessió i pinta la dreta. La ronda és per a dues persones, amb assignació fixa de costats.
 3. Cada persona aporta una idea. Falta concretar la confirmació de les idees, quan poden editar-se i què inicia la generació.
 4. S’espera una única generació compartida que combini totes dues idees en una il·lustració en blanc i negre per pintar.
 5. Quan apareix la imatge, es mostren les dues idees. Des d’aquest primer moment cadascú només veu el seu 50% del dibuix; no hi ha vista completa inicial.
@@ -49,6 +49,8 @@ Font: `scope.md > Inspiration & Identity`, concretada per les respostes de l’u
 Font: `scope.md > The POC Boundary`, concretada durant l’entrevista.
 
 No cal registre ni inici de sessió. Crear una sala dona un codi curt, que l’altra persona pot comunicar i escriure sense enviar-se un enllaç. El codi és la via principal; un enllaç addicional no està acordat.
+
+En aquesta primera versió, qui crea la sala té l’esquerra i qui s’hi uneix té la dreta. No s’afegeix una elecció manual de costat. Aquesta assignació s’ha de mantenir durant tota la ronda; la recuperació de la mateixa plaça en tornar encara s’ha de concretar.
 
 Criteri: dues sessions independents entren a la mateixa ronda mitjançant el codi, sense compartir una sessió de navegador ni ocupar una tercera plaça. Format, caducitat i recuperació de l’entrada pendents.
 
@@ -100,6 +102,7 @@ Després de la revelació, cadascú pot descarregar l’obra completa. L’arxiu
 Confirmades durant l’entrevista:
 
 - Inici sense compte, amb crear sala i codi curt com a via principal d’entrada; l’usuari vol poder comunicar-lo fàcilment des d’ordinadors.
+- Assignació fixa: creador de sala a l’esquerra, persona que s’uneix a la dreta. L’usuari ha proposat aquest repartiment i ha considerat poc important l’elecció manual alternativa; s’adopta el repartiment simple per a la primera versió.
 - Direcció visual neta i minimalista, amb aire de taller creatiu i interès per imatges generades pròpies.
 - Imatge de ronda en blanc i negre amb estil de llibre per pintar.
 - Cubell i pinzell dins de la primera versió, més desfer i netejar.
@@ -107,7 +110,7 @@ Confirmades durant l’entrevista:
 - Descàrrega de l’obra final dins de la primera versió; la galeria continua fora. És una modificació explícita de l’ajornament inicial de l’exportació al scope.
 - Confirmar «He acabat», desar correctament i després bloquejar la pintura per a la ronda. Durant l’espera només es contempla la meitat pròpia desada. L’usuari ha acceptat explícitament aquesta recomanació després d’explorar altres possibles activitats; no s’hi afegeix un segon editor.
 
-Les quatre regles del nucli ja estaven acordades abans de l’entrevista. L’assignació de costat i les polítiques de recuperació o cost encara no estan acordades.
+Les quatre regles del nucli ja estaven acordades abans de l’entrevista. Les polítiques de recuperació o cost encara no estan acordades.
 
 ## What We're Building
 
@@ -118,6 +121,8 @@ Una ronda completa de dues persones en sessions independents: entrada amb codi, 
 Font: `scope.md > Later` i `Explicitly Cut`.
 
 Mode individual i rondes addicionals: es prioritza completar la ronda compartida. Galeria, xarxa social, xat, videotrucada, pagaments i gamificació queden fora perquè afegeixen recorreguts independents. Les quotes diàries per persona encara no tenen una decisió definitiva.
+
+Elecció manual del costat: alternativa explorada però poc important segons l’usuari; el repartiment fix evita afegir un pas a l’entrada.
 
 ## Possible Later Enhancements
 
@@ -131,11 +136,10 @@ No demostrar la integració d’IA amb una imatge fixa presentada com si s’hag
 
 Abans d’aprovar el PRD i passar a spec cal resoldre els punts de comportament que afecten la ronda:
 
-1. Com s’assignen esquerra i dreta a les dues persones?
-2. Com es confirmen les idees, fins quan poden canviar i què inicia la generació? Què poden fer si falla o el contingut no és acceptable?
-3. Què es conserva si es recarrega la pàgina, es perd la connexió o algú abandona?
-4. Quin és el dispositiu prioritari i quin idioma tindrà la interfície?
-5. Quin mínim de controls de color, gruix i correcció necessita la primera versió?
-6. S’ajornen les quotes diàries per persona? Quin control mínim de generació s’inclou i què veu qui arriba al límit?
+1. Com es confirmen les idees, fins quan poden canviar i què inicia la generació? Què poden fer si falla o el contingut no és acceptable?
+2. Què es conserva si es recarrega la pàgina, es perd la connexió o algú abandona?
+3. Quin és el dispositiu prioritari i quin idioma tindrà la interfície?
+4. Quin mínim de controls de color, gruix i correcció necessita la primera versió?
+5. S’ajornen les quotes diàries per persona? Quin control mínim de generació s’inclou i què veu qui arriba al límit?
 
 La spec concretarà format de codi, credencials, dimensions, format de descàrrega, proveïdor/model, pressupost, topalls numèrics i mecanismes tècnics, després dels acords de producte. Encara no s’ha triat arquitectura ni s’ha implementat l’app.
