@@ -2,9 +2,9 @@
 
 Dues idees, dues meitats, una creació compartida.
 
-Paquet documental preparat el **21 d’octubre de 2026** per iniciar un repositori nou per a Build With AI: Basics. **No conté una aplicació implementada, ni documents de planificació oficials generats amb el Devpost Learn Skill Pack.**
+Paquet documental preparat el **21 d’octubre de 2026** per iniciar un repositori nou per a Build With AI: Basics. El paquet original només contenia context. **Encara no hi ha una aplicació implementada ni plans aprovats.**
 
-Actualització del **22 d’octubre de 2026**: el Devpost Learn Skill Pack s’ha instal·lat localment i s’ha iniciat l’entrevista de `1-start`. Encara no s’ha completat aquesta etapa ni s’ha aprovat cap pla. L’usuari ha aportat la transcripció del vídeo, conservada en local al document 10. La transcripció completa i la conversa recuperada estan excloses del repositori públic; els resums de context es mantenen disponibles.
+Actualització del **22 d’octubre de 2026**: el Devpost Learn Skill Pack s’ha instal·lat localment, s’ha completat `1-start` i s’ha creat un primer esborrany de [scope](devpost/scope.md) mitjançant `2-scope`. Encara no s’ha aprovat cap pla ni s’ha iniciat la construcció. L’usuari ha aportat la transcripció del vídeo, conservada en local al document 10. La transcripció completa, la conversa recuperada i el perfil d’aprenent estan exclosos del repositori públic; els resums de context es mantenen disponibles.
 
 Per reinstal·lar els skills en un clon nou, amb Node.js i Git disponibles, executa `npx skills add challengepost/learn-ai-basics --all -y`. `skills-lock.json` registra la instal·lació inicial; les còpies locals dels skills queden fora dels commits.
 
@@ -43,7 +43,7 @@ La carpeta conté documentació de la idea, no codi reutilitzat d’un altre pro
 | [11 — Skill Pack](context/11-proces-skill-pack.md) | Separació entre context i planificació |
 | Arxiu recuperat (només local: `context/archive/conversa-recuperada.md`) | Text històric retornat, amb límits indicats; exclòs de Git |
 | [Prompt](prompts/INICI_CODEX.md) | Instruccions completes per iniciar la planificació |
-| [Estat de devpost](devpost/README.md) | Documents pendents; no acredita progrés |
+| [Estat de devpost](devpost/README.md) | Estat real del procés i documents pendents |
 
 ## Etiquetes d’autoritat
 

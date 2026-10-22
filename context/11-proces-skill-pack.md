@@ -18,6 +18,8 @@ Cap etapa consta com a completada. No hi ha perfil d’aprenent, plans, checklis
 
 **Actualització del 2026-10-22:** s’ha executat l’ordre d’instal·lació anterior dins del projecte. El primer intent ha fallat amb `EAI_AGAIN`; el segon, amb accés ampliat, ha instal·lat els sis skills a `.agents/skills/`. S’han llegit el `1-start` instal·lat i la seva plantilla i s’ha iniciat l’entrevista. `skills-lock.json` conserva la procedència i els hashes retornats per l’instal·lador. Instal·lar els sis skills no equival a completar-los: `1-start` continua en curs i no s’ha iniciat la construcció.
 
+**Actualització posterior del mateix dia:** acabada l’entrevista essencial, s’ha desat el perfil local d’aprenent i s’ha completat `1-start`. S’han llegit `2-scope` i la seva plantilla i s’ha creat `devpost/scope.md` amb `status: draft`, a partir dels acords explícits disponibles. Format de revisió i aprovació pendents; no hi ha PRD ni spec i no s’ha iniciat `5-build`. Aquest estat posterior preval sobre la nota d’inici del procés.
+
 ## Aplicació al nostre projecte
 
 El context evita haver de repetir acords, però no substitueix les converses de planificació. Proposar un stack no l’aprova. La frase històrica sobre una “segona decisió” no autoritza inventar-la.
