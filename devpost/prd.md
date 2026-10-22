@@ -9,6 +9,8 @@ Activitat creativa per a parelles, incloses les que estan a distància: dues ide
 
 PRD de `3-prd`, basat en l’entrevista real i en `scope.md > The Unique Kernel`, `The Core Loop` i `The POC Boundary`. Document complet revisat en text i aprovat explícitament per l’usuari el 2026-10-22: «Aquest PRD em sembla perfecte, podem passar a la següent fase i implementar-lo». Aquesta aprovació inclou les concrecions mostrades de 3 intents totals per ronda, «Undo» per última acció completa i confirmació de «Clear colors». Les recomanacions del context no constitueixen aprovacions independents.
 
+Precisió explícita de l’usuari al primer checkpoint de `5-build`: les dues idees s’han de fusionar en **un sol animal, objecte o ésser híbrid**, amb trets reconeixibles de totes dues. Una escena amb dos personatges separats no satisfà aquest objectiu. Les bases ja generades es conserven; el prompt nou s’aplica a rondes noves.
+
 ## The Core Journey
 
 Font: `scope.md > The Core Loop` i `What "Working" Looks Like`.

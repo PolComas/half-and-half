@@ -1,12 +1,69 @@
-# Half & Half — context inicial del projecte
+# Half & Half
 
 Dues idees, dues meitats, una creació compartida.
 
-Paquet documental preparat el **21 d’octubre de 2026** per iniciar un repositori nou per a Build With AI: Basics. El paquet original només contenia context. **Encara no hi ha una aplicació implementada.**
+Paquet documental preparat el **21 d’octubre de 2026** per iniciar un repositori nou per a Build With AI: Basics. El paquet original només contenia context. Ara el primer increment de l’app està implementat i comprovat mecànicament; falta la prova de l’usuari abans de continuar amb pintura i revelació.
 
-Actualització del **22 d’octubre de 2026**: el Devpost Learn Skill Pack s’ha instal·lat localment i s’han completat `1-start`, `2-scope`, `3-prd` i `4-spec`. L’usuari ha revisat i aprovat l’[abast de la primera versió](devpost/scope.md), al qual ha afegit posteriorment la descàrrega del resultat final, i el [PRD complet](devpost/prd.md). El [pla tècnic](devpost/spec.md) també està aprovat: React i servidor Node local, Supabase privat, pressupost limitat als crèdits existents i identitat sense compte. L’usuari ha demanat continuar; `5-build` ha preparat una [checklist de construcció](devpost/checklist.md) en esborrany per revisar l’ordre i el mode abans de començar el codi. Encara no s’ha implementat ni desplegat l’app. L’usuari ha aportat la transcripció del vídeo, conservada en local al document 10. La transcripció completa, la conversa recuperada i el perfil d’aprenent estan exclosos del repositori públic; els resums de context es mantenen disponibles.
+Actualització del **22 d’octubre de 2026**: el Devpost Learn Skill Pack s’ha instal·lat localment i s’han completat `1-start`, `2-scope`, `3-prd` i `4-spec`. L’usuari ha revisat i aprovat l’[abast de la primera versió](devpost/scope.md), al qual ha afegit posteriorment la descàrrega del resultat final, i el [PRD complet](devpost/prd.md). El [pla tècnic](devpost/spec.md) també està aprovat: React i servidor Node local, Supabase privat, pressupost limitat als crèdits existents i identitat sense compte. L’usuari ha aprovat la [checklist de construcció](devpost/checklist.md) i triat mode fast. El primer increment cobreix sala, idees, generació real i meitats privades; és al checkpoint manual. Encara no hi ha pintura, revelació, descàrrega ni desplegament. Resultats i límits a [verification.md](devpost/verification.md). L’usuari ha aportat la transcripció del vídeo, conservada en local al document 10. La transcripció completa, la conversa recuperada i el perfil d’aprenent estan exclosos del repositori públic; els resums de context es mantenen disponibles.
 
 Per reinstal·lar els skills en un clon nou, amb Node.js i Git disponibles, executa `npx skills add challengepost/learn-ai-basics --all -y`. `skills-lock.json` registra la instal·lació inicial; les còpies locals dels skills queden fora dels commits.
+
+## Executar l’app local
+
+Requisit: **Node.js 24**, npm i Internet. Amb les dependències ja instal·lades i `.env` configurat:
+
+```bash
+npm run dev
+```
+
+Obre **http://localhost:5173**. Per aturar els dos processos, `Ctrl+C`. Obre la segona persona en un altre perfil o navegador; dues pestanyes del mateix perfil comparteixen plaça. Un perfil crea sala, l’altre entra amb el codi de sis caràcters. Cadascú escriu una idea i la confirma dues vegades. Apareixen les idees i només la meitat pròpia quan acaba una única generació compartida. Recarregar conserva plaça i base.
+
+Aquest primer increment encara no permet pintar. La il·lustració de la home és un exemple SVG estàtic; les de les sales sí que es generen amb l’API d’OpenAI.
+
+En un clon nou:
+
+```bash
+npm ci
+cp -n .env.example .env
+```
+
+Configura localment `SUPABASE_URL`, `SUPABASE_SECRET_KEY` i `OPENAI_API_KEY`. La clau Supabase ha de ser secreta (`sb_secret_…`) o una clau de servei antiga amb rol `service_role`, mai `anon`. Cap clau al xat, al frontend o al repositori. `APP_ORIGIN=http://localhost:5173` i `PORT=3001` són els valors de desenvolupament. No obrir la web amb `127.0.0.1` mentre l’origen configurat sigui `localhost`.
+
+Abans de generar, comprova saldo, recàrrega i configuració de límits; només aleshores estableix `OPENAI_BILLING_VERIFIED=true` i `OPENAI_GENERATION_ENABLED=true` i reinicia el servidor. Les generacions reals consumeixen crèdits i compten al topall global de 20, inclosos reintents i proves. Amb el límit assolit, no s’engega cap generació nova. `npm run preflight` comprova presència/tipus de claus i connexió de dades sense imprimir secrets ni generar imatges; no consulta el saldo.
+
+Per preparar un projecte Supabase nou buit, aplica en ordre els dos SQL de `supabase/migrations/` des del SQL Editor d’aquell projecte; no els apliquis sobre una base aliena. El projecte Half & Half d’aquesta sessió ja està preparat i les versions locals coincideixen amb la seva història remota. Les quatre taules i el bucket són privats; només Node hi accedeix després de comprovar cada participant.
+
+Execució compilada, també comprovada:
+
+```bash
+npm run build
+APP_ORIGIN=http://localhost:3001 npm start
+```
+
+Obre http://localhost:3001. L’origen canviat afecta la identitat del navegador: tria una adreça estable per a cada prova. No canviïs de dispositiu o esborris dades esperant recuperar automàticament la plaça.
+
+## Comprovacions
+
+```bash
+npm run typecheck
+npm test
+npm run build
+```
+
+Per a les proves d’integració i navegador cal PostgreSQL 16 o superior amb `pg_config`, `initdb` i `pg_ctl`, i Chrome instal·lat. Es crea una instància temporal exclusiva de tests a `127.0.0.1:5548`; els tests no llegeixen les claus de `.env` ni toquen Supabase de producció:
+
+```bash
+npm run test:db
+npm run test:integration
+npm run test:e2e
+npm run test:db:stop
+```
+
+Els tests de navegador mostren «Test fixture — no AI was called». No són el mode real de l’app i no substitueixen les proves reals documentades a [verification.md](devpost/verification.md).
+
+## Estat del procés
+
+`1-start` → `2-scope` → `3-prd` → `4-spec` completats. `5-build` en curs, primer increment pendent de comentaris de l’usuari. No marcar-lo complet, ni saltar a `6-ship`, només perquè l’agent ha passat les proves. Desplegament i candidatura continuen fora d’aquesta fase.
 
 ## Què està acordat
 

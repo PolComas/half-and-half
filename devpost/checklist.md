@@ -1,13 +1,13 @@
 ---
 doc: checklist
-status: draft
+status: approved
 ---
 
 # Half & Half — Build Checklist
 
-Build mode: pendent d’elecció. Proposta per revisar: fast, amb explicació pràctica de la crida a OpenAI, prova manual primerenca i revisió final. Learn ofereix prova i explicació de codi a cada increment. Cap mode s’ha atribuït encara a l’usuari.
+Build mode: fast — triat explícitament per l’usuari: «Em va bé aquest mode ràpid, a sobre m’agrada testejar-ho i provar-ho». Ordre de construcció aprovat en aquesta resposta després de mostrar els tres passos. Es mantenen prova manual primerenca i revisió final, amb explicació pràctica de la crida a OpenAI.
 
-Scope, PRD i spec estan aprovats. La resposta «Em sembla tot bé, podem seguir endevant» aprova la spec i autoritza passar a `5-build`; aquesta checklist és el nou ordre de construcció que el skill demana revisar abans del codi. No s’ha iniciat cap increment. Cada pas ha de deixar una app executable, passar les seves comprovacions i quedar registrat en un commit abans de continuar.
+Scope, PRD i spec estan aprovats. La resposta «Em sembla tot bé, podem seguir endevant» aprova la spec i autoritza passar a `5-build`; aquesta checklist recull l’ordre de construcció posteriorment revisat i aprovat per l’usuari. El primer increment està implementat i comprovat mecànicament; espera la prova i els comentaris de l’usuari abans de registrar-ne el commit i marcar-lo complet. Els altres dos increments encara no s’han iniciat. Cada pas ha de deixar una app executable, passar les seves comprovacions i quedar registrat en un commit abans de continuar.
 
 En tots els passos: conservar el context original, excloure perfil i secrets, respectar els 7 USD de crèdits existents i 0 USD addicionals, sense desplegar ni publicar la candidatura. Les proves sintètiques s’identifiquen com a tests i no substitueixen l’evidència de generació real. No donar per configurats els comptes, el saldo, les quotes o els permisos.
 
@@ -43,9 +43,11 @@ En tots els passos: conservar el context original, excloure perfil i secrets, re
   Learner check: Amb A i B en dos perfils, completar la ronda, acabar només amb A i comprovar l’espera privada. Acabar amb B, veure la mateixa obra completa i descarregar-la en tots dos. Recarregar abans i després de revelar, provar entrades incòmodes i revisar també el llenç en una finestra estreta. Explicar què ha passat i què es canviaria; després de les correccions acordades, tornar a provar les parts afectades i confirmar si la prova de concepte està preparada.
   Commit: `feat: reveal and download artwork after two valid finishes`
 
+Comprovació mecànica del pas 1: typecheck, build, 10 proves de domini, 7 d’integració i 2 de navegador superades; dues generacions reals, cost total estimat de 0,013225 USD. Vegeu `verification.md`. Checkpoint manual rebut amb captures i correccions resoltes: un sol híbrid i fons amb moviment. Vegeu el registre de revisió a `verification.md`.
+
 ## Hands-on Checkpoints
 
-- [ ] Early usable behavior explored — després del pas 1, provar la sala real, meitats i recuperació i recollir comentaris sobre la il·lustració i el flux. En fast aquesta pausa és obligatòria; en learn ja forma part del check del pas.
+- [x] Early usable behavior explored — després del pas 1, provar la sala real, meitats i recuperació i recollir comentaris sobre la il·lustració i el flux. En fast aquesta pausa és obligatòria; en learn ja forma part del check del pas.
 - [ ] Final kick-the-tires exploration and feedback completed — després del pas 3, l’usuari arrenca i prova el recorregut sencer, informa del que observa i torna a provar les correccions acordades. És el checkpoint de revisió final, no una prova separada duplicada.
 
 En learn, també s’espera la prova de l’usuari a cada pas abans de registrar-lo complet. En fast, no hi ha una pausa intermèdia addicional per defecte; només si un problema o canvi important necessita una decisió. Cap cas permet saltar-se la verificació mecànica o els commits de cada pas.
@@ -73,3 +75,9 @@ Reflection: encara no oferta. La resposta personal, si n’hi ha, queda al perfi
 Activity mode: pendent; per l’experiència de planificació declarada, una investigació breu sobre la crida real pot ser més útil que un recorregut genèric de tot el codi. El mapa del pack es farà a partir de l’app acabada; no és un acompanyant HTML d’aquesta checklist, que continua en Markdown.
 
 ## Revisions
+
+- S’han agrupat les mutacions de sala en `hh_room_command` i la lectura en `hh_state`, mantenint els mateixos endpoints i comportaments previstos — evita duplicar validació i bloquejos SQL entre funcions gairebé iguals. La spec reflecteix els noms reals.
+- S’accepta la clau de servei JWT antiga de Supabase, a més de `sb_secret_…` — la credencial local configurada és `service_role`, compatible segons la documentació oficial. Les claus públiques continuen denegades i cap credencial arriba al client.
+- Abans d’una mutació, el client refresca la versió i comprova que la idea pròpia no hagi canviat — la prova en dos navegadors va detectar conflictes normals causats per actualitzacions de l’altre participant. Una carrera restant continua retornant conflicte, sense ignorar una edició acceptada.
+
+- Primer checkpoint real: l’usuari ha provat les dues meitats i ha aportat captures de panda + drac. Demana poder pintar (pas 2), fusionar les idees en un sol subjecte i enriquir el fons amb moviment suau. S’actualitzen prompt, plans i atmosfera abans de continuar. No s’atribueixen a l’usuari proves de recuperació no reportades.

@@ -4,6 +4,6 @@ Estat del 2026-10-22: `1-start` completat i perfil d’aprenent creat en local, 
 
 `3-prd` i `4-spec` completats: [prd.md](prd.md) i [spec.md](spec.md) consten com a `status: approved` després de revisions i aprovacions explícites. La resposta «Em sembla tot bé, podem seguir endevant» aprova la spec i demana continuar amb el procés de construcció. No cal tornar a aprovar aquests plans.
 
-S’ha llegit el `5-build` real i creat [checklist.md](checklist.md) amb `status: draft`: tres increments usables amb comprovacions mecàniques, proves de l’usuari i commits previstos. Pendent de revisar l’ordre i acordar learn o fast segons el skill, abans del primer increment. Encara no hi ha app, infraestructura creada ni crides de generació; les ordres d’arrencada de la spec continuen sent previstes. Cap desplegament o publicació de candidatura autoritzat en aquesta fase.
+`5-build` en curs: [checklist.md](checklist.md) està aprovada, en mode fast escollit explícitament. El primer increment ja és executable i ha passat les comprovacions de [verification.md](verification.md), incloses dues generacions reals dins del pressupost. Espera la prova i els comentaris de l’usuari al checkpoint primerenc abans del commit de l’increment i de marcar-lo complet. Pintura, finalització, revelació i descàrrega encara pendents. Ordres reals al [README principal](../README.md); cap desplegament ni candidatura publicada.
 
 Vegeu [el procés](../context/11-proces-skill-pack.md) i [el prompt inicial](../prompts/INICI_CODEX.md).

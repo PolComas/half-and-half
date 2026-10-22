@@ -21,3 +21,13 @@ dist/
 /.codex/
 /.aws/
 /agent/skills/
+
+/test-results/
+
+/playwright-report/
+
+/.local/
+
+/supabase/.temp/
+
+/supabase/.branches/

@@ -11,6 +11,8 @@ Pla de `2-scope`, revisat en text i aprovat explícitament per l’usuari el 202
 
 Canvi explícit posterior durant `3-prd`, el mateix dia: l’usuari demana poder descarregar el dibuix i manté la galeria fora. La descàrrega de l’obra final s’incorpora a aquesta primera versió, substituint-ne l’ajornament inicial. També ha aclarit que abans de pintar cadascú només veu la seva meitat; no hi haurà previsualització completa inicial.
 
+Precisió explícita de l’usuari al primer checkpoint de `5-build`: les dues idees s’han de fusionar en **un sol animal, objecte o ésser híbrid**, amb trets reconeixibles de totes dues. Una escena amb dos personatges separats no satisfà aquest objectiu. Les bases ja generades es conserven; el prompt nou s’aplica a rondes noves.
+
 ## The Unique Kernel
 
 Les dues persones aporten una idea cadascuna. La IA les combina en una única il·lustració en blanc i negre per pintar; després cadascú hi aporta color sense veure com pinta l’altra persona. La sorpresa és descobrir la combinació de les dues aportacions en una mateixa obra.

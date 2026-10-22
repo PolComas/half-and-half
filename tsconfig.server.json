@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "lib": ["ES2023", "DOM"],
+    "types": ["node"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "outDir": "dist/server",
+    "rootDir": ".",
+    "skipLibCheck": true,
+    "verbatimModuleSyntax": true
+  },
+  "include": ["server", "shared", "src/painting/regions.ts"]
+}
