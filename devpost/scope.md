@@ -37,7 +37,7 @@ Vol portar aquesta idea pròpia al hackathon Build With AI: Basics, amb un recor
 
 Prova d’èxit aprovada: dues persones, en dues sessions independents, aporten idees diferents, obtenen la mateixa il·lustració generada realment i pinten meitats complementàries. Quan acaba la primera, el resultat encara no es revela; quan acaben totes dues amb les seves parts desades i vàlides, les dues sessions mostren la mateixa obra completa.
 
-La verificació ha de cobrir una sola generació compartida, el tall exacte, la protecció de la pintura aliena, el desament abans de confirmar el final i l’absència de revelació amb una sola finalització. Les comprovacions concretes i els errors recuperables es definiran en PRD i spec. Una imatge fixa de prova no substitueix l’evidència de generació real.
+La verificació ha de cobrir una sola generació compartida activa alhora i una base comuna per pintar, el tall exacte, la protecció de la pintura aliena, el desament abans de confirmar el final i l’absència de revelació amb una sola finalització. Els errors poden donar lloc a reintents controlats, com ha demanat explícitament l’usuari durant el PRD; no a generacions duplicades o a canviar la base mentre es pinta. Les comprovacions concretes es definiran en PRD i spec. Una imatge fixa de prova no substitueix l’evidència de generació real.
 
 Després de revelar, tots dos han de poder descarregar la mateixa obra completa. La descàrrega no exposarà el resultat abans de les dues finalitzacions vàlides.
 

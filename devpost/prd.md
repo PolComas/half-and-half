@@ -28,7 +28,7 @@ Superfícies conegudes del recorregut; no impliquen una pàgina separada per a c
 
 - **Home:** informació breu de Half & Half, acció principal per crear sala i entrada per codi curt. L’usuari ha acceptat aquesta proposta d’inici. No s’ha definit cap opció concreta de configuració.
 - **Sala i idees:** codi per comunicar a l’altra persona, entrada de text per a la idea pròpia, botó «Fet» o «Confirmar» i segona confirmació. No es confirma una entrada buida. El text no interpretable activa la llibertat creativa prevista al prompt. Presentació exacta dels controls pendent.
-- **Generació:** missatge «La imatge s’està generant. Espereu un moment» per a totes dues persones, sense percentatges inventats. Un error no s’ha de presentar com una imatge generada correctament. L’acció de recuperació d’un error de generació està pendent.
+- **Generació:** missatge «La imatge s’està generant. Espereu un moment» per a totes dues persones, sense percentatges inventats. En cas d’error confirmat, explicació senzilla i recuperació amb intents limitats o edició de les idees; cap error tècnic cru com a missatge principal.
 - **Pintura:** meitat pròpia com a element central, dues idees visibles, selecció de color, cubell, pinzell, desfer, netejar i acció per acabar. Distribució dels controls i dispositiu prioritari pendents.
 - **Espera final:** la meitat pròpia desada es pot mirar sense editar-la, amb el missatge «La teva part està desada. Esperem l’altra persona». No s’ensenya pintura aliena ni el resultat complet. No s’afegeix un altre editor o activitat mentre s’espera.
 - **Revelació:** obra completa i acció per descarregar-la, disponible després de dues finalitzacions vàlides.
@@ -60,7 +60,7 @@ Font: `scope.md > The Core Loop`, concretada durant l’entrevista.
 
 Cada persona introdueix una idea en text lliure i la confirma en dos passos. La segona confirmació revisa la idea pròpia; no anticipa la revelació de l’aportació de l’altra persona. L’etiqueta exacta del botó encara pot ser «Fet» o «Confirmar».
 
-Mentre no hagi començat la generació, una idea confirmada mostra «Editar». Activar-lo retira la confirmació d’aquella persona i torna el text propi a edició; la idea de l’altra persona manté el seu estat. Cal repetir la confirmació després d’editar. Durant aquesta edició ja no hi ha dues idees confirmades i no es pot iniciar la generació. Les idees que s’estan generant o ja s’estan pintant no es poden canviar; el retorn a edició si la generació falla encara s’ha de concretar.
+Mentre no hagi començat la generació, una idea confirmada mostra «Editar». Activar-lo retira la confirmació d’aquella persona i torna el text propi a edició; la idea de l’altra persona manté el seu estat. Cal repetir la confirmació després d’editar. Durant aquesta edició ja no hi ha dues idees confirmades i no es pot iniciar la generació. Les idees que s’estan generant o ja s’estan pintant no es poden canviar. Si la generació falla, es permet tornar a editar les aportacions pròpies i tornar-les a confirmar, dins del mateix límit d’intents de la ronda.
 
 Una entrada buida, inclòs text format només per espais, no pot quedar confirmada ni iniciar generació. Per a text no buit però incomprensible, com una seqüència aleatòria de lletres, l’usuari ha definit una alternativa creativa: el prompt dona llibertat per inventar un objecte especialment estrany o original i combinar-lo amb l’altra idea, mantenint una sola escena en blanc i negre pintable. Aquest cas no s’ha de tractar com si fos text buit ni exigeix que la persona reformuli l’aportació.
 
@@ -78,13 +78,25 @@ Si algú recarrega, recupera la mateixa sala, plaça, costat i fase, així com l
 
 Criteris: en dues sessions independents, recarregar A mentre B espera manté una única generació; si la imatge acaba durant la recàrrega, A arriba a la pintura de la mateixa base; recarregar després d’una finalització manté el bloqueig ja confirmat; recarregar després de dues finalitzacions vàlides mostra el mateix resultat. Durant la pintura es recupera la versió pròpia desada automàticament, sense haver de prémer «He acabat». Retenció i mecanismes de recuperació pendents de spec.
 
+### Errors de generació i intents limitats
+
+Font: `scope.md > What "Working" Looks Like`, concretada per la petició de repetir com a màxim «2 o 3 cops», explicar l’error sense tecnicismes i permetre idees diferents.
+
+Un error confirmat de generació mostra una explicació breu i senzilla i els intents disponibles. Les dues persones poden tornar-ho a provar amb les idees confirmades o editar les aportacions pròpies; qualsevol idea editada ha de confirmar-se de nou abans del nou intent. No es mostra prematurament el text de l’altra persona en un missatge d’error o durant l’edició.
+
+Concreció proposada en aquest esborrany, dins del rang indicat per l’usuari: **3 intents totals per ronda**, l’inicial i un màxim de **2 reintents**. El límit és compartit, no per persona. Canviar les idees o recarregar no reinicia el comptador. Sense intents disponibles no es permet una altra generació d’aquesta ronda i s’explica que s’han esgotat; no s’afegeixen noves rondes automàtiques per esquivar-lo.
+
+Exemples de text d’interfície: «No hem pogut crear el dibuix. Podeu tornar-ho a provar o canviar les idees. Queden 2 intents.» i «S’han esgotat els intents d’aquesta ronda.» S’han d’adaptar a l’estat real; no s’inventa la causa de l’error. El redactat i l’idioma definitius encara s’han de concretar.
+
+Criteris: dos clics o reintents simultanis no creen dos intents nous; només hi ha una generació activa alhora; el comptador persisteix en recarregar i en editar idees; assolir el màxim impedeix noves peticions d’aquesta ronda. Una pèrdua de connexió per si sola no prova que la generació hagi fallat: primer cal recuperar l’estat compartit, sense reintentar cegament una generació que continua activa. No es regenera una base que ja s’està pintant.
+
 ### Dibuix compartit i visibilitat
 
 Font: `scope.md > The Unique Kernel`, `The Core Loop` i `What "Working" Looks Like`.
 
 Una il·lustració comuna combina les dues idees. Tall vertical exacte al 50%: una meitat esquerra i una dreta. Les idees es mostren quan apareix el dibuix. Abans i durant la pintura, cada persona només veu la seva meitat i mai la pintura de l’altra.
 
-Criteris: una sola generació compartida; cap vista completa inicial; cap canvi de base mentre es pinta; tall sense buit ni solapament; protecció de la pintura aliena fins a la revelació. Les idees només es poden editar abans de començar a generar. La política de reintents s’ha de concretar abans d’aprovar el PRD.
+Criteris: una sola generació compartida activa alhora i una única base comuna per pintar; cap vista completa inicial; cap canvi de base mentre es pinta; tall sense buit ni solapament; protecció de la pintura aliena fins a la revelació. Les idees es poden editar abans de generar o després d’un error confirmat, mai mentre es genera o pinta. Els reintents de generació fallida tenen el límit descrit a «Errors de generació i intents limitats».
 
 ### Pintar i corregir
 
@@ -126,14 +138,15 @@ Després de la revelació, cadascú pot descarregar l’obra completa. L’arxiu
 
 - **Falta la segona persona o una idea:** no es pot generar la composició de dues aportacions encara. Missatges i controls concrets pendents.
 - **Generació en curs:** totes dues idees s’han enviat juntes; es mostra el missatge d’espera. Una recàrrega recupera aquesta mateixa generació.
-- **Generació fallida:** no es pot començar a pintar una base absent. Falta decidir el reintent i el retorn a edició de les idees.
+- **Generació fallida:** explicació senzilla, intents restants i possibilitat de reintentar o canviar idees dins del mateix límit; no es pot pintar una base absent.
+- **Intents esgotats:** s’explica que no es pot generar més en aquesta ronda; no es reinicia el comptador per recarregar o modificar idees.
 - **Pintura:** només la meitat pròpia; cap previsualització completa ni pintura aliena.
 - **Desament fallit:** no es confirma el final ni s’activa la revelació.
 - **Una persona acabada:** pintura desada i bloquejada; pot mirar només la seva meitat fins a la revelació, sense retornar a edició ni iniciar una activitat addicional.
 - **Dues finalitzacions vàlides:** revelació coherent i descàrrega habilitada.
 - **Recarregar o reconnectar la mateixa sessió:** recuperar sala, plaça, fase reals i pintura pròpia desada automàticament, sense duplicar generació ni finalitzacions. No inventar finalitzacions per desconnexió o abandonament.
 - **Desament automàtic pendent o fallit:** indicar-lo fidelment; no afirmar que els canvis estan desats ni marcar la persona com a acabada.
-- **Cost de generació:** l’usuari ha plantejat ajornar les quotes diàries. El topall global petit i els reintents limitats són recomanacions encara no aprovades. Cap pressupost o límit s’ha configurat.
+- **Cost de generació:** l’usuari ha demanat reintents limitats; l’esborrany concreta 3 intents totals per ronda. Les quotes diàries i el topall global petit continuen pendents. Cap pressupost o límit s’ha configurat realment.
 
 ## Product Decisions
 
@@ -145,6 +158,7 @@ Confirmades durant l’entrevista:
 - «Editar» després de confirmar retira la confirmació pròpia i permet canviar el text abans de generar. Cal confirmar-lo de nou; la confirmació de l’altra persona no es retira.
 - Amb totes dues idees confirmades s’envien juntes a l’API per a una única generació. Durant l’espera es mostra «La imatge s’està generant. Espereu un moment», normalització del text proposat per l’usuari.
 - Recarregar ha de recuperar la mateixa sala, participant i estat compartit, sense desincronitzar les dues persones ni tornar a generar. L’usuari ha demanat recuperar també tot el que ja havia pintat, abans d’acabar; s’inclou desament automàtic amb freqüència i mecanisme pendents de spec, sense prometre persistència de canvis encara no desats.
+- En un error de generació, reintents limitats, explicació senzilla i possibilitat de canviar les idees. L’usuari ha indicat «2 o 3 cops»; la concreció d’esborrany a revisar és 3 intents totals per ronda, sense reiniciar el comptador per canviar idees.
 - Direcció visual neta i minimalista, amb aire de taller creatiu i interès per imatges generades pròpies.
 - Imatge de ronda en blanc i negre amb estil de llibre per pintar.
 - Cubell i pinzell dins de la primera versió, més desfer i netejar.
@@ -152,7 +166,7 @@ Confirmades durant l’entrevista:
 - Descàrrega de l’obra final dins de la primera versió; la galeria continua fora. És una modificació explícita de l’ajornament inicial de l’exportació al scope.
 - Confirmar «He acabat», desar correctament i després bloquejar la pintura per a la ronda. Durant l’espera només es contempla la meitat pròpia desada. L’usuari ha acceptat explícitament aquesta recomanació després d’explorar altres possibles activitats; no s’hi afegeix un segon editor.
 
-Les quatre regles del nucli ja estaven acordades abans de l’entrevista. Les polítiques d’error de generació i cost encara no estan acordades. La spec concretarà la persistència de la pintura i la frontera observable del desament automàtic.
+Les quatre regles del nucli ja estaven acordades abans de l’entrevista. La revisió del PRD ha de validar la concreció numèrica dels intents i el control global de cost encara pendent. La spec concretarà la persistència de la pintura i la frontera observable del desament automàtic.
 
 ## What We're Building
 
@@ -178,9 +192,10 @@ No demostrar la integració d’IA amb una imatge fixa presentada com si s’hag
 
 Abans d’aprovar el PRD i passar a spec cal resoldre els punts de comportament que afecten la ronda:
 
-1. Què poden fer si la generació falla o el contingut no és acceptable?
-2. Quin és el dispositiu prioritari i quin idioma tindrà la interfície?
-3. Quin mínim de controls de color, gruix i correcció necessita la primera versió?
-4. S’ajornen les quotes diàries per persona? Quin control mínim de generació s’inclou i què veu qui arriba al límit?
+1. Quin és el dispositiu prioritari i quin idioma tindrà la interfície?
+2. Quin mínim de controls de color, gruix i correcció necessita la primera versió?
+3. S’ajornen les quotes diàries per persona? Quin control mínim global de generació s’inclou i què veu qui arriba al límit?
+
+La revisió també ha de validar la concreció de 3 intents totals per ronda dins del rang de reintents indicat per l’usuari; encara no equival a un PRD aprovat.
 
 La spec concretarà format de codi, credencials, dimensions, format de descàrrega, proveïdor/model, pressupost, topalls numèrics i mecanismes tècnics, després dels acords de producte. Encara no s’ha triat arquitectura ni s’ha implementat l’app.
