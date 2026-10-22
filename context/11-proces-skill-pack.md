@@ -26,6 +26,8 @@ Cap etapa consta com a completada. No hi ha perfil d’aprenent, plans, checklis
 
 **Estat posterior, PRD per revisar:** s’han concretat idees i edició, inici de generació, espera, errors, desament automàtic, finalització, dispositius, idioma i controls de pintura. L’usuari ha acceptat el topall global de generació de la demo i ajornar les quotes diàries individuals. `prd.md` està preparat per revisar, amb `status: draft`; encara no s’ha aprovat el document complet. Les concrecions de 3 intents totals per ronda i controls de correcció són propostes a validar en aquesta revisió. No hi ha spec ni construcció.
 
+**Estat posterior, PRD aprovat:** després de mostrar el resum complet i l’enllaç al Markdown, l’usuari ha respost «Aquest PRD em sembla perfecte, podem passar a la següent fase i implementar-lo». S’ha marcat `prd.md` com a `status: approved`, incloses les concrecions mostrades. `3-prd` està completat i comença `4-spec`, després de llegir el skill real, la plantilla i els patrons tècnics. Encara no hi ha `spec.md`, arquitectura escollida ni implementació. La petició d’implementar no substitueix les decisions i la revisió del pla tècnic.
+
 ## Aplicació al nostre projecte
 
 El context evita haver de repetir acords, però no substitueix les converses de planificació. Proposar un stack no l’aprova. La frase històrica sobre una “segona decisió” no autoritza inventar-la.

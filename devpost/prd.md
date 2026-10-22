@@ -1,13 +1,13 @@
 ---
 doc: prd
-status: draft
+status: approved
 ---
 
 # Half & Half — Requisits de producte
 
 Activitat creativa per a parelles, incloses les que estan a distància: dues idees, una il·lustració i dues meitats pintades per separat abans de descobrir el resultat compartit.
 
-Versió per a revisió de `3-prd`, basada en l’entrevista real i en `scope.md > The Unique Kernel`, `The Core Loop` i `The POC Boundary`. Les preguntes de producte s’han resolt; l’usuari encara ha de revisar i aprovar el document complet, incloses les concrecions d’intents i controls de correcció que s’indiquen com a propostes. L’estat continua sent `draft`. Les recomanacions del context no es converteixen en decisions de producte per aparèixer-hi.
+PRD de `3-prd`, basat en l’entrevista real i en `scope.md > The Unique Kernel`, `The Core Loop` i `The POC Boundary`. Document complet revisat en text i aprovat explícitament per l’usuari el 2026-10-22: «Aquest PRD em sembla perfecte, podem passar a la següent fase i implementar-lo». Aquesta aprovació inclou les concrecions mostrades de 3 intents totals per ronda, «Undo» per última acció completa i confirmació de «Clear colors». Les recomanacions del context no constitueixen aprovacions independents.
 
 ## The Core Journey
 
@@ -91,7 +91,7 @@ Font: `scope.md > What "Working" Looks Like`, concretada per la petició de repe
 
 Un error confirmat de generació mostra una explicació breu i senzilla i els intents disponibles. Les dues persones poden tornar-ho a provar amb les idees confirmades o editar les aportacions pròpies; qualsevol idea editada ha de confirmar-se de nou abans del nou intent. No es mostra prematurament el text de l’altra persona en un missatge d’error o durant l’edició.
 
-Concreció proposada en aquest esborrany, dins del rang indicat per l’usuari: **3 intents totals per ronda**, l’inicial i un màxim de **2 reintents**. El límit és compartit, no per persona. Canviar les idees o recarregar no reinicia el comptador. Sense intents disponibles no es permet una altra generació d’aquesta ronda i s’explica que s’han esgotat; no s’afegeixen noves rondes automàtiques per esquivar-lo.
+Concreció aprovada amb el PRD, dins del rang indicat inicialment per l’usuari: **3 intents totals per ronda**, l’inicial i un màxim de **2 reintents**. El límit és compartit, no per persona. Canviar les idees o recarregar no reinicia el comptador. Sense intents disponibles no es permet una altra generació d’aquesta ronda i s’explica que s’han esgotat; no s’afegeixen noves rondes automàtiques per esquivar-lo.
 
 Exemples de text d’interfície: «We couldn’t create your drawing. Try again or edit your ideas. 2 attempts left.» i «There are no attempts left for this round.» S’han d’adaptar a l’estat real; no s’inventa la causa de l’error. La interfície serà en anglès, segons la decisió de l’usuari. El redactat es pot polir sense canviar-ne el comportament.
 
@@ -126,7 +126,7 @@ Controls definits per l’usuari:
 - Paleta de cercles de colors predefinits i selector amb degradat per triar altres tons. El degradat s’interpreta com a selector de color; no s’ha demanat pintar traços multicolor. Es mostra quin color està seleccionat i el fan servir tant el cubell com el pinzell.
 - Barra horitzontal per ajustar el gruix del pinzell. Una previsualització circular es fa més gran o més petita amb la barra. El gruix no afecta el cubell ni modifica allò ja pintat. Colors predefinits exactes i rang de gruixos es concretaran a la spec.
 
-Concrecions de correcció proposades per l’agent, pendents de validar en la revisió del PRD: «Undo» desfà l’última acció de pintura completada (un traç, un ompliment o una neteja); «Clear colors» demana confirmació abans de treure la pintura pròpia. Cancel·lar conserva el que hi havia; confirmar deixa el dibuix base intacte i registra el canvi per al desament automàtic. Aquestes propostes concreten els controls ja demanats per l’usuari, sense afegir eines noves.
+Concrecions de correcció proposades per l’agent i acceptades en l’aprovació del PRD complet: «Undo» desfà l’última acció de pintura completada (un traç, un ompliment o una neteja); «Clear colors» demana confirmació abans de treure la pintura pròpia. Cancel·lar conserva el que hi havia; confirmar deixa el dibuix base intacte i registra el canvi per al desament automàtic. Concreten els controls ja demanats per l’usuari, sense afegir eines noves.
 
 Criteris: triar un cercle o un color del selector actualitza el color utilitzat per totes dues eines; moure la barra actualitza el gruix i la previsualització, però no els traços anteriors. Tant el cubell com el pinzell queden dins de la meitat assignada, també quan una regió continua més enllà del centre; el dibuix base i l’altra meitat no canvien. Cal provar imatges generades reals: demanar contorns tancats al prompt no garanteix que cada regió es pugui omplir sense problemes. Una retirada del cubell requeriria revisar el requisit amb l’usuari.
 
@@ -170,7 +170,7 @@ Després de la revelació, cadascú pot descarregar l’obra completa. L’arxiu
 - **Dues finalitzacions vàlides:** revelació coherent i descàrrega habilitada.
 - **Recarregar o reconnectar la mateixa sessió:** recuperar sala, plaça, fase reals i pintura pròpia desada automàticament, sense duplicar generació ni finalitzacions. No inventar finalitzacions per desconnexió o abandonament.
 - **Desament automàtic pendent o fallit:** indicar-lo fidelment; no afirmar que els canvis estan desats ni marcar la persona com a acabada.
-- **Cost de generació:** l’usuari ha acceptat ajornar les quotes diàries individuals i incloure un topall global de la demo que compta intents i reintents. Assolir-lo bloqueja generacions noves, sense impedir acabar rondes amb dibuix disponible. La xifra global i el pressupost es decidiran a la spec. L’esborrany proposa 3 intents totals per ronda; encara no s’ha configurat cap límit real.
+- **Cost de generació:** l’usuari ha acceptat ajornar les quotes diàries individuals i incloure un topall global de la demo que compta intents i reintents. Assolir-lo bloqueja generacions noves, sense impedir acabar rondes amb dibuix disponible. La xifra global i el pressupost es decidiran a la spec. S’han aprovat 3 intents totals per ronda; encara no s’ha configurat cap límit real.
 
 ## Product Decisions
 
@@ -184,7 +184,7 @@ Confirmades durant l’entrevista:
 - «Edit» després de confirmar retira la confirmació pròpia i permet canviar el text abans de generar. Cal confirmar-lo de nou; la confirmació de l’altra persona no es retira.
 - Amb totes dues idees confirmades s’envien juntes a l’API per a una única generació. Durant l’espera es mostra «Your drawing is being generated. Please wait.», adaptació a l’anglès del text proposat per l’usuari.
 - Recarregar ha de recuperar la mateixa sala, participant i estat compartit, sense desincronitzar les dues persones ni tornar a generar. L’usuari ha demanat recuperar també tot el que ja havia pintat, abans d’acabar; s’inclou desament automàtic amb freqüència i mecanisme pendents de spec, sense prometre persistència de canvis encara no desats.
-- En un error de generació, reintents limitats, explicació senzilla i possibilitat de canviar les idees. L’usuari ha indicat «2 o 3 cops»; la concreció d’esborrany a revisar és 3 intents totals per ronda, sense reiniciar el comptador per canviar idees.
+- En un error de generació, reintents limitats, explicació senzilla i possibilitat de canviar les idees. L’usuari va indicar «2 o 3 cops» i ha acceptat en la revisió completa la concreció de 3 intents totals per ronda, sense reiniciar el comptador per canviar idees.
 - Quotes diàries individuals ajornades i topall global de generacions de la demo acceptat explícitament. Inclou intents inicials i reintents de totes les sales; assolir-lo atura generacions noves, però permet acabar les rondes que ja tenen dibuix. Xifra i pressupost pendents de spec.
 - Direcció visual neta i minimalista, amb aire de taller creatiu i interès per imatges generades pròpies.
 - Imatge de ronda en blanc i negre amb estil de llibre per pintar.
@@ -194,7 +194,7 @@ Confirmades durant l’entrevista:
 - Descàrrega de l’obra final dins de la primera versió; la galeria continua fora. És una modificació explícita de l’ajornament inicial de l’exportació al scope.
 - Confirmar «I’m done», desar correctament i després bloquejar la pintura per a la ronda. Durant l’espera només es contempla la meitat pròpia desada. L’usuari ha acceptat explícitament aquesta recomanació després d’explorar altres possibles activitats; no s’hi afegeix un segon editor.
 
-Les quatre regles del nucli ja estaven acordades abans de l’entrevista. La revisió del PRD ha de validar la concreció numèrica dels intents i les propostes d’«Undo» i confirmació de «Clear colors». El control global de cost ja està acceptat; la spec en concretarà la xifra, així com la persistència de la pintura i la frontera observable del desament automàtic.
+Les quatre regles del nucli ja estaven acordades abans de l’entrevista. L’aprovació del PRD complet valida també la concreció numèrica dels intents, «Undo» i la confirmació de «Clear colors». El control global de cost està acceptat; la spec en concretarà la xifra, així com la persistència de la pintura i la frontera observable del desament automàtic.
 
 ## What We're Building
 
@@ -218,9 +218,7 @@ No demostrar la integració d’IA amb una imatge fixa presentada com si s’hag
 
 ## Open Questions
 
-No queden preguntes de producte imprescindibles sense resposta per preparar aquesta revisió. Això no equival a una aprovació del PRD complet.
-
-La revisió ha de validar la concreció de **3 intents totals per ronda** dins del rang de reintents indicat per l’usuari, **«Undo» per última acció completa** i la **confirmació de «Clear colors»**. Aquestes propostes s’han mostrat com a tals, no com a decisions prèvies de l’usuari.
+No queden preguntes de producte imprescindibles sense resposta. El PRD complet, incloses les concrecions mostrades durant la revisió, ha estat aprovat explícitament. Els punts següents són decisions tècniques per a la spec, no tecnologia ja escollida.
 
 Pendents tècnics per a `4-spec`, abans de fixar arquitectura: on s’executarà la demo, tecnologia i eines, model i accés real a l’API, pressupost i topall global numèric, format/caducitat del codi, credencials de participant, retenció, desament i recuperació de pintura, límits i representació dels colors/traços, dimensions i tall exacte, ompliment de regions i format de descàrrega. Cal comprovar les incerteses tècniques rellevants, no donar-les per resoltes per haver escrit aquest PRD.
 
