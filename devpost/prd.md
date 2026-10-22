@@ -15,7 +15,7 @@ Font: `scope.md > The Core Loop` i `What "Working" Looks Like`.
 
 1. La persona obre una home neta que explica breument l’activitat i permet crear una sala o entrar-hi amb un codi curt. No cal compte.
 2. Qui crea la sala obté el codi i pinta l’esquerra; la segona persona l’introdueix des de la seva sessió i pinta la dreta. La ronda és per a dues persones, amb assignació fixa de costats.
-3. Cada persona escriu la seva idea en text lliure, prem «Fet» o «Confirmar» i fa una segona confirmació de la idea pròpia. No es pot confirmar text buit. Si una aportació no és interpretable, el prompt dona llibertat creativa per inventar un objecte estrany i combinar-lo amb l’altra aportació. La possible edició posterior i el desencadenant de generació encara s’han de concretar.
+3. Cada persona escriu la seva idea en text lliure, prem «Fet» o «Confirmar» i fa una segona confirmació de la idea pròpia. Abans de començar la generació, «Editar» permet modificar-la retirant la confirmació pròpia; cal confirmar-la de nou. No es pot confirmar text buit. Si una aportació no és interpretable, el prompt dona llibertat creativa per inventar un objecte estrany i combinar-lo amb l’altra aportació. El desencadenant de generació encara s’ha de concretar.
 4. S’espera una única generació compartida que combini totes dues idees en una il·lustració en blanc i negre per pintar.
 5. Quan apareix la imatge, es mostren les dues idees. Des d’aquest primer moment cadascú només veu el seu 50% del dibuix; no hi ha vista completa inicial.
 6. Cadascú pinta la seva meitat amb cubell o pinzell i pot desfer o netejar la pintura pròpia, conservant el dibuix base.
@@ -60,11 +60,13 @@ Font: `scope.md > The Core Loop`, concretada durant l’entrevista.
 
 Cada persona introdueix una idea en text lliure i la confirma en dos passos. La segona confirmació revisa la idea pròpia; no anticipa la revelació de l’aportació de l’altra persona. L’etiqueta exacta del botó encara pot ser «Fet» o «Confirmar».
 
+Mentre no hagi començat la generació, una idea confirmada mostra «Editar». Activar-lo retira la confirmació d’aquella persona i torna el text propi a edició; la idea de l’altra persona manté el seu estat. Cal repetir la confirmació després d’editar. Durant aquesta edició ja no hi ha dues idees confirmades i no es pot iniciar la generació. Les idees que s’estan generant o ja s’estan pintant no es poden canviar; el retorn a edició si la generació falla encara s’ha de concretar.
+
 Una entrada buida, inclòs text format només per espais, no pot quedar confirmada ni iniciar generació. Per a text no buit però incomprensible, com una seqüència aleatòria de lletres, l’usuari ha definit una alternativa creativa: el prompt dona llibertat per inventar un objecte especialment estrany o original i combinar-lo amb l’altra idea, mantenint una sola escena en blanc i negre pintable. Aquest cas no s’ha de tractar com si fos text buit ni exigeix que la persona reformuli l’aportació.
 
 La regla orienta la generació; no pressuposa una classificació semàntica perfecta ni un resultat determinista. Una idea surrealista que sí que es pot interpretar s’ha de respectar. Les dues aportacions originals es conserven com a text i es mostren en el moment acordat; no s’inventa una nova aportació atribuïda a la persona. Encara no s’ha redactat ni provat el prompt definitiu.
 
-Criteris coneguts: no hi ha confirmació de text buit; el text propi es pot revisar en el segon pas; una única persona llesta no basta per generar la composició de dues aportacions. Provar visualment una combinació amb una idea comprensible i una seqüència de lletres per comprovar la resposta creativa i el format pintable. Cal concretar fins quan s’editen les idees i què inicia la generació després de les dues confirmacions.
+Criteris coneguts: no hi ha confirmació de text buit; el text propi es pot revisar en el segon pas; una única persona llesta no basta per generar la composició de dues aportacions. Si s’accepta «Editar», la confirmació pròpia queda retirada i no es genera amb una idea que s’està modificant, tampoc quan l’altra persona confirma gairebé alhora. Provar visualment una combinació amb una idea comprensible i una seqüència de lletres per comprovar la resposta creativa i el format pintable. Cal concretar què inicia la generació després de les dues confirmacions.
 
 ### Dibuix compartit i visibilitat
 
@@ -72,7 +74,7 @@ Font: `scope.md > The Unique Kernel`, `The Core Loop` i `What "Working" Looks Li
 
 Una il·lustració comuna combina les dues idees. Tall vertical exacte al 50%: una meitat esquerra i una dreta. Les idees es mostren quan apareix el dibuix. Abans i durant la pintura, cada persona només veu la seva meitat i mai la pintura de l’altra.
 
-Criteris: una sola generació compartida; cap vista completa inicial; cap canvi de base mentre es pinta; tall sense buit ni solapament; protecció de la pintura aliena fins a la revelació. La política de canvi d’idees i de reintents s’ha de concretar abans d’aprovar el PRD.
+Criteris: una sola generació compartida; cap vista completa inicial; cap canvi de base mentre es pinta; tall sense buit ni solapament; protecció de la pintura aliena fins a la revelació. Les idees només es poden editar abans de començar a generar. L’acció que inicia la generació i la política de reintents s’han de concretar abans d’aprovar el PRD.
 
 ### Pintar i corregir
 
@@ -116,6 +118,7 @@ Confirmades durant l’entrevista:
 - Inici sense compte, amb crear sala i codi curt com a via principal d’entrada; l’usuari vol poder comunicar-lo fàcilment des d’ordinadors.
 - Assignació fixa: creador de sala a l’esquerra, persona que s’uneix a la dreta. L’usuari ha proposat aquest repartiment i ha considerat poc important l’elecció manual alternativa; s’adopta el repartiment simple per a la primera versió.
 - Idea en text lliure amb botó «Fet» o «Confirmar» i segona confirmació de la idea pròpia. Les entrades buides no s’accepten. Si una aportació no buida no s’entén, l’usuari vol que el prompt permeti inventar un objecte estrany i creatiu per combinar-lo amb l’altra idea.
+- «Editar» després de confirmar retira la confirmació pròpia i permet canviar el text abans de generar. Cal confirmar-lo de nou; la confirmació de l’altra persona no es retira.
 - Direcció visual neta i minimalista, amb aire de taller creatiu i interès per imatges generades pròpies.
 - Imatge de ronda en blanc i negre amb estil de llibre per pintar.
 - Cubell i pinzell dins de la primera versió, més desfer i netejar.
@@ -149,7 +152,7 @@ No demostrar la integració d’IA amb una imatge fixa presentada com si s’hag
 
 Abans d’aprovar el PRD i passar a spec cal resoldre els punts de comportament que afecten la ronda:
 
-1. Fins quan poden canviar les idees i què inicia la generació quan totes dues estan confirmades? Què poden fer si la generació falla o el contingut no és acceptable?
+1. Què inicia la generació quan totes dues idees estan confirmades? Què poden fer si la generació falla o el contingut no és acceptable?
 2. Què es conserva si es recarrega la pàgina, es perd la connexió o algú abandona?
 3. Quin és el dispositiu prioritari i quin idioma tindrà la interfície?
 4. Quin mínim de controls de color, gruix i correcció necessita la primera versió?
