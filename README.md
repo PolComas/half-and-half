@@ -2,9 +2,9 @@
 
 Dues idees, dues meitats, una creació compartida.
 
-Paquet documental preparat el **21 d’octubre de 2026** per iniciar un repositori nou per a Build With AI: Basics. El paquet original només contenia context. **Encara no hi ha una aplicació implementada ni plans aprovats.**
+Paquet documental preparat el **21 d’octubre de 2026** per iniciar un repositori nou per a Build With AI: Basics. El paquet original només contenia context. **Encara no hi ha una aplicació implementada.**
 
-Actualització del **22 d’octubre de 2026**: el Devpost Learn Skill Pack s’ha instal·lat localment, s’ha completat `1-start` i s’ha creat un primer esborrany de [scope](devpost/scope.md) mitjançant `2-scope`. Encara no s’ha aprovat cap pla ni s’ha iniciat la construcció. L’usuari ha aportat la transcripció del vídeo, conservada en local al document 10. La transcripció completa, la conversa recuperada i el perfil d’aprenent estan exclosos del repositori públic; els resums de context es mantenen disponibles.
+Actualització del **22 d’octubre de 2026**: el Devpost Learn Skill Pack s’ha instal·lat localment i s’han completat `1-start` i `2-scope`. L’usuari ha revisat i aprovat l’[abast de la primera versió](devpost/scope.md). Comença l’entrevista de `3-prd`; PRD i spec encara no existeixen i no s’ha iniciat la construcció. L’usuari ha aportat la transcripció del vídeo, conservada en local al document 10. La transcripció completa, la conversa recuperada i el perfil d’aprenent estan exclosos del repositori públic; els resums de context es mantenen disponibles.
 
 Per reinstal·lar els skills en un clon nou, amb Node.js i Git disponibles, executa `npx skills add challengepost/learn-ai-basics --all -y`. `skills-lock.json` registra la instal·lació inicial; les còpies locals dels skills queden fora dels commits.
 
