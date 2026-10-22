@@ -29,7 +29,7 @@ Superfícies conegudes del recorregut; no impliquen una pàgina separada per a c
 - **Home:** informació breu de Half & Half, acció principal per crear sala i entrada per codi curt. L’usuari ha acceptat aquesta proposta d’inici. No s’ha definit cap opció concreta de configuració.
 - **Sala i idees:** codi per comunicar a l’altra persona, entrada de text per a la idea pròpia, botó «Confirm idea» i segona confirmació. No es confirma una entrada buida. El text no interpretable activa la llibertat creativa prevista al prompt. Presentació exacta dels controls pendent.
 - **Generació:** missatge «Your drawing is being generated. Please wait.» per a totes dues persones, sense percentatges inventats. En cas d’error confirmat, explicació senzilla i recuperació amb intents limitats o edició de les idees; cap error tècnic cru com a missatge principal.
-- **Pintura:** meitat pròpia com a element central, dues idees visibles, selecció de color, cubell, pinzell, desfer, netejar i acció per acabar. Distribució pensada primer per a ordinador; la col·locació exacta dels controls encara s’ha de concretar.
+- **Pintura:** meitat pròpia com a element central, dues idees visibles, cercles de colors predefinits, selector de color amb degradat, cubell, pinzell, barra horitzontal de gruix amb previsualització circular, desfer, netejar i acció per acabar. Distribució pensada primer per a ordinador; la col·locació exacta dels controls encara s’ha de concretar.
 - **Espera final:** la meitat pròpia desada es pot mirar sense editar-la, amb el missatge «Your half is saved. Waiting for your partner.». No s’ensenya pintura aliena ni el resultat complet. No s’afegeix un altre editor o activitat mentre s’espera.
 - **Revelació:** obra completa i acció per descarregar-la, disponible després de dues finalitzacions vàlides.
 
@@ -111,7 +111,14 @@ Font: `scope.md > The Core Loop`, concretada per petició expressa de totes dues
 
 Cubell per omplir regions tancades i pinzell per pintar a mà, amb color seleccionable. Desfer i netejar afecten només la pintura pròpia i conserven el dibuix base.
 
-Criteris: tant el cubell com el pinzell queden dins de la meitat assignada, també quan una regió continua més enllà del centre; el dibuix base i l’altra meitat no canvien. Cal provar imatges generades reals: demanar contorns tancats al prompt no garanteix que cada regió es pugui omplir sense problemes. Paleta, gruixos, abast de desfer i confirmació de neteja pendents de concretar. Una retirada del cubell requeriria revisar el requisit amb l’usuari.
+Controls definits per l’usuari:
+
+- Paleta de cercles de colors predefinits i selector amb degradat per triar altres tons. El degradat s’interpreta com a selector de color; no s’ha demanat pintar traços multicolor. Es mostra quin color està seleccionat i el fan servir tant el cubell com el pinzell.
+- Barra horitzontal per ajustar el gruix del pinzell. Una previsualització circular es fa més gran o més petita amb la barra. El gruix no afecta el cubell ni modifica allò ja pintat. Colors predefinits exactes i rang de gruixos es concretaran a la spec.
+
+Concrecions de correcció proposades per l’agent, pendents de validar en la revisió del PRD: «Undo» desfà l’última acció de pintura completada (un traç, un ompliment o una neteja); «Clear colors» demana confirmació abans de treure la pintura pròpia. Cancel·lar conserva el que hi havia; confirmar deixa el dibuix base intacte i registra el canvi per al desament automàtic. Aquestes propostes concreten els controls ja demanats per l’usuari, sense afegir eines noves.
+
+Criteris: triar un cercle o un color del selector actualitza el color utilitzat per totes dues eines; moure la barra actualitza el gruix i la previsualització, però no els traços anteriors. Tant el cubell com el pinzell queden dins de la meitat assignada, també quan una regió continua més enllà del centre; el dibuix base i l’altra meitat no canvien. Cal provar imatges generades reals: demanar contorns tancats al prompt no garanteix que cada regió es pugui omplir sense problemes. Una retirada del cubell requeriria revisar el requisit amb l’usuari.
 
 ### Desament automàtic de la pintura pròpia
 
@@ -171,6 +178,7 @@ Confirmades durant l’entrevista:
 - Direcció visual neta i minimalista, amb aire de taller creatiu i interès per imatges generades pròpies.
 - Imatge de ronda en blanc i negre amb estil de llibre per pintar.
 - Cubell i pinzell dins de la primera versió, més desfer i netejar.
+- Paleta de cercles de colors i selector amb degradat; barra horitzontal per fer més gran o petita la previsualització circular del pinzell i el seu gruix. Colors exactes i rang de mida pendents de spec.
 - Veure només el 50% propi des de l’aparició del dibuix, també abans del primer traç; cap vista completa inicial.
 - Descàrrega de l’obra final dins de la primera versió; la galeria continua fora. És una modificació explícita de l’ajornament inicial de l’exportació al scope.
 - Confirmar «I’m done», desar correctament i després bloquejar la pintura per a la ronda. Durant l’espera només es contempla la meitat pròpia desada. L’usuari ha acceptat explícitament aquesta recomanació després d’explorar altres possibles activitats; no s’hi afegeix un segon editor.
@@ -201,9 +209,10 @@ No demostrar la integració d’IA amb una imatge fixa presentada com si s’hag
 
 Abans d’aprovar el PRD i passar a spec cal resoldre els punts de comportament que afecten la ronda:
 
-1. Quin mínim de controls de color, gruix i correcció necessita la primera versió?
-2. S’ajornen les quotes diàries per persona? Quin control mínim global de generació s’inclou i què veu qui arriba al límit?
+1. S’ajornen les quotes diàries per persona? Quin control mínim global de generació s’inclou i què veu qui arriba al límit?
 
-La revisió també ha de validar la concreció de 3 intents totals per ronda dins del rang de reintents indicat per l’usuari; encara no equival a un PRD aprovat.
+Proposta per resoldre aquest últim punt: ajornar les quotes diàries individuals i posar un topall global de peticions de generació per a la demo, compartit entre totes les sales i comptant tant intents inicials com reintents. En arribar-hi, s’atura només la possibilitat d’iniciar generacions noves, amb un missatge senzill; qui ja té dibuix pot continuar pintant, acabar, revelar i descarregar. Crear una sala nova no ha de reiniciar el topall. L’existència d’aquest control encara s’ha d’acceptar; la xifra es decidirà a la spec amb el model i pressupost, no per suposició.
+
+La revisió també ha de validar la concreció de 3 intents totals per ronda dins del rang de reintents indicat per l’usuari i les propostes d’«Undo» i confirmació de «Clear colors»; encara no equival a un PRD aprovat.
 
 La spec concretarà format de codi, credencials, dimensions, format de descàrrega, proveïdor/model, pressupost, topalls numèrics i mecanismes tècnics, després dels acords de producte. Encara no s’ha triat arquitectura ni s’ha implementat l’app.
