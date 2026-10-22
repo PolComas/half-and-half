@@ -4,6 +4,8 @@ export type Phase =
   | "ideas"
   | "generating"
   | "painting"
+  | "composing"
+  | "revealed"
   | "generation_failed"
   | "generation_uncertain"
   | "generation_exhausted"
@@ -17,6 +19,8 @@ export interface RoomView {
   participantId: string;
   idea: string;
   confirmed: boolean;
+  finished: boolean;
+  partnerFinished: boolean;
   partnerPresent: boolean;
   partnerConfirmed: boolean;
   attemptsUsed: number;

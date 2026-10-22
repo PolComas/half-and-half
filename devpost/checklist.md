@@ -7,7 +7,7 @@ status: approved
 
 Build mode: fast — triat explícitament per l’usuari: «Em va bé aquest mode ràpid, a sobre m’agrada testejar-ho i provar-ho». Ordre de construcció aprovat en aquesta resposta després de mostrar els tres passos. Es mantenen prova manual primerenca i revisió final, amb explicació pràctica de la crida a OpenAI.
 
-Scope, PRD i spec estan aprovats. La resposta «Em sembla tot bé, podem seguir endevant» aprova la spec i autoritza passar a `5-build`; aquesta checklist recull l’ordre de construcció posteriorment revisat i aprovat per l’usuari. El primer increment està implementat i comprovat mecànicament; espera la prova i els comentaris de l’usuari abans de registrar-ne el commit i marcar-lo complet. Els altres dos increments encara no s’han iniciat. Cada pas ha de deixar una app executable, passar les seves comprovacions i quedar registrat en un commit abans de continuar.
+Scope, PRD i spec estan aprovats. La resposta «Em sembla tot bé, podem seguir endevant» aprova la spec i autoritza passar a `5-build`; aquesta checklist recull l’ordre de construcció posteriorment revisat i aprovat per l’usuari. Els increments 1 i 2 estan verificats i desats en Git; el primer checkpoint ha recollit feedback real amb captures. El tercer increment està implementat i verificat mecànicament, amb una ronda real completada per l’agent; l’usuari acaba de confirmar que tot el tram final funciona i es pot registrar el commit i la marca de completat. Cada pas ha de deixar una app executable, passar les seves comprovacions i quedar registrat en un commit abans de continuar.
 
 En tots els passos: conservar el context original, excloure perfil i secrets, respectar els 7 USD de crèdits existents i 0 USD addicionals, sense desplegar ni publicar la candidatura. Les proves sintètiques s’identifiquen com a tests i no substitueixen l’evidència de generació real. No donar per configurats els comptes, el saldo, les quotes o els permisos.
 
@@ -23,7 +23,7 @@ En tots els passos: conservar el context original, excloure perfil i secrets, re
   Learner check: Amb les ordres reals del README, obrir dos perfils separats, crear una sala i entrar amb el codi, confirmar idees diferents i observar que cada perfil mostra només la seva meitat. Recarregar un perfil i comprovar que no canvia el costat ni es torna a generar. Per evitar un càrrec extra, aprofitar la primera sessió real de verificació quan sigui possible. Explicar què s’observa de la combinació, el format per pintar i la claredat de l’entrada; podem ajustar-ho abans de construir l’editor.
   Commit: `feat: add shared image generation with private room halves`
 
-- [ ] **2. Cadascú pinta la seva meitat i recupera els colors en recarregar**
+- [x] **2. Cadascú pinta la seva meitat i recupera els colors en recarregar**
   Becomes usable: Cada participant pot pintar amb cubell o pinzell, triar colors, ajustar gruix, desfer i netejar només la seva pintura. Després de «Saved on this device», recarregar recupera els colors propis. L’altra sessió no veu cap traç; encara no es presenta una revelació o finalització simulada.
   Why now: Construeix sobre una base real i immutable, i comprova la segona part del nucli abans d’afegir la revelació. La mostra i els comentaris del primer pas permeten corregir el format del dibuix abans de dependre’n. Persistir cada acció forma part del comportament de pintar des del principi.
   PRD ref: `prd.md > The Core Journey` (pas 6), `Pintar i corregir`, `Desament automàtic de la pintura pròpia`, `Dibuix compartit i visibilitat`, `Prioritat de dispositius`, `Look and Feel`.
@@ -48,15 +48,17 @@ Comprovació mecànica del pas 1: typecheck, build, 10 proves de domini, 7 d’i
 ## Hands-on Checkpoints
 
 - [x] Early usable behavior explored — després del pas 1, provar la sala real, meitats i recuperació i recollir comentaris sobre la il·lustració i el flux. En fast aquesta pausa és obligatòria; en learn ja forma part del check del pas.
-- [ ] Final kick-the-tires exploration and feedback completed — després del pas 3, l’usuari arrenca i prova el recorregut sencer, informa del que observa i torna a provar les correccions acordades. És el checkpoint de revisió final, no una prova separada duplicada.
+- [x] Final kick-the-tires exploration and feedback completed — després del pas 3, l’usuari arrenca i prova el recorregut sencer, informa del que observa i torna a provar les correccions acordades. És el checkpoint de revisió final, no una prova separada duplicada.
 
 En learn, també s’espera la prova de l’usuari a cada pas abans de registrar-lo complet. En fast, no hi ha una pausa intermèdia addicional per defecte; només si un problema o canvi important necessita una decisió. Cap cas permet saltar-se la verificació mecànica o els commits de cada pas.
 
+Feedback real de la revisió final: primer l’usuari confirma cubell i pinzell. Després de demanar-li provar «Saved», recàrrega, espera amb un sol final, revelació i descàrrega en dos perfils a la mateixa sala, respon «Si tot funciona ja». S’accepta com a confirmació del tram complet, sense atribuir-li tests interns, captures o mesuraments addicionals.
+
 ## Final Review
 
-- [ ] Final review complete — feedback resolved and learner confirms ready to ship
+- [x] Final review complete — feedback resolved and learner confirms ready to ship
 
-Encara no hi ha app per revisar ni comentaris d’ús recollits. Aquí s’afegiran només correccions o refinaments acordats com a tasques no marcades, amb verificació, commit i nova prova de l’usuari abans de completar-les. No inventar ajustos si l’usuari confirma que no en calen.
+Revisió final completada: l’usuari confirma que tot el tram sol·licitat funciona, després de provar les correccions de pintura. No demana més ajustos. Les 29 proves mecàniques i la ronda real de l’agent ja consten a `verification.md`; la confirmació manual és evidència separada. Aquesta acceptació tanca la prova de concepte, sense autoritzar desplegament o candidatura.
 
 ## Code Tour and App Map
 
@@ -83,3 +85,8 @@ Activity mode: pendent; per l’experiència de planificació declarada, una inv
 - Primer checkpoint real: l’usuari ha provat les dues meitats i ha aportat captures de panda + drac. Demana poder pintar (pas 2), fusionar les idees en un sol subjecte i enriquir el fons amb moviment suau. S’actualitzen prompt, plans i atmosfera abans de continuar. No s’atribueixen a l’usuari proves de recuperació no reportades.
 
 - Pas 2: editor implementat amb dades locals serialitzades i Web Locks; proves sobre base real reutilitzada. El cubell segueix les regions connectades: s’ha observat una obertura real i s’explica Undo/pinzell. El prompt de rondes noves es reforçarà sense substituir cap base activa.
+
+- Pas 3: el PNG final viatja com a cos binari amb tres capçaleres, en lloc de multipart; conserva el contracte previst i evita afegir un parser de formularis. El servidor valida format/dimensions/límit i calcula hash.
+- La prova de longitud ha detectat que quotes repetides podien superar el límit del prompt tot i ser idees vàlides. S’escurcen les regles i es normalitzen controls només al prompt; es conserven els textos originals de les idees. `hybrid-coloring-v3` reforça siluetes tancades i sense traços de pèl interromputs.
+
+- El botó de desactivar generació ara també protegeix la recuperació de reserves després de reiniciar el servidor. Les reserves queden pendents mentre estigui desactivat; no s’envia cap petició de pagament. Prova d’integració específica afegida.

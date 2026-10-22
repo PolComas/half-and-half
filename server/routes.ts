@@ -1,3 +1,4 @@
+import { FinalService } from "./finalService.js";
 import express from "express";
 import { randomUUID } from "node:crypto";
 import { assert, AppError } from "./errors.js";
@@ -14,6 +15,9 @@ export function createApp(
   generation: GenerationService | null,
 ) {
   const app = express();
+  const finals =
+    rooms && storage ? new FinalService(rooms, rooms.gateway, storage) : null;
+  app.locals.finals = finals;
   app.disable("x-powered-by");
   app.use("/api", (_req, res, next) => {
     res.set("Cache-Control", "no-store");
@@ -31,7 +35,10 @@ export function createApp(
             403,
           ),
         );
-      if (!req.is("application/json"))
+      if (
+        !req.is("application/json") &&
+        !(req.path === "/room/finish" && req.is("image/png"))
+      )
         return next(
           new AppError("invalid_request", "Please refresh and try again.", 415),
         );
@@ -87,6 +94,7 @@ export function createApp(
   app.get("/api/room", async (req, res) => {
     const view = await rooms!.state(identity(req));
     if (view) await generation?.kick(view.roomId);
+    if (view?.phase === "composing") finals?.kick(view.roomId);
     res.json(view);
   });
   app.post("/api/rooms", async (req, res) => {
@@ -153,7 +161,8 @@ export function createApp(
   app.get("/api/room/base", async (req, res) => {
     const view = await rooms!.state(identity(req));
     assert(
-      view?.baseId && view.phase === "painting",
+      view?.baseId &&
+        ["painting", "composing", "revealed"].includes(view.phase),
       "drawing_unavailable",
       "Your drawing isn’t ready yet.",
       409,
@@ -167,6 +176,54 @@ export function createApp(
     );
     res.type("png").send(bytes);
   });
+  app.post(
+    "/api/room/finish",
+    express.raw({ type: "image/png", limit: "8mb" }),
+    async (req, res) => {
+      const baseId = req.get("X-Base-Id") ?? "",
+        commitId = req.get("X-Commit-Id") ?? "",
+        revision = Number(req.get("X-Revision"));
+      assert(
+        /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i.test(
+          baseId,
+        ) &&
+          /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i.test(
+            commitId,
+          ) &&
+          Number.isSafeInteger(revision) &&
+          revision >= 0 &&
+          req.get("X-Revision") !== undefined &&
+          Buffer.isBuffer(req.body),
+        "invalid_final",
+        "We couldn’t read your saved colors. Please try again.",
+      );
+      res.json(
+        await finals!.finish(identity(req), {
+          baseId,
+          commitId,
+          revision,
+          bytes: req.body,
+        }),
+      );
+    },
+  );
+  app.get("/api/room/my-final", async (req, res) => {
+    const view = await rooms!.state(identity(req));
+    assert(view, "room_missing", "Please reconnect to your room.", 404);
+    res.type("png").send(await finals!.ownFinal(view));
+  });
+  for (const path of ["result", "download"])
+    app.get(`/api/room/${path}`, async (req, res) => {
+      const view = await rooms!.state(identity(req));
+      assert(view, "room_missing", "Please reconnect to your room.", 404);
+      const bytes = await finals!.result(view);
+      if (path === "download")
+        res.set(
+          "Content-Disposition",
+          'attachment; filename="half-and-half.png"',
+        );
+      res.type("png").send(bytes);
+    });
   app.use("/api", (_req, _res, next) =>
     next(new AppError("not_found", "This action isn’t available.", 404)),
   );
@@ -184,12 +241,18 @@ export function createApp(
       const e =
         error instanceof AppError
           ? error
-          : new AppError(
-              "request_failed",
-              "Something went wrong. Please try again.",
-              500,
-              true,
-            );
+          : (error as { type?: string })?.type === "entity.too.large"
+            ? new AppError(
+                "file_too_large",
+                "Your saved colors are too large. Please try again.",
+                413,
+              )
+            : new AppError(
+                "request_failed",
+                "Something went wrong. Please try again.",
+                500,
+                true,
+              );
       if (!(error instanceof AppError))
         console.error("request_failed", randomUUID());
       res

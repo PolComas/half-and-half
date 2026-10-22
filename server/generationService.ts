@@ -11,11 +11,13 @@ export class GenerationService {
     private gateway: Gateway,
     private storage: PrivateStorage,
     private generate: (ideas: Attempt["ideas"]) => Promise<GeneratedImage>,
+    private canGenerate = true,
   ) {}
   async kick(roomId?: string, recover = false) {
     const attempts = await this.gateway.attempts(roomId);
     for (const attempt of attempts) {
       if (this.active.has(attempt.id)) continue;
+      if (attempt.state === "reserved" && !this.canGenerate) continue;
       if (
         attempt.state !== "reserved" &&
         attempt.state !== "uncertain" &&

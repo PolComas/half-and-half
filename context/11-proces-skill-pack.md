@@ -34,6 +34,10 @@ Cap etapa consta com a completada. No hi ha perfil d’aprenent, plans, checklis
 
 **Estat posterior, construcció en mode fast:** l’usuari aprova l’ordre i tria explícitament mode ràpid, amb interès a provar l’app. Checklist aprovada. Primer increment implementat i comprovat amb unitàries, PostgreSQL temporal i dos navegadors, i dues generacions reals al projecte Supabase nou creat en pla gratuït. SaidChip s’ha pausat amb autorització explícita; no s’ha eliminat cap projecte. El primer increment encara espera comentaris de l’usuari al checkpoint abans del seu commit i marca de completat. No s’ha iniciat pintura o revelació, desplegament ni candidatura. Resultats, cost estimat i límits a `devpost/verification.md`.
 
+**Estat posterior, després del primer feedback:** l’usuari ha provat les dues meitats i ha aportat captures: demana un únic subjecte híbrid, pintura funcional i més vida al fons. S’han resolt el prompt i l’ambient; els dos primers increments estan implementats, verificats i desats amb commits. L’editor inclou pinzell, cubell, Undo/Clear i desament privat al navegador. La finalització, revelació i descàrrega s’han implementat al tercer increment i s’estan verificant. No es marca el checkpoint final, ni `5-build` complet, abans dels comentaris reals de l’usuari i la confirmació explícita de preparació. No hi ha desplegament ni candidatura publicada.
+
+**Confirmació posterior de la revisió final:** l’usuari confirma primer que pot pintar amb les dues eines, i després, en resposta a la prova de recàrrega, espera, revelació i descàrrega, diu «Si tot funciona ja». Es tanca la revisió de la prova de concepte i es registra l’últim increment. El resum d’aprenentatge i mapa corresponen al final de `5-build`; desplegament i candidatura continuen fora de l’autorització actual.
+
 ## Aplicació al nostre projecte
 
 El context evita haver de repetir acords, però no substitueix les converses de planificació. Proposar un stack no l’aprova. La frase històrica sobre una “segona decisió” no autoritza inventar-la.

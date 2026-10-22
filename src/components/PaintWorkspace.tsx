@@ -3,6 +3,7 @@ import type { PointerEvent } from "react";
 import type { RoomView } from "../../shared/contracts";
 import { PaintingModel, initialSettings } from "../painting/model";
 import type { Settings } from "../painting/model";
+import { loadRoom, ApiError } from "../lib/api";
 import { readDraft, writeDraft, DraftSaver } from "../painting/draftStore";
 const colors = [
   "#E45756",
@@ -32,12 +33,26 @@ const names = [
   "White",
   "Charcoal",
 ];
-export default function PaintWorkspace({ room }: { room: RoomView }) {
+export default function PaintWorkspace({
+  room,
+  onState,
+}: {
+  room: RoomView;
+  onState: (view: RoomView) => void;
+}) {
   const canvas = useRef<HTMLCanvasElement>(null),
     model = useRef<PaintingModel | null>(null),
     saver = useRef<DraftSaver | null>(null);
   const revision = useRef(0),
     settingsRef = useRef<Settings>({ ...initialSettings });
+  const commitId = useRef<string | undefined>(undefined),
+    finalRevision = useRef<number | undefined>(undefined),
+    finishing = useRef(false),
+    pendingRef = useRef(false);
+  const [pending, setPending] = useState(false),
+    [finishSending, setFinishSending] = useState(false),
+    [finishConfirm, setFinishConfirm] = useState(false),
+    [finishError, setFinishError] = useState("");
   const [settings, setSettings] = useState<Settings>({ ...initialSettings }),
     [ready, setReady] = useState(false),
     [hasUndo, setHasUndo] = useState(false);
@@ -69,6 +84,8 @@ export default function PaintWorkspace({ room }: { room: RoomView }) {
       pixels: m.pixels.slice(),
       undo: m.undo?.slice() ?? null,
       settings: { ...settingsRef.current },
+      commitId: commitId.current,
+      finalRevision: finalRevision.current,
     });
   }
   function saveQuietly() {
@@ -77,85 +94,179 @@ export default function PaintWorkspace({ room }: { room: RoomView }) {
   useEffect(() => {
     let live = true,
       release: (() => void) | undefined;
-
     const abort = new AbortController();
     setReady(false);
     setMessage(
-      "This half can be edited in one tab. Close another tab if it is open.",
+      room.finished
+        ? "Loading your saved half…"
+        : "This half can be edited in one tab. Close another tab if it is open.",
     );
-    if (!navigator.locks) {
+    async function initialize() {
+      if (!live) return;
+      try {
+        const response = await fetch(
+          `/api/room/base?base=${encodeURIComponent(room.baseId!)}`,
+          { cache: "no-store", signal: abort.signal },
+        );
+        if (!response.ok) throw Error("base");
+        const bitmap = await createImageBitmap(await response.blob()),
+          surface = document.createElement("canvas");
+        surface.width = 512;
+        surface.height = 1024;
+        const ctx = surface.getContext("2d")!;
+        ctx.drawImage(bitmap, 0, 0);
+        bitmap.close();
+        const data = ctx.getImageData(0, 0, 512, 1024).data,
+          white = new Uint8Array(512 * 1024);
+        for (let i = 0; i < white.length; i++)
+          white[i] = data[i * 4]! > 180 ? 1 : 0;
+        const m = new PaintingModel(white, 512, 1024);
+        if (room.finished) {
+          const final = await fetch("/api/room/my-final", {
+            cache: "no-store",
+            signal: abort.signal,
+          });
+          if (!final.ok) throw Error("final");
+          const image = await createImageBitmap(await final.blob());
+          ctx.clearRect(0, 0, 512, 1024);
+          ctx.drawImage(image, 0, 0);
+          image.close();
+          m.pixels = ctx.getImageData(0, 0, 512, 1024).data;
+          if (!live) return;
+          model.current = m;
+          render();
+          setMessage("✓ Your half is safely saved");
+          setSaveState("saved");
+          setPending(false);
+          return;
+        }
+        const draft = await readDraft(key);
+        if (!live) return;
+        if (
+          draft &&
+          draft.pixels.length === m.pixels.length &&
+          (!draft.undo || draft.undo.length === m.pixels.length)
+        ) {
+          m.pixels = new Uint8ClampedArray(draft.pixels);
+          m.undo = draft.undo ? new Uint8ClampedArray(draft.undo) : null;
+          revision.current = draft.revision;
+          settingsRef.current = { ...initialSettings, ...draft.settings };
+          setSettings(settingsRef.current);
+          commitId.current = draft.commitId;
+          finalRevision.current = draft.finalRevision;
+        }
+        model.current = m;
+        saver.current = new DraftSaver(writeDraft, (state) => {
+          if (live) setSaveState(state);
+        });
+        render();
+        pendingRef.current = !!commitId.current;
+        setPending(pendingRef.current);
+        setReady(!pendingRef.current);
+        setMessage(
+          pendingRef.current
+            ? "Your colors are frozen. Retry finishing to save this half."
+            : "",
+        );
+        if (draft) setSaveState("saved");
+        else saveQuietly();
+        await new Promise<void>((resolve) => {
+          release = resolve;
+          if (!live) resolve();
+        });
+        await saver.current?.flush().catch(() => {});
+      } catch {
+        if (live) {
+          setReady(false);
+          setMessage(
+            room.finished
+              ? "We couldn’t load your saved half. Please reload to try again."
+              : "We couldn’t open your saved drawing. Check this browser allows storage, then reload.",
+          );
+        }
+      }
+    }
+    if (room.finished) void initialize();
+    else if (navigator.locks)
+      void navigator.locks
+        .request(`hh-editor:${key}`, { signal: abort.signal }, initialize)
+        .catch(() => {});
+    else
       setMessage(
         "Please open this drawing in a recent Chrome, Firefox or Safari browser to save your colors safely.",
       );
-      return;
-    }
-    void navigator.locks
-      .request(`hh-editor:${key}`, { signal: abort.signal }, async () => {
-        if (!live) return;
-        try {
-          const response = await fetch(
-            `/api/room/base?base=${encodeURIComponent(room.baseId!)}`,
-            { cache: "no-store" },
-          );
-          if (!response.ok) throw new Error("base");
-          const bitmap = await createImageBitmap(await response.blob());
-          const surface = document.createElement("canvas");
-          surface.width = 512;
-          surface.height = 1024;
-          const ctx = surface.getContext("2d")!;
-          ctx.drawImage(bitmap, 0, 0);
-          bitmap.close();
-          const base = ctx.getImageData(0, 0, 512, 1024).data,
-            white = new Uint8Array(512 * 1024);
-          for (let i = 0; i < white.length; i++)
-            white[i] = base[i * 4]! > 180 ? 1 : 0;
-          const m = new PaintingModel(white, 512, 1024),
-            draft = await readDraft(key);
-          if (!live) return;
-          if (
-            draft &&
-            draft.pixels.length === m.pixels.length &&
-            (!draft.undo || draft.undo.length === m.pixels.length)
-          ) {
-            m.pixels = new Uint8ClampedArray(draft.pixels);
-            m.undo = draft.undo ? new Uint8ClampedArray(draft.undo) : null;
-            revision.current = draft.revision;
-            settingsRef.current = { ...initialSettings, ...draft.settings };
-            setSettings(settingsRef.current);
-          }
-          model.current = m;
-          saver.current = new DraftSaver(writeDraft, (state) => {
-            if (live) setSaveState(state);
-          });
-          render();
-          setReady(true);
-          setMessage("");
-          if (draft) setSaveState("saved");
-          else saveQuietly();
-          await new Promise<void>((resolve) => {
-            release = resolve;
-            if (!live) resolve();
-          });
-          // Give the next tab the newest persisted revision before it acquires this lock.
-          await saver.current?.flush().catch(() => {});
-        } catch {
-          if (live) {
-            setReady(false);
-            setMessage(
-              "We couldn’t open your saved drawing. Check this browser allows storage, then reload.",
-            );
-          }
-        }
-      })
-      .catch(() => {});
     return () => {
       live = false;
-
       gesture.current = null;
       abort.abort();
       release?.();
     };
-  }, [key]);
+  }, [key, room.finished]);
+  async function finishNow() {
+    if (finishing.current || room.finished || !model.current || gesture.current)
+      return;
+    finishing.current = true;
+    pendingRef.current = true;
+    setPending(true);
+    setReady(false);
+    setFinishSending(true);
+    setFinishConfirm(false);
+    setFinishError("");
+    setMessage("");
+    if (!commitId.current) {
+      commitId.current = crypto.randomUUID();
+      finalRevision.current = revision.current + 1;
+    }
+    try {
+      await save();
+      const surface = document.createElement("canvas");
+      surface.width = 512;
+      surface.height = 1024;
+      surface
+        .getContext("2d")!
+        .putImageData(
+          new ImageData(model.current.pixels.slice(), 512, 1024),
+          0,
+          0,
+        );
+      const blob = await new Promise<Blob>((resolve, reject) =>
+        surface.toBlob(
+          (b) => (b ? resolve(b) : reject(Error("png"))),
+          "image/png",
+        ),
+      );
+      const response = await fetch("/api/room/finish", {
+        method: "POST",
+        cache: "no-store",
+        headers: {
+          "Content-Type": "image/png",
+          "X-Base-Id": room.baseId!,
+          "X-Commit-Id": commitId.current!,
+          "X-Revision": String(finalRevision.current),
+        },
+        body: blob,
+      });
+      const state = await response.json();
+      if (!response.ok) throw new ApiError(state, response.status);
+      onState(state as RoomView);
+    } catch (e) {
+      try {
+        const latest = await loadRoom();
+        if (latest?.finished) {
+          onState(latest);
+          return;
+        }
+      } catch {}
+      setFinishError(
+        e instanceof ApiError
+          ? e.message
+          : "We couldn’t finish yet. Your colors are still here. Please try again.",
+      );
+    } finally {
+      finishing.current = false;
+      setFinishSending(false);
+    }
+  }
   function updateSettings(next: Partial<Settings>) {
     if (!ready) return;
     settingsRef.current = { ...settingsRef.current, ...next };
@@ -170,7 +281,14 @@ export default function PaintWorkspace({ room }: { room: RoomView }) {
     };
   }
   function down(event: PointerEvent<HTMLCanvasElement>) {
-    if (!ready || gesture.current || event.button !== 0) return;
+    if (
+      !ready ||
+      pendingRef.current ||
+      room.finished ||
+      gesture.current ||
+      event.button !== 0
+    )
+      return;
     event.preventDefault();
     const p = point(event),
       m = model.current!;
@@ -374,12 +492,49 @@ export default function PaintWorkspace({ room }: { room: RoomView }) {
               Try saving again
             </button>
           )}
-          <p className="storage-note">
-            Colors stay in this browser until you finish. Wait for “Saved”
-            before closing.
-          </p>
+          {room.finished ? (
+            <p className="waiting-partner" role="status">
+              Your part is done.
+              <br />
+              Waiting for your partner’s finishing touch…
+            </p>
+          ) : (
+            <>
+              <p className="storage-note">
+                Colors stay in this browser until you finish. Wait for “Saved”
+                before closing.
+              </p>
+              {finishError && (
+                <p className="finish-error" role="alert">
+                  {finishError}
+                </p>
+              )}
+              <button
+                className="button finish-button"
+                disabled={finishSending || (!ready && !pending)}
+                onClick={() =>
+                  pending ? void finishNow() : setFinishConfirm(true)
+                }
+              >
+                {finishSending
+                  ? "Saving your half…"
+                  : pending
+                    ? "Retry finishing"
+                    : "I’m done →"}
+              </button>
+              <p className="storage-note">
+                Finish when you’re happy. Your colors become final.
+              </p>
+            </>
+          )}
         </aside>
       </div>
+      {finishConfirm && (
+        <FinishDialog
+          onCancel={() => setFinishConfirm(false)}
+          onConfirm={() => void finishNow()}
+        />
+      )}
       {clear && (
         <ClearDialog
           onCancel={() => setClear(false)}
@@ -418,6 +573,39 @@ function ClearDialog({
         </button>
         <button className="button" onClick={onConfirm}>
           Yes, clear colors
+        </button>
+      </div>
+    </dialog>
+  );
+}
+
+function FinishDialog({
+  onCancel,
+  onConfirm,
+}: {
+  onCancel: () => void;
+  onConfirm: () => void;
+}) {
+  const ref = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    const d = ref.current!;
+    d.showModal();
+    return () => d.close();
+  }, []);
+  return (
+    <dialog ref={ref} onCancel={onCancel} aria-labelledby="finish-title">
+      <p className="eyebrow">Your finishing touch</p>
+      <h2 id="finish-title">Finished with your half?</h2>
+      <p>
+        Once saved, your colors are final. You’ll see the full drawing when
+        you’ve both finished.
+      </p>
+      <div className="dialog-actions">
+        <button className="button secondary" onClick={onCancel}>
+          Keep painting
+        </button>
+        <button className="button" onClick={onConfirm}>
+          Yes, finish my half
         </button>
       </div>
     </dialog>

@@ -220,3 +220,33 @@ test("a saved original recovers an uncertain attempt without another provider ca
   assert.equal((await rooms.state(a))!.attemptsUsed, 1);
   assert.equal(calls, 0);
 });
+
+test("disabled generation leaves reserved attempts untouched even during restart recovery", async () => {
+  await db.owner.query(
+    "update public.demo_budget set requests_used=0,max_requests=20 where id=1",
+  );
+  const { a, b } = await pair();
+  await command(a, "save", { text: "panda" });
+  await command(b, "save", { text: "dragon" });
+  await command(a, "confirm");
+  await command(b, "confirm");
+  const state = (await rooms.state(a))!;
+  let calls = 0;
+  const service = new GenerationService(
+    gateway,
+    new TestStorage(),
+    async () => {
+      calls++;
+      return {
+        bytes: await fixtureImage(),
+        usage: null,
+        promptVersion: "fixture",
+      };
+    },
+    false,
+  );
+  await service.kick(state.roomId, true);
+  await new Promise((r) => setTimeout(r, 10));
+  assert.equal(calls, 0);
+  assert.equal((await gateway.attempts(state.roomId))[0]!.state, "reserved");
+});

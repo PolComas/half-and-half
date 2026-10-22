@@ -17,6 +17,8 @@ export interface Gateway {
   ): Promise<{ base_id: string; base_manifest: { baseHash: string } } | null>;
 }
 const problems: Record<string, [string, number]> = {
+  invalid_final: ["We couldn’t read your saved colors. Please try again.", 400],
+  final_conflict: ["This half is already finished and cannot be changed.", 409],
   room_missing: ["Please create a room or enter your partner’s code.", 404],
   room_unavailable: ["We couldn’t find an available room with that code.", 404],
   room_full: ["This room already has two people.", 409],

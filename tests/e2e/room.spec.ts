@@ -3,8 +3,8 @@ import { mkdir } from "node:fs/promises";
 test("home, independent room sessions, shared generation and private halves", async ({
   browser,
 }) => {
-  test.setTimeout(90000);
-  const a = await browser.newContext({hasTouch:true}),
+  test.setTimeout(120000);
+  const a = await browser.newContext({ hasTouch: true }),
     b = await browser.newContext(),
     c = await browser.newContext();
   const A = await a.newPage(),
@@ -83,7 +83,7 @@ test("home, independent room sessions, shared generation and private halves", as
   const altered = await a.request.get("/api/room/base?side=right");
   expect((await altered.body()).equals(await left.body())).toBeTruthy();
   expect((await c.request.get("/api/room/base")).ok()).toBeFalsy();
-  expect((await a.request.get("/api/room/result")).status()).toBe(404);
+  expect((await a.request.get("/api/room/result")).status()).toBe(409);
   await A.screenshot({
     path: ".local/screenshots/own-half.png",
     fullPage: true,
@@ -102,7 +102,11 @@ test("home, independent room sessions, shared generation and private halves", as
   const untouchedB = await digest(B);
   const drawingPosts: string[] = [];
   A.on("request", (r) => {
-    if (r.method() !== "GET" && r.url().includes("/api/") && !r.url().endsWith("/api/session"))
+    if (
+      r.method() !== "GET" &&
+      r.url().includes("/api/") &&
+      !r.url().endsWith("/api/session")
+    )
       drawingPosts.push(r.url());
   });
   await canvasA.click({ position: { x: 12, y: 12 } });
@@ -194,15 +198,19 @@ test("home, independent room sessions, shared generation and private halves", as
       animations: "disabled",
     });
   }
-  await A.getByRole("button",{name:"Fill",exact:true}).click();
-  await A.getByRole("button",{name:"Green",exact:true}).click();
+  await A.getByRole("button", { name: "Fill", exact: true }).click();
+  await A.getByRole("button", { name: "Green", exact: true }).click();
   await A.locator("canvas").scrollIntoViewIfNeeded();
-  const touchBox=(await A.locator("canvas").boundingBox())!;
-  await A.touchscreen.tap(touchBox.x+12,touchBox.y+12);
-  await expect(A.getByText("✓ Saved on this device",{exact:true})).toBeVisible();
+  const touchBox = (await A.locator("canvas").boundingBox())!;
+  await A.touchscreen.tap(touchBox.x + 12, touchBox.y + 12);
+  await expect(
+    A.getByText("✓ Saved on this device", { exact: true }),
+  ).toBeVisible();
   expect((await digest(A)) === filledA).toBe(false);
-  await A.getByRole("button",{name:/Undo/}).click();
-  await expect(A.getByText("✓ Saved on this device",{exact:true})).toBeVisible();
+  await A.getByRole("button", { name: /Undo/ }).click();
+  await expect(
+    A.getByText("✓ Saved on this device", { exact: true }),
+  ).toBeVisible();
   expect(await digest(A)).toBe(filledA);
   await A.emulateMedia({ reducedMotion: "reduce" });
   expect(
@@ -220,6 +228,114 @@ test("home, independent room sessions, shared generation and private halves", as
   await A.close();
   await expect(twin.locator("canvas")).toHaveAttribute("data-ready", "true");
   expect(await digest(twin)).toBe(filledA);
+
+  // Local save must succeed before any upload. Upload failures keep the same frozen final.
+  await twin.evaluate(() => {
+    const transaction = IDBDatabase.prototype.transaction;
+    (window as any).__blockFinish = true;
+    IDBDatabase.prototype.transaction = function (...args: any[]) {
+      if ((window as any).__blockFinish && args[1] === "readwrite")
+        throw Error("Disk failure");
+      return transaction.apply(this, args as any);
+    };
+  });
+  let uploads = 0;
+  const commits: string[] = [];
+  twin.on("request", (r) => {
+    if (r.url().endsWith("/api/room/finish")) {
+      uploads++;
+      commits.push(r.headers()["x-commit-id"]!);
+    }
+  });
+  await twin.getByRole("button", { name: "I’m done →", exact: true }).click();
+  await twin.getByRole("button", { name: "Yes, finish my half" }).click();
+  await expect(twin.getByRole("alert")).toContainText("couldn’t finish");
+  expect(uploads).toBe(0);
+  expect((await (await a.request.get("/api/room")).json()).finished).toBe(
+    false,
+  );
+  await twin.evaluate(() => {
+    (window as any).__blockFinish = false;
+  });
+  await twin.route("**/api/room/finish", (r) =>
+    r.fulfill({
+      status: 503,
+      contentType: "application/json",
+      body: JSON.stringify({
+        code: "save_failed",
+        message: "Please try saving again.",
+        retryable: true,
+      }),
+    }),
+  );
+  await twin.getByRole("button", { name: "Retry finishing" }).click();
+  await expect(twin.getByRole("alert")).toContainText(
+    "Please try saving again",
+  );
+  expect((await (await a.request.get("/api/room")).json()).finished).toBe(
+    false,
+  );
+  await twin.unroute("**/api/room/finish");
+  await twin.reload();
+  await expect(
+    twin.getByRole("button", { name: "Retry finishing" }),
+  ).toBeEnabled();
+  await expect(
+    twin.getByRole("button", { name: "Brush", exact: true }),
+  ).toBeDisabled();
+  await twin.route("**/api/room/finish", async (r) => {
+    await r.fetch();
+    await r.abort("failed");
+  });
+  await twin.getByRole("button", { name: "Retry finishing" }).click();
+  await expect(
+    twin.getByText(/Waiting for your partner’s finishing touch/),
+  ).toBeVisible();
+  expect(commits.length).toBe(2);
+  expect(commits[0]).toBe(commits[1]);
+  expect((await a.request.get("/api/room/result")).status()).toBe(409);
+  await twin.reload();
+  await expect(
+    twin.getByText("✓ Your half is safely saved", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    twin.getByRole("button", { name: "Brush", exact: true }),
+  ).toBeDisabled();
+  expect(await digest(twin)).toBe(filledA);
+  await B.getByRole("button", { name: "I’m done →", exact: true }).click();
+  await B.getByRole("button", { name: "Yes, finish my half" }).click();
+  await expect(
+    B.getByRole("heading", { name: "Better together." }),
+  ).toBeVisible({ timeout: 15000 });
+  await expect(
+    twin.getByRole("heading", { name: "Better together." }),
+  ).toBeVisible({ timeout: 15000 });
+  const resultA = await a.request.get("/api/room/download"),
+    resultB = await b.request.get("/api/room/download");
+  expect(resultA.ok()).toBeTruthy();
+  expect((await resultA.body()).equals(await resultB.body())).toBeTruthy();
+  expect(resultA.headers()["content-disposition"]).toContain(
+    "half-and-half.png",
+  );
+  expect(resultA.headers()["cache-control"]).toBe("no-store");
+  expect((await c.request.get("/api/room/result")).ok()).toBeFalsy();
+  expect((await c.request.get("/api/room/my-final")).ok()).toBeFalsy();
+  const ownA = await a.request.get("/api/room/my-final?side=right"),
+    ownB = await b.request.get("/api/room/my-final");
+  expect((await ownA.body()).equals(await ownB.body())).toBeFalsy();
+  await B.reload();
+  await expect(
+    B.getByRole("heading", { name: "Better together." }),
+  ).toBeVisible();
+  await B.setViewportSize({ width: 390, height: 844 });
+  expect(
+    await B.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
+  ).toBeTruthy();
+  await B.screenshot({
+    path: ".local/screenshots/result-mobile.png",
+    fullPage: true,
+    animations: "disabled",
+  });
   await a.close();
   await b.close();
   await c.close();

@@ -65,3 +65,8 @@ test("gibberish stays as supplied and creative fallback is in the prompt", () =>
   assert.ok(p.includes("Never draw the two ideas as separate"));
   assert.ok(p.length <= 2000);
 });
+
+test("maximum length ideas with JSON escaping still fit and controls are only normalized in the prompt", () => {
+  for (const value of ['"'.repeat(300), "😀".repeat(300), "\u0000".repeat(300)])
+    assert.ok(imagePrompt(value, value).length <= 2000);
+});

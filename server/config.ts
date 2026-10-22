@@ -1,7 +1,7 @@
 export const IMAGE_MODEL = "gpt-image-2.5-flare-2026-09-08";
 export const IMAGE_SIZE = 1024;
 export const HALF_WIDTH = 512;
-export const PROMPT_VERSION = "hybrid-coloring-v2";
+export const PROMPT_VERSION = "hybrid-coloring-v3";
 export function getConfig() {
   const port = Number(process.env.PORT ?? 3001);
   if (!Number.isInteger(port) || port < 1024 || port > 65535)

@@ -2,9 +2,9 @@
 
 Dues idees, dues meitats, una creació compartida.
 
-Paquet documental preparat el **21 d’octubre de 2026** per iniciar un repositori nou per a Build With AI: Basics. El paquet original només contenia context. Ara el primer increment de l’app està implementat i comprovat mecànicament; falta la prova de l’usuari abans de continuar amb pintura i revelació.
+Paquet documental preparat el **21 d’octubre de 2026** per iniciar un repositori nou per a Build With AI: Basics. El paquet original només contenia context. La ronda completa està implementada, comprovada mecànicament i confirmada per l’usuari en la revisió manual.
 
-Actualització del **22 d’octubre de 2026**: el Devpost Learn Skill Pack s’ha instal·lat localment i s’han completat `1-start`, `2-scope`, `3-prd` i `4-spec`. L’usuari ha revisat i aprovat l’[abast de la primera versió](devpost/scope.md), al qual ha afegit posteriorment la descàrrega del resultat final, i el [PRD complet](devpost/prd.md). El [pla tècnic](devpost/spec.md) també està aprovat: React i servidor Node local, Supabase privat, pressupost limitat als crèdits existents i identitat sense compte. L’usuari ha aprovat la [checklist de construcció](devpost/checklist.md) i triat mode fast. El primer increment cobreix sala, idees, generació real i meitats privades; és al checkpoint manual. Encara no hi ha pintura, revelació, descàrrega ni desplegament. Resultats i límits a [verification.md](devpost/verification.md). L’usuari ha aportat la transcripció del vídeo, conservada en local al document 10. La transcripció completa, la conversa recuperada i el perfil d’aprenent estan exclosos del repositori públic; els resums de context es mantenen disponibles.
+Actualització del **22 d’octubre de 2026**: el Devpost Learn Skill Pack s’ha instal·lat localment i s’han completat `1-start`, `2-scope`, `3-prd` i `4-spec`. L’usuari ha revisat i aprovat l’[abast de la primera versió](devpost/scope.md), al qual ha afegit posteriorment la descàrrega del resultat final, i el [PRD complet](devpost/prd.md). El [pla tècnic](devpost/spec.md) també està aprovat: React i servidor Node local, Supabase privat, pressupost limitat als crèdits existents i identitat sense compte. L’usuari ha aprovat la [checklist de construcció](devpost/checklist.md) i triat mode fast. El primer checkpoint ha aportat captures i correccions: idees fusionades en un sol híbrid i un fons amb moviment suau. Hi ha sala, generació real, editor privat amb desament local, finalització, revelació i descàrrega. L’usuari ha confirmat que tot el tram final funciona; queda el resum d’aprenentatge i mapa per completar `5-build`. No hi ha desplegament. Resultats i límits a [verification.md](devpost/verification.md). L’usuari ha aportat la transcripció del vídeo, conservada en local al document 10. La transcripció completa, la conversa recuperada i el perfil d’aprenent estan exclosos del repositori públic; els resums de context es mantenen disponibles.
 
 Per reinstal·lar els skills en un clon nou, amb Node.js i Git disponibles, executa `npx skills add challengepost/learn-ai-basics --all -y`. `skills-lock.json` registra la instal·lació inicial; les còpies locals dels skills queden fora dels commits.
 
@@ -18,7 +18,11 @@ npm run dev
 
 Obre **http://localhost:5173**. Per aturar els dos processos, `Ctrl+C`. Obre la segona persona en un altre perfil o navegador; dues pestanyes del mateix perfil comparteixen plaça. Un perfil crea sala, l’altre entra amb el codi de sis caràcters. Cadascú escriu una idea i la confirma dues vegades. Apareixen les idees i només la meitat pròpia quan acaba una única generació compartida. Recarregar conserva plaça i base.
 
-Aquest primer increment encara no permet pintar. La il·lustració de la home és un exemple SVG estàtic; les de les sales sí que es generen amb l’API d’OpenAI.
+Pinta amb **Fill** (cubell) o **Brush**, tria color i gruix, desfés amb **Undo** o neteja amb **Clear colors**. Espera «Saved on this device» abans de recarregar o tancar. El color es conserva a IndexedDB d’aquest navegador; només una pestanya pot editar aquella meitat alhora. Les regions amb contorns oberts es poden omplir juntes: desfés i utilitza el pinzell si passa.
+
+Quan estiguis satisfet, prem **I’m done** i confirma: es desa i congela la teva capa. Si falla, **Retry finishing** conserva el mateix final; no crearà una segona finalització. La primera persona espera veient només la seva meitat. Amb dues finalitzacions vàlides apareix l’obra completa i **Download your artwork** descarrega el mateix PNG en tots dos perfils. Les bases ja generades no canvien amb el prompt nou. Per provar el nou híbrid cal una altra ronda en dos perfils nous; consumirà una generació.
+
+La il·lustració de la home és un exemple SVG estàtic; les de les sales es generen amb l’API d’OpenAI. L’ambient del fons no fa crides d’IA i respecta la reducció de moviment del navegador.
 
 En un clon nou:
 
@@ -31,7 +35,7 @@ Configura localment `SUPABASE_URL`, `SUPABASE_SECRET_KEY` i `OPENAI_API_KEY`. La
 
 Abans de generar, comprova saldo, recàrrega i configuració de límits; només aleshores estableix `OPENAI_BILLING_VERIFIED=true` i `OPENAI_GENERATION_ENABLED=true` i reinicia el servidor. Les generacions reals consumeixen crèdits i compten al topall global de 20, inclosos reintents i proves. Amb el límit assolit, no s’engega cap generació nova. `npm run preflight` comprova presència/tipus de claus i connexió de dades sense imprimir secrets ni generar imatges; no consulta el saldo.
 
-Per preparar un projecte Supabase nou buit, aplica en ordre els dos SQL de `supabase/migrations/` des del SQL Editor d’aquell projecte; no els apliquis sobre una base aliena. El projecte Half & Half d’aquesta sessió ja està preparat i les versions locals coincideixen amb la seva història remota. Les quatre taules i el bucket són privats; només Node hi accedeix després de comprovar cada participant.
+Per preparar un projecte Supabase nou buit, aplica en ordre els quatre SQL de `supabase/migrations/` des del SQL Editor d’aquell projecte; no els apliquis sobre una base aliena. El projecte Half & Half d’aquesta sessió ja està preparat i les versions locals coincideixen amb la seva història remota. Les quatre taules i el bucket són privats; només Node hi accedeix després de comprovar cada participant.
 
 Execució compilada, també comprovada:
 
@@ -63,7 +67,7 @@ Els tests de navegador mostren «Test fixture — no AI was called». No són el
 
 ## Estat del procés
 
-`1-start` → `2-scope` → `3-prd` → `4-spec` completats. `5-build` en curs, primer increment pendent de comentaris de l’usuari. No marcar-lo complet, ni saltar a `6-ship`, només perquè l’agent ha passat les proves. Desplegament i candidatura continuen fora d’aquesta fase.
+`1-start` → `2-scope` → `3-prd` → `4-spec` completats. `5-build` amb construcció i revisió final completades; resum d’aprenentatge i mapa en preparació. No marcar-lo complet, ni saltar a `6-ship`, només perquè l’agent ha passat les proves. Desplegament i candidatura continuen fora d’aquesta fase.
 
 ## Què està acordat
 

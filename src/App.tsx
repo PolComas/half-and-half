@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { RoomView } from "../shared/contracts";
 import { api, ApiError, ensureSession, loadRoom, operation } from "./lib/api";
+import ResultRoom from "./components/ResultRoom";
 import PaintWorkspace from "./components/PaintWorkspace";
 import Atmosphere from "./components/Atmosphere";
 import Home from "./components/Home";
@@ -206,8 +207,17 @@ export default function App() {
               onEdit={() => void action("/room/idea/edit")}
               onConfirm={() => action("/room/idea/confirm")}
             />
+          ) : ["composing", "revealed"].includes(room.phase) ? (
+            <ResultRoom room={room} />
           ) : room.phase === "painting" ? (
-            <PaintWorkspace key={room.baseId} room={room} />
+            <PaintWorkspace
+              key={room.baseId}
+              room={room}
+              onState={(view) => {
+                roomRef.current = view;
+                setRoom(view);
+              }}
+            />
           ) : (
             <GenerationStatus
               room={room}

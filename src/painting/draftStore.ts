@@ -6,6 +6,7 @@ export interface Draft {
   undo: Uint8ClampedArray | null;
   settings: Settings;
   commitId?: string;
+  finalRevision?: number;
 }
 let database: Promise<IDBDatabase> | undefined;
 function open() {
