@@ -28,6 +28,8 @@ Cap etapa consta com a completada. No hi ha perfil d’aprenent, plans, checklis
 
 **Estat posterior, PRD aprovat:** després de mostrar el resum complet i l’enllaç al Markdown, l’usuari ha respost «Aquest PRD em sembla perfecte, podem passar a la següent fase i implementar-lo». S’ha marcat `prd.md` com a `status: approved`, incloses les concrecions mostrades. `3-prd` està completat i comença `4-spec`, després de llegir el skill real, la plantilla i els patrons tècnics. Encara no hi ha `spec.md`, arquitectura escollida ni implementació. La petició d’implementar no substitueix les decisions i la revisió del pla tècnic.
 
+**Estat posterior, primera spec per revisar:** recollides les preferències tècniques i el pressupost, l’usuari ha acceptat la credencial privada en cookie per reprendre la plaça al mateix navegador, sense registre. S’ha creat `devpost/spec.md` amb `status: draft`: arquitectura proposada, contractes, dades, arxius, límits, riscos i verificacions amb dues sessions independents. Els nous detalls de model, quota, cubell i recuperació incerta estan marcats com a propostes de revisió. El pla complet encara no està aprovat. No s’ha implementat, creat infraestructura, gastat crèdit, executat `5-build` ni desplegat. Les ordres d’arrencada són especificacions futures, no una app executable actual.
+
 ## Aplicació al nostre projecte
 
 El context evita haver de repetir acords, però no substitueix les converses de planificació. Proposar un stack no l’aprova. La frase històrica sobre una “segona decisió” no autoritza inventar-la.
