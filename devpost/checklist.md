@@ -13,7 +13,7 @@ En tots els passos: conservar el context original, excloure perfil i secrets, re
 
 ## Slices
 
-- [ ] **1. Dues persones entren amb codi i obtenen les seves meitats d’una generació real**
+- [x] **1. Dues persones entren amb codi i obtenen les seves meitats d’una generació real**
   Becomes usable: App local on A crea sala i B hi entra amb codi, cadascú confirma una idea i tots dos reben només la seva meitat d’una única il·lustració real. Les idees es revelen quan apareix la base; una recàrrega conserva plaça, fase i generació. Encara no hi ha editor ni botons de finalització sense implementar.
   Why now: Demostra aviat la integració que l’usuari vol aprendre i els riscos principals de cost, unicitat, sincronització i tall. La configuració inicial queda dins d’aquest comportament usable; no es construeixen capes desconnectades esperant integrar-les al final. Validar els contorns de la primera mostra abans de desenvolupar tot l’editor.
   PRD ref: `prd.md > The Core Journey` (passos 1–5), `Entrada amb codi curt`, `Escriure i confirmar les idees`, `Generació i recuperació de la ronda`, `Errors de generació i intents limitats`, `Topall global de generació de la demo`, `Dibuix compartit i visibilitat`.
@@ -81,3 +81,5 @@ Activity mode: pendent; per l’experiència de planificació declarada, una inv
 - Abans d’una mutació, el client refresca la versió i comprova que la idea pròpia no hagi canviat — la prova en dos navegadors va detectar conflictes normals causats per actualitzacions de l’altre participant. Una carrera restant continua retornant conflicte, sense ignorar una edició acceptada.
 
 - Primer checkpoint real: l’usuari ha provat les dues meitats i ha aportat captures de panda + drac. Demana poder pintar (pas 2), fusionar les idees en un sol subjecte i enriquir el fons amb moviment suau. S’actualitzen prompt, plans i atmosfera abans de continuar. No s’atribueixen a l’usuari proves de recuperació no reportades.
+
+- Pas 2: editor implementat amb dades locals serialitzades i Web Locks; proves sobre base real reutilitzada. El cubell segueix les regions connectades: s’ha observat una obertura real i s’explica Undo/pinzell. El prompt de rondes noves es reforçarà sense substituir cap base activa.

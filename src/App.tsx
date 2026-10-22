@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { RoomView } from "../shared/contracts";
 import { api, ApiError, ensureSession, loadRoom, operation } from "./lib/api";
+import PaintWorkspace from "./components/PaintWorkspace";
 import Atmosphere from "./components/Atmosphere";
 import Home from "./components/Home";
 import IdeaRoom from "./components/IdeaRoom";
@@ -206,31 +207,7 @@ export default function App() {
               onConfirm={() => action("/room/idea/confirm")}
             />
           ) : room.phase === "painting" ? (
-            <section className="room-content drawing-room">
-              <p className="eyebrow">Two ideas, one drawing</p>
-              <h1>
-                Here’s your <em>half.</em>
-              </h1>
-              <div className="shared-ideas">
-                <p>
-                  <span>Left idea</span>
-                  {room.ideas?.left}
-                </p>
-                <span aria-hidden="true">&</span>
-                <p>
-                  <span>Right idea</span>
-                  {room.ideas?.right}
-                </p>
-              </div>
-              <img
-                className="half-drawing"
-                src={`/api/room/base?base=${encodeURIComponent(room.baseId!)}`}
-                alt={`Your ${room.side} half of the shared coloring illustration`}
-              />
-              <p className="quiet-note">
-                Your partner’s half stays a surprise.
-              </p>
-            </section>
+            <PaintWorkspace key={room.baseId} room={room} />
           ) : (
             <GenerationStatus
               room={room}

@@ -3,22 +3,32 @@ import { mkdir } from "node:fs/promises";
 test("home, independent room sessions, shared generation and private halves", async ({
   browser,
 }) => {
-  const a = await browser.newContext(),
+  test.setTimeout(90000);
+  const a = await browser.newContext({hasTouch:true}),
     b = await browser.newContext(),
     c = await browser.newContext();
   const A = await a.newPage(),
     B = await b.newPage(),
     C = await c.newPage();
   let sessionRequests = 0;
-  A.on("request", request => {
-    if (new URL(request.url()).pathname === "/api/session" && request.method() === "POST") sessionRequests++;
+  A.on("request", (request) => {
+    if (
+      new URL(request.url()).pathname === "/api/session" &&
+      request.method() === "POST"
+    )
+      sessionRequests++;
   });
   await A.goto("/");
   await expect(A.getByRole("button", { name: "Create a room" })).toBeEnabled();
   expect(sessionRequests).toBe(1);
-  for (const privatePath of ["/.env", "/.local/live-a.json", "/context/archive/conversa-recuperada.md", "/devpost/learner-profile.md"]) {
+  for (const privatePath of [
+    "/.env",
+    "/.local/live-a.json",
+    "/context/archive/conversa-recuperada.md",
+    "/devpost/learner-profile.md",
+  ]) {
     const response = await a.request.get(privatePath);
-    expect([403,404]).toContain(response.status());
+    expect([403, 404]).toContain(response.status());
   }
   await mkdir(".local/screenshots", { recursive: true });
   await A.screenshot({
@@ -79,6 +89,137 @@ test("home, independent room sessions, shared generation and private halves", as
     fullPage: true,
     animations: "disabled",
   });
+
+  // Editor operates locally: independent colors never travel to the partner.
+  const canvasA = A.getByRole("img", { name: /painting canvas/ }),
+    canvasB = B.getByRole("img", { name: /painting canvas/ });
+  await expect(canvasA).toHaveAttribute("data-ready", "true");
+  await expect(canvasB).toHaveAttribute("data-ready", "true");
+  const digest = async (page: typeof A) =>
+    page
+      .locator("canvas")
+      .evaluate((el) => (el as HTMLCanvasElement).toDataURL());
+  const untouchedB = await digest(B);
+  const drawingPosts: string[] = [];
+  A.on("request", (r) => {
+    if (r.method() !== "GET" && r.url().includes("/api/") && !r.url().endsWith("/api/session"))
+      drawingPosts.push(r.url());
+  });
+  await canvasA.click({ position: { x: 12, y: 12 } });
+  await expect(
+    A.getByRole("status").filter({ hasText: "Saved on this device" }),
+  ).toBeVisible();
+  const filledA = await digest(A);
+  expect(await digest(B)).toBe(untouchedB);
+  await B.getByRole("button", { name: "Blue", exact: true }).click();
+  await canvasB.click({ position: { x: 12, y: 12 } });
+  await expect(
+    B.getByText("✓ Saved on this device", { exact: true }),
+  ).toBeVisible();
+  expect(await digest(B)).not.toBe(filledA);
+  await A.reload();
+  await expect(A.getByRole("img", { name: /painting canvas/ })).toHaveAttribute(
+    "data-ready",
+    "true",
+  );
+  expect(await digest(A)).toBe(filledA);
+  await A.getByRole("button", { name: "Brush", exact: true }).click();
+  await A.getByRole("button", { name: "Blue", exact: true }).click();
+  const box = (await A.locator("canvas").boundingBox())!;
+  await A.mouse.move(box.x + box.width * 0.2, box.y + box.height * 0.3);
+  await A.mouse.down();
+  await A.mouse.move(box.x + box.width * 0.7, box.y + box.height * 0.5, {
+    steps: 12,
+  });
+  await A.mouse.up();
+  await expect(
+    A.getByText("✓ Saved on this device", { exact: true }),
+  ).toBeVisible();
+  const brushed = await digest(A);
+  expect(brushed).not.toBe(filledA);
+  await A.reload();
+  await expect(A.locator("canvas")).toHaveAttribute("data-ready", "true");
+  expect(await digest(A)).toBe(brushed);
+  await A.getByRole("button", { name: /Undo/ }).click();
+  await expect(
+    A.getByText("✓ Saved on this device", { exact: true }),
+  ).toBeVisible();
+  expect(await digest(A)).toBe(filledA);
+  await A.reload();
+  await expect(A.locator("canvas")).toHaveAttribute("data-ready", "true");
+  expect(await digest(A)).toBe(filledA);
+  // A failed IndexedDB write must not claim saved, then retry the current revision.
+  await A.evaluate(() => {
+    const original = IDBDatabase.prototype.transaction;
+    (window as any).__writeBlocked = true;
+    IDBDatabase.prototype.transaction = function (...args: any[]) {
+      if ((window as any).__writeBlocked && args[1] === "readwrite")
+        throw Error("Simulated storage failure");
+      return original.apply(this, args as any);
+    };
+  });
+  await A.getByRole("button", { name: "Clear colors", exact: true }).click();
+  await A.getByRole("button", { name: "Yes, clear colors" }).click();
+  await expect(
+    A.getByText("We couldn’t save on this device.", { exact: true }),
+  ).toBeVisible();
+  await A.evaluate(() => {
+    (window as any).__writeBlocked = false;
+  });
+  await A.getByRole("button", { name: "Try saving again" }).click();
+  await expect(
+    A.getByText("✓ Saved on this device", { exact: true }),
+  ).toBeVisible();
+  const cleared = await digest(A);
+  expect(cleared).not.toBe(filledA);
+  await A.reload();
+  await expect(A.locator("canvas")).toHaveAttribute("data-ready", "true");
+  expect(await digest(A)).toBe(cleared);
+  await A.getByRole("button", { name: /Undo/ }).click();
+  await expect(
+    A.getByText("✓ Saved on this device", { exact: true }),
+  ).toBeVisible();
+  expect(await digest(A)).toBe(filledA);
+  expect(drawingPosts).toEqual([]);
+  for (const width of [1440, 1024, 768, 390]) {
+    await A.setViewportSize({ width, height: 900 });
+    expect(
+      await A.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBeTruthy();
+    await A.screenshot({
+      path: `.local/screenshots/editor-${width}.png`,
+      fullPage: true,
+      animations: "disabled",
+    });
+  }
+  await A.getByRole("button",{name:"Fill",exact:true}).click();
+  await A.getByRole("button",{name:"Green",exact:true}).click();
+  await A.locator("canvas").scrollIntoViewIfNeeded();
+  const touchBox=(await A.locator("canvas").boundingBox())!;
+  await A.touchscreen.tap(touchBox.x+12,touchBox.y+12);
+  await expect(A.getByText("✓ Saved on this device",{exact:true})).toBeVisible();
+  expect((await digest(A)) === filledA).toBe(false);
+  await A.getByRole("button",{name:/Undo/}).click();
+  await expect(A.getByText("✓ Saved on this device",{exact:true})).toBeVisible();
+  expect(await digest(A)).toBe(filledA);
+  await A.emulateMedia({ reducedMotion: "reduce" });
+  expect(
+    await A.locator(".sketch-one").evaluate(
+      (el) => getComputedStyle(el).animationName,
+    ),
+  ).toBe("none");
+  // Only one active tab for this participant, and a successor reloads the saved colors.
+  const twin = await a.newPage();
+  await twin.goto("/");
+  await expect(twin.locator("canvas")).toHaveAttribute("data-ready", "false");
+  await expect(
+    twin.getByText(/This half can be edited in one tab/),
+  ).toBeVisible();
+  await A.close();
+  await expect(twin.locator("canvas")).toHaveAttribute("data-ready", "true");
+  expect(await digest(twin)).toBe(filledA);
   await a.close();
   await b.close();
   await c.close();

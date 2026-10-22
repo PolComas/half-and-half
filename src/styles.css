@@ -747,6 +747,253 @@ dialog p.idea-quote {
     right: -125px;
   }
 }
+
+.painting-room {
+  width: min(960px, 88vw);
+  margin: 44px auto 70px;
+}
+.paint-heading {
+  text-align: center;
+}
+.paint-heading h1 {
+  font-size: clamp(40px, 5vw, 64px);
+  margin-bottom: 24px;
+}
+.paint-heading .eyebrow {
+  margin-bottom: 18px;
+}
+.paint-heading .shared-ideas {
+  margin-bottom: 32px;
+}
+.paint-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 246px;
+  gap: 60px;
+  align-items: start;
+  max-width: 770px;
+  margin: auto;
+}
+.canvas-paper {
+  background: white;
+  border: 1px solid var(--line);
+  box-shadow: 0 14px 50px #51402b12;
+}
+.canvas-paper canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: none;
+  cursor: crosshair;
+}
+.canvas-paper canvas[data-ready="false"] {
+  cursor: wait;
+}
+.canvas-column .quiet-note {
+  margin: 20px 0 0;
+  text-align: center;
+}
+.paint-tools {
+  position: sticky;
+  top: 26px;
+  padding-top: 6px;
+}
+.paint-tools > .eyebrow {
+  color: var(--accent);
+  margin-bottom: 25px;
+}
+.paint-tools fieldset {
+  padding: 0 0 22px;
+  margin: 0 0 22px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  min-width: 0;
+}
+.paint-tools legend {
+  font-size: 11px;
+  letter-spacing: 0.8px;
+  margin-bottom: 14px;
+  color: var(--muted);
+}
+.tool-switch {
+  display: flex;
+  gap: 8px;
+}
+.tool-switch button {
+  flex: 1;
+  border: 1px solid var(--line);
+  background: #faf7f0bb;
+  color: var(--ink);
+  border-radius: 3px;
+  min-height: 44px;
+  font-size: 13px;
+}
+.tool-switch button[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: #b85c4412;
+  color: #91432f;
+}
+.tool-switch button span {
+  font-size: 21px;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+.tool-hint {
+  font-size: 11px;
+  color: var(--muted);
+  margin: 10px 0 0;
+  min-height: 18px;
+}
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(44px, 1fr));
+  gap: 7px;
+}
+.swatches button {
+  width: 100%;
+  height: 44px;
+  border: 8px solid var(--paper);
+  border-radius: 50%;
+  outline: 1px solid transparent;
+  box-shadow: inset 0 0 0 1px #25231f20;
+}
+.swatches button[aria-pressed="true"] {
+  outline-color: var(--ink);
+}
+.custom-color {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 13px;
+  font-size: 11px;
+  cursor: pointer;
+}
+.custom-color small {
+  display: block;
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+.color-wheel {
+  display: block;
+  width: 30px;
+  height: 30px;
+  background: conic-gradient(red, yellow, lime, cyan, blue, magenta, red);
+  border-radius: 50%;
+  overflow: hidden;
+}
+.color-wheel input {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+.color-wheel:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+.brush-size {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.brush-preview {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.brush-preview > span {
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px #25231f20;
+}
+.brush-size input {
+  width: 100%;
+  accent-color: var(--accent);
+  min-width: 0;
+  height: 44px;
+}
+.brush-size output {
+  font-size: 10px;
+  color: var(--muted);
+  min-width: 15px;
+}
+.paint-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+.text-button {
+  background: none;
+  border: 0;
+  padding: 8px 0;
+  min-height: 44px;
+  color: var(--ink);
+  font-size: 12px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.save-status {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 18px;
+  min-height: 18px;
+}
+.save-status.saved {
+  color: #526b52;
+}
+.save-status.error {
+  color: #91432f;
+}
+.storage-note {
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 9px 0;
+}
+@media (max-width: 760px) {
+  .paint-layout {
+    gap: 28px;
+    grid-template-columns: minmax(0, 1fr) 220px;
+  }
+  .painting-room {
+    width: 90vw;
+  }
+}
+@media (max-width: 560px) {
+  .paint-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    max-width: 340px;
+  }
+  .canvas-column {
+    width: 100%;
+  }
+  .canvas-paper {
+    width: min(100%, 300px);
+    margin: auto;
+  }
+  .paint-tools {
+    position: static;
+    width: 100%;
+  }
+  .swatches {
+    gap: 5px;
+  }
+  .swatches button {
+    height: 44px;
+    border-width: 8px;
+  }
+  .painting-room {
+    margin-top: 38px;
+  }
+  .paint-tools > .eyebrow {
+    margin-bottom: 20px;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   *,
   *:before,
