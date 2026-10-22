@@ -18,7 +18,7 @@ Font: `scope.md > The Core Loop` i `What "Working" Looks Like`.
 3. Cada persona escriu la seva idea en text lliure, prem «Fet» o «Confirmar» i fa una segona confirmació de la idea pròpia. Abans de començar la generació, «Editar» permet modificar-la retirant la confirmació pròpia; cal confirmar-la de nou. No es pot confirmar text buit. Si una aportació no és interpretable, el prompt dona llibertat creativa per inventar un objecte estrany i combinar-lo amb l’altra aportació.
 4. Amb totes dues idees confirmades s’inicia una única generació compartida, enviant-les juntes a l’API de generació d’imatges. Totes dues persones veuen «La imatge s’està generant. Espereu un moment». Recarregar la pàgina ha de recuperar aquesta mateixa ronda i generació, sense duplicar-la.
 5. Quan apareix la imatge, es mostren les dues idees. Des d’aquest primer moment cadascú només veu el seu 50% del dibuix; no hi ha vista completa inicial.
-6. Cadascú pinta la seva meitat amb cubell o pinzell i pot desfer o netejar la pintura pròpia, conservant el dibuix base.
+6. Cadascú pinta la seva meitat amb cubell o pinzell i pot desfer o netejar la pintura pròpia, conservant el dibuix base. La pintura es desa automàticament abans d’acabar, perquè es pugui recuperar en recarregar la mateixa sessió.
 7. Cada persona prem «He acabat» i confirma que vol tancar la seva pintura. Només després d’un desament correcte es confirma la finalització i es bloqueja l’edició per a aquesta ronda. Qui acaba primer pot mirar la seva meitat desada mentre espera, sense veure el resultat complet.
 8. Amb dues finalitzacions vàlides de la mateixa ronda, totes dues sessions veuen la mateixa obra completa i poden descarregar-la. No hi ha galeria.
 
@@ -76,7 +76,7 @@ S’envien totes dues idees juntes per obtenir una sola imatge comuna; les dues 
 
 Si algú recarrega, recupera la mateixa sala, plaça, costat i fase, així com les idees confirmades i la generació que ja s’està fent o ha acabat. Si torna durant l’espera final o després de revelar, veu l’estat real de la mateixa ronda. No es creen una ronda nova, una tercera plaça o una generació addicional per la recàrrega. Desconnectar-se no equival a acabar ni permet saltar-se les dues finalitzacions vàlides.
 
-Criteris: en dues sessions independents, recarregar A mentre B espera manté una única generació; si la imatge acaba durant la recàrrega, A arriba a la pintura de la mateixa base; recarregar després d’una finalització manté el bloqueig ja confirmat; recarregar després de dues finalitzacions vàlides mostra el mateix resultat. La recuperació de la pintura feta abans de prémer «He acabat» encara s’ha de concretar, sense donar per garantits traços no desats. Retenció i mecanismes de recuperació pendents de spec.
+Criteris: en dues sessions independents, recarregar A mentre B espera manté una única generació; si la imatge acaba durant la recàrrega, A arriba a la pintura de la mateixa base; recarregar després d’una finalització manté el bloqueig ja confirmat; recarregar després de dues finalitzacions vàlides mostra el mateix resultat. Durant la pintura es recupera la versió pròpia desada automàticament, sense haver de prémer «He acabat». Retenció i mecanismes de recuperació pendents de spec.
 
 ### Dibuix compartit i visibilitat
 
@@ -94,6 +94,18 @@ Cubell per omplir regions tancades i pinzell per pintar a mà, amb color selecci
 
 Criteris: tant el cubell com el pinzell queden dins de la meitat assignada, també quan una regió continua més enllà del centre; el dibuix base i l’altra meitat no canvien. Cal provar imatges generades reals: demanar contorns tancats al prompt no garanteix que cada regió es pugui omplir sense problemes. Paleta, gruixos, abast de desfer i confirmació de neteja pendents de concretar. Una retirada del cubell requeriria revisar el requisit amb l’usuari.
 
+### Desament automàtic de la pintura pròpia
+
+Font: `scope.md > What "Working" Looks Like`, ampliada per la petició explícita de recuperar allò pintat abans de prémer «He acabat».
+
+L’objectiu expressat per l’usuari és conservar tot el que ja havia pintat en recarregar la mateixa sessió. Ha suggerit desar al navegador cada segon o cada cert temps; mecanisme i freqüència exactes no estan triats. El desament automàtic forma part de la primera versió i no marca la persona com a acabada.
+
+La interfície ha de distingir entre canvis encara pendents de desar, versió desada i error de desament. No ha de presentar com a desat allò que encara no s’ha confirmat. La recuperació ha de reflectir l’estat actual de la pintura pròpia, incloent ompliments, pinzell, desfer i netejar, associat a la mateixa ronda, base i costat. No recupera colors aliens ni permet saltar-se una finalització ja confirmada.
+
+Criteris: fer diverses accions, esperar la confirmació de desament i recarregar abans d’acabar ha de restaurar la mateixa pintura; repetir després de desfer o netejar no ha de ressuscitar una versió anterior. Un error de desament no pot mostrar confirmació d’èxit. Amb la segona sessió oberta, aquesta recuperació no duplica la ronda ni exposa pintura aliena.
+
+L’objectiu de conservar-ho tot no és una garantia de persistir un canvi que encara s’està desant si el navegador es tanca sobtadament. La spec ha de definir i explicar aquesta frontera i investigar una freqüència de desament que minimitzi la finestra de pèrdua. No s’ha promès recuperació després d’esborrar les dades del navegador ni en un altre dispositiu. La recuperació local no substitueix el desament i validació finals necessaris per revelar l’obra a totes dues persones.
+
 ### Acabar, esperar i revelar
 
 Font: `scope.md > What "Working" Looks Like`.
@@ -102,7 +114,7 @@ Font: `scope.md > What "Working" Looks Like`.
 
 La revelació exigeix dues versions finals vàlides de participants diferents, de la mateixa ronda i il·lustració base. No s’inclou llenç lliure ni pintura de predicció durant l’espera.
 
-Criteris: la primera finalització no revela res de l’altra pintura; un error de desament no compta com a finalització i permet recuperar el desament sense perdre la pintura; la versió final desada ja no es pot modificar; repeticions de l’acció no compten com una segona persona; finalitzacions gairebé simultànies donen el mateix resultat complet a les dues sessions. Una recàrrega manté les finalitzacions ja confirmades; la recuperació de pintura encara no finalitzada continua pendent.
+Criteris: la primera finalització no revela res de l’altra pintura; un error de desament no compta com a finalització i permet recuperar el desament sense perdre la pintura; la versió final desada ja no es pot modificar; repeticions de l’acció no compten com una segona persona; finalitzacions gairebé simultànies donen el mateix resultat complet a les dues sessions. Una recàrrega manté les finalitzacions ja confirmades i recupera la pintura pròpia desada automàticament si encara estava en edició.
 
 ### Descarregar el resultat
 
@@ -119,7 +131,8 @@ Després de la revelació, cadascú pot descarregar l’obra completa. L’arxiu
 - **Desament fallit:** no es confirma el final ni s’activa la revelació.
 - **Una persona acabada:** pintura desada i bloquejada; pot mirar només la seva meitat fins a la revelació, sense retornar a edició ni iniciar una activitat addicional.
 - **Dues finalitzacions vàlides:** revelació coherent i descàrrega habilitada.
-- **Recarregar o reconnectar la mateixa sessió:** recuperar sala, plaça i fase reals sense duplicar generació ni finalitzacions. La pintura pròpia no finalitzada que s’ha de recuperar encara s’ha de concretar. No inventar finalitzacions per desconnexió o abandonament.
+- **Recarregar o reconnectar la mateixa sessió:** recuperar sala, plaça, fase reals i pintura pròpia desada automàticament, sense duplicar generació ni finalitzacions. No inventar finalitzacions per desconnexió o abandonament.
+- **Desament automàtic pendent o fallit:** indicar-lo fidelment; no afirmar que els canvis estan desats ni marcar la persona com a acabada.
 - **Cost de generació:** l’usuari ha plantejat ajornar les quotes diàries. El topall global petit i els reintents limitats són recomanacions encara no aprovades. Cap pressupost o límit s’ha configurat.
 
 ## Product Decisions
@@ -131,7 +144,7 @@ Confirmades durant l’entrevista:
 - Idea en text lliure amb botó «Fet» o «Confirmar» i segona confirmació de la idea pròpia. Les entrades buides no s’accepten. Si una aportació no buida no s’entén, l’usuari vol que el prompt permeti inventar un objecte estrany i creatiu per combinar-lo amb l’altra idea.
 - «Editar» després de confirmar retira la confirmació pròpia i permet canviar el text abans de generar. Cal confirmar-lo de nou; la confirmació de l’altra persona no es retira.
 - Amb totes dues idees confirmades s’envien juntes a l’API per a una única generació. Durant l’espera es mostra «La imatge s’està generant. Espereu un moment», normalització del text proposat per l’usuari.
-- Recarregar ha de recuperar la mateixa sala, participant i estat compartit, sense desincronitzar les dues persones ni tornar a generar. El detall de pintura no finalitzada encara s’ha de concretar.
+- Recarregar ha de recuperar la mateixa sala, participant i estat compartit, sense desincronitzar les dues persones ni tornar a generar. L’usuari ha demanat recuperar també tot el que ja havia pintat, abans d’acabar; s’inclou desament automàtic amb freqüència i mecanisme pendents de spec, sense prometre persistència de canvis encara no desats.
 - Direcció visual neta i minimalista, amb aire de taller creatiu i interès per imatges generades pròpies.
 - Imatge de ronda en blanc i negre amb estil de llibre per pintar.
 - Cubell i pinzell dins de la primera versió, més desfer i netejar.
@@ -139,7 +152,7 @@ Confirmades durant l’entrevista:
 - Descàrrega de l’obra final dins de la primera versió; la galeria continua fora. És una modificació explícita de l’ajornament inicial de l’exportació al scope.
 - Confirmar «He acabat», desar correctament i després bloquejar la pintura per a la ronda. Durant l’espera només es contempla la meitat pròpia desada. L’usuari ha acceptat explícitament aquesta recomanació després d’explorar altres possibles activitats; no s’hi afegeix un segon editor.
 
-Les quatre regles del nucli ja estaven acordades abans de l’entrevista. El detall de recuperació de pintura no finalitzada i les polítiques d’error o cost encara no estan acordats.
+Les quatre regles del nucli ja estaven acordades abans de l’entrevista. Les polítiques d’error de generació i cost encara no estan acordades. La spec concretarà la persistència de la pintura i la frontera observable del desament automàtic.
 
 ## What We're Building
 
@@ -166,9 +179,8 @@ No demostrar la integració d’IA amb una imatge fixa presentada com si s’hag
 Abans d’aprovar el PRD i passar a spec cal resoldre els punts de comportament que afecten la ronda:
 
 1. Què poden fer si la generació falla o el contingut no és acceptable?
-2. Quina pintura pròpia ha de poder recuperar una persona que recarrega abans de prémer «He acabat»?
-3. Quin és el dispositiu prioritari i quin idioma tindrà la interfície?
-4. Quin mínim de controls de color, gruix i correcció necessita la primera versió?
-5. S’ajornen les quotes diàries per persona? Quin control mínim de generació s’inclou i què veu qui arriba al límit?
+2. Quin és el dispositiu prioritari i quin idioma tindrà la interfície?
+3. Quin mínim de controls de color, gruix i correcció necessita la primera versió?
+4. S’ajornen les quotes diàries per persona? Quin control mínim de generació s’inclou i què veu qui arriba al límit?
 
 La spec concretarà format de codi, credencials, dimensions, format de descàrrega, proveïdor/model, pressupost, topalls numèrics i mecanismes tècnics, després dels acords de producte. Encara no s’ha triat arquitectura ni s’ha implementat l’app.
