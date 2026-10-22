@@ -7,7 +7,7 @@ status: draft
 
 Activitat creativa per a parelles, incloses les que estan a distància: dues idees, una il·lustració i dues meitats pintades per separat abans de descobrir el resultat compartit.
 
-Primer esborrany de `3-prd`, basat en l’entrevista real i en `scope.md > The Unique Kernel`, `The Core Loop` i `The POC Boundary`. L’entrevista continua: les preguntes obertes són explícites i aquest document encara no es pot donar per aprovat. Les recomanacions del context no es converteixen en decisions de producte per aparèixer-hi.
+Versió per a revisió de `3-prd`, basada en l’entrevista real i en `scope.md > The Unique Kernel`, `The Core Loop` i `The POC Boundary`. Les preguntes de producte s’han resolt; l’usuari encara ha de revisar i aprovar el document complet, incloses les concrecions d’intents i controls de correcció que s’indiquen com a propostes. L’estat continua sent `draft`. Les recomanacions del context no es converteixen en decisions de producte per aparèixer-hi.
 
 ## The Core Journey
 
@@ -97,6 +97,16 @@ Exemples de text d’interfície: «We couldn’t create your drawing. Try again
 
 Criteris: dos clics o reintents simultanis no creen dos intents nous; només hi ha una generació activa alhora; el comptador persisteix en recarregar i en editar idees; assolir el màxim impedeix noves peticions d’aquesta ronda. Una pèrdua de connexió per si sola no prova que la generació hagi fallat: primer cal recuperar l’estat compartit, sense reintentar cegament una generació que continua activa. No es regenera una base que ja s’està pintant.
 
+### Topall global de generació de la demo
+
+Font: `scope.md > The POC Boundary`, concretada amb l’acceptació explícita del control mínim de despesa durant l’entrevista.
+
+S’ajornen les quotes diàries per persona. La primera versió inclou un topall global de peticions de generació de la demo, compartit entre totes les sales i comptant tant intents inicials com reintents. Crear una sala nova o recarregar no reinicia aquest topall. La xifra es decidirà a la spec segons el model i el pressupost de l’usuari; encara no s’ha configurat cap límit real.
+
+En arribar-hi, no s’inicien generacions noves, encara que a una ronda li quedin intents propis. Es mostra un missatge senzill en anglès, com «The demo has reached its drawing limit. New drawings are unavailable for now.» Qui ja té dibuix pot continuar pintant, desar, acabar, revelar i descarregar. Una generació que ja estava en curs no es duplica ni es reinicia per aquest missatge.
+
+Criteris: el topall s’aplica al conjunt de sales, sense duplicar permisos per dues peticions simultànies; els reintents hi compten; no es pot esquivar amb una sala nova; pintar i completar una ronda amb base ja disponible continua funcionant després d’assolir-lo. Política de retenció, reinici autoritzat del topall i mecanisme de control es concretaran a la spec.
+
 ### Dibuix compartit i visibilitat
 
 Font: `scope.md > The Unique Kernel`, `The Core Loop` i `What "Working" Looks Like`.
@@ -160,7 +170,7 @@ Després de la revelació, cadascú pot descarregar l’obra completa. L’arxiu
 - **Dues finalitzacions vàlides:** revelació coherent i descàrrega habilitada.
 - **Recarregar o reconnectar la mateixa sessió:** recuperar sala, plaça, fase reals i pintura pròpia desada automàticament, sense duplicar generació ni finalitzacions. No inventar finalitzacions per desconnexió o abandonament.
 - **Desament automàtic pendent o fallit:** indicar-lo fidelment; no afirmar que els canvis estan desats ni marcar la persona com a acabada.
-- **Cost de generació:** l’usuari ha demanat reintents limitats; l’esborrany concreta 3 intents totals per ronda. Les quotes diàries i el topall global petit continuen pendents. Cap pressupost o límit s’ha configurat realment.
+- **Cost de generació:** l’usuari ha acceptat ajornar les quotes diàries individuals i incloure un topall global de la demo que compta intents i reintents. Assolir-lo bloqueja generacions noves, sense impedir acabar rondes amb dibuix disponible. La xifra global i el pressupost es decidiran a la spec. L’esborrany proposa 3 intents totals per ronda; encara no s’ha configurat cap límit real.
 
 ## Product Decisions
 
@@ -175,6 +185,7 @@ Confirmades durant l’entrevista:
 - Amb totes dues idees confirmades s’envien juntes a l’API per a una única generació. Durant l’espera es mostra «Your drawing is being generated. Please wait.», adaptació a l’anglès del text proposat per l’usuari.
 - Recarregar ha de recuperar la mateixa sala, participant i estat compartit, sense desincronitzar les dues persones ni tornar a generar. L’usuari ha demanat recuperar també tot el que ja havia pintat, abans d’acabar; s’inclou desament automàtic amb freqüència i mecanisme pendents de spec, sense prometre persistència de canvis encara no desats.
 - En un error de generació, reintents limitats, explicació senzilla i possibilitat de canviar les idees. L’usuari ha indicat «2 o 3 cops»; la concreció d’esborrany a revisar és 3 intents totals per ronda, sense reiniciar el comptador per canviar idees.
+- Quotes diàries individuals ajornades i topall global de generacions de la demo acceptat explícitament. Inclou intents inicials i reintents de totes les sales; assolir-lo atura generacions noves, però permet acabar les rondes que ja tenen dibuix. Xifra i pressupost pendents de spec.
 - Direcció visual neta i minimalista, amb aire de taller creatiu i interès per imatges generades pròpies.
 - Imatge de ronda en blanc i negre amb estil de llibre per pintar.
 - Cubell i pinzell dins de la primera versió, més desfer i netejar.
@@ -183,7 +194,7 @@ Confirmades durant l’entrevista:
 - Descàrrega de l’obra final dins de la primera versió; la galeria continua fora. És una modificació explícita de l’ajornament inicial de l’exportació al scope.
 - Confirmar «I’m done», desar correctament i després bloquejar la pintura per a la ronda. Durant l’espera només es contempla la meitat pròpia desada. L’usuari ha acceptat explícitament aquesta recomanació després d’explorar altres possibles activitats; no s’hi afegeix un segon editor.
 
-Les quatre regles del nucli ja estaven acordades abans de l’entrevista. La revisió del PRD ha de validar la concreció numèrica dels intents i el control global de cost encara pendent. La spec concretarà la persistència de la pintura i la frontera observable del desament automàtic.
+Les quatre regles del nucli ja estaven acordades abans de l’entrevista. La revisió del PRD ha de validar la concreció numèrica dels intents i les propostes d’«Undo» i confirmació de «Clear colors». El control global de cost ja està acceptat; la spec en concretarà la xifra, així com la persistència de la pintura i la frontera observable del desament automàtic.
 
 ## What We're Building
 
@@ -193,7 +204,7 @@ Una ronda completa de dues persones en sessions independents: entrada amb codi, 
 
 Font: `scope.md > Later` i `Explicitly Cut`.
 
-Mode individual i rondes addicionals: es prioritza completar la ronda compartida. Galeria, xarxa social, xat, videotrucada, pagaments i gamificació queden fora perquè afegeixen recorreguts independents. Les quotes diàries per persona encara no tenen una decisió definitiva.
+Mode individual i rondes addicionals: es prioritza completar la ronda compartida. Galeria, xarxa social, xat, videotrucada, pagaments i gamificació queden fora perquè afegeixen recorreguts independents. Les quotes diàries per persona s’ajornen per acord explícit; es manté el topall global de generació de la demo.
 
 Elecció manual del costat: alternativa explorada però poc important segons l’usuari; el repartiment fix evita afegir un pas a l’entrada.
 
@@ -207,12 +218,10 @@ No demostrar la integració d’IA amb una imatge fixa presentada com si s’hag
 
 ## Open Questions
 
-Abans d’aprovar el PRD i passar a spec cal resoldre els punts de comportament que afecten la ronda:
+No queden preguntes de producte imprescindibles sense resposta per preparar aquesta revisió. Això no equival a una aprovació del PRD complet.
 
-1. S’ajornen les quotes diàries per persona? Quin control mínim global de generació s’inclou i què veu qui arriba al límit?
+La revisió ha de validar la concreció de **3 intents totals per ronda** dins del rang de reintents indicat per l’usuari, **«Undo» per última acció completa** i la **confirmació de «Clear colors»**. Aquestes propostes s’han mostrat com a tals, no com a decisions prèvies de l’usuari.
 
-Proposta per resoldre aquest últim punt: ajornar les quotes diàries individuals i posar un topall global de peticions de generació per a la demo, compartit entre totes les sales i comptant tant intents inicials com reintents. En arribar-hi, s’atura només la possibilitat d’iniciar generacions noves, amb un missatge senzill; qui ja té dibuix pot continuar pintant, acabar, revelar i descarregar. Crear una sala nova no ha de reiniciar el topall. L’existència d’aquest control encara s’ha d’acceptar; la xifra es decidirà a la spec amb el model i pressupost, no per suposició.
+Pendents tècnics per a `4-spec`, abans de fixar arquitectura: on s’executarà la demo, tecnologia i eines, model i accés real a l’API, pressupost i topall global numèric, format/caducitat del codi, credencials de participant, retenció, desament i recuperació de pintura, límits i representació dels colors/traços, dimensions i tall exacte, ompliment de regions i format de descàrrega. Cal comprovar les incerteses tècniques rellevants, no donar-les per resoltes per haver escrit aquest PRD.
 
-La revisió també ha de validar la concreció de 3 intents totals per ronda dins del rang de reintents indicat per l’usuari i les propostes d’«Undo» i confirmació de «Clear colors»; encara no equival a un PRD aprovat.
-
-La spec concretarà format de codi, credencials, dimensions, format de descàrrega, proveïdor/model, pressupost, topalls numèrics i mecanismes tècnics, després dels acords de producte. Encara no s’ha triat arquitectura ni s’ha implementat l’app.
+Encara no s’ha triat arquitectura ni s’ha implementat l’app. La generació, la recuperació, els permisos i els límits descrits són requisits a verificar durant la construcció, no proves ja superades.

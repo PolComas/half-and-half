@@ -24,6 +24,8 @@ Cap etapa consta com a completada. No hi ha perfil d’aprenent, plans, checklis
 
 **Estat posterior durant l’entrevista de producte:** l’usuari ha concretat entrada sense compte per codi curt, direcció visual, cubell i pinzell, controls de correcció i absència de vista completa inicial. Ha afegit explícitament la descàrrega de l’obra final a la primera versió, mantenint la galeria fora; `scope.md` reflecteix aquest canvi. S’ha desat el primer `devpost/prd.md` amb `status: draft` i preguntes obertes. La revisió del PRD encara no està completada; no hi ha spec ni construcció.
 
+**Estat posterior, PRD per revisar:** s’han concretat idees i edició, inici de generació, espera, errors, desament automàtic, finalització, dispositius, idioma i controls de pintura. L’usuari ha acceptat el topall global de generació de la demo i ajornar les quotes diàries individuals. `prd.md` està preparat per revisar, amb `status: draft`; encara no s’ha aprovat el document complet. Les concrecions de 3 intents totals per ronda i controls de correcció són propostes a validar en aquesta revisió. No hi ha spec ni construcció.
+
 ## Aplicació al nostre projecte
 
 El context evita haver de repetir acords, però no substitueix les converses de planificació. Proposar un stack no l’aprova. La frase històrica sobre una “segona decisió” no autoritza inventar-la.
