@@ -1,0 +1,23 @@
+# Credencials locals
+.env
+.env.*
+!.env.example
+
+# Context personal del procés d'aprenentatge
+/devpost/learner-profile.md
+
+# Fonts completes de context: conservar només en local i a la còpia privada
+/context/archive/
+/context/10-transcripcio-disponible.md
+
+# Futurs fitxers temporals
+node_modules/
+dist/
+.DS_Store
+
+# Instal·lacions locals d'agents (reinstal·lables amb skills-lock.json)
+/.agents/
+/.claude/
+/.codex/
+/.aws/
+/agent/skills/
