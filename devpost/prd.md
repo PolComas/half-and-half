@@ -29,9 +29,15 @@ Superfícies conegudes del recorregut; no impliquen una pàgina separada per a c
 - **Home:** informació breu de Half & Half, acció principal per crear sala i entrada per codi curt. L’usuari ha acceptat aquesta proposta d’inici. No s’ha definit cap opció concreta de configuració.
 - **Sala i idees:** codi per comunicar a l’altra persona, entrada de text per a la idea pròpia, botó «Fet» o «Confirmar» i segona confirmació. No es confirma una entrada buida. El text no interpretable activa la llibertat creativa prevista al prompt. Presentació exacta dels controls pendent.
 - **Generació:** missatge «La imatge s’està generant. Espereu un moment» per a totes dues persones, sense percentatges inventats. En cas d’error confirmat, explicació senzilla i recuperació amb intents limitats o edició de les idees; cap error tècnic cru com a missatge principal.
-- **Pintura:** meitat pròpia com a element central, dues idees visibles, selecció de color, cubell, pinzell, desfer, netejar i acció per acabar. Distribució dels controls i dispositiu prioritari pendents.
+- **Pintura:** meitat pròpia com a element central, dues idees visibles, selecció de color, cubell, pinzell, desfer, netejar i acció per acabar. Distribució pensada primer per a ordinador; la col·locació exacta dels controls encara s’ha de concretar.
 - **Espera final:** la meitat pròpia desada es pot mirar sense editar-la, amb el missatge «La teva part està desada. Esperem l’altra persona». No s’ensenya pintura aliena ni el resultat complet. No s’afegeix un altre editor o activitat mentre s’espera.
 - **Revelació:** obra completa i acció per descarregar-la, disponible després de dues finalitzacions vàlides.
+
+### Prioritat de dispositius
+
+Ordre indicat explícitament per l’usuari: **ordinador → mòbil → tauleta**. La primera experiència de pintura que es dissenya i valida és la d’ordinador, amb cubell, pinzell i controls de correcció accessibles. Les adaptacions a mòbil i tauleta segueixen aquest ordre i han de conservar el mateix recorregut, costat assignat, tall al 50% i privacitat.
+
+Aquesta priorització no elimina automàticament mòbil o tauleta de l’abast ni incorpora aplicacions natives. La spec ha de concretar el suport i les comprovacions de cada entorn sense desplaçar la ronda completa de dues persones a l’ordinador.
 
 ## Look and Feel
 
@@ -152,6 +158,7 @@ Després de la revelació, cadascú pot descarregar l’obra completa. L’arxiu
 
 Confirmades durant l’entrevista:
 
+- Prioritat de dispositius: ordinador, després mòbil i finalment tauleta; validar primer la pintura a l’ordinador.
 - Inici sense compte, amb crear sala i codi curt com a via principal d’entrada; l’usuari vol poder comunicar-lo fàcilment des d’ordinadors.
 - Assignació fixa: creador de sala a l’esquerra, persona que s’uneix a la dreta. L’usuari ha proposat aquest repartiment i ha considerat poc important l’elecció manual alternativa; s’adopta el repartiment simple per a la primera versió.
 - Idea en text lliure amb botó «Fet» o «Confirmar» i segona confirmació de la idea pròpia. Les entrades buides no s’accepten. Si una aportació no buida no s’entén, l’usuari vol que el prompt permeti inventar un objecte estrany i creatiu per combinar-lo amb l’altra idea.
@@ -192,7 +199,7 @@ No demostrar la integració d’IA amb una imatge fixa presentada com si s’hag
 
 Abans d’aprovar el PRD i passar a spec cal resoldre els punts de comportament que afecten la ronda:
 
-1. Quin és el dispositiu prioritari i quin idioma tindrà la interfície?
+1. Quin idioma tindrà la interfície?
 2. Quin mínim de controls de color, gruix i correcció necessita la primera versió?
 3. S’ajornen les quotes diàries per persona? Quin control mínim global de generació s’inclou i què veu qui arriba al límit?
 
