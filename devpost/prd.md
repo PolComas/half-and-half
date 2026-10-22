@@ -15,7 +15,7 @@ Font: `scope.md > The Core Loop` i `What "Working" Looks Like`.
 
 1. La persona obre una home neta que explica breument l’activitat i permet crear una sala o entrar-hi amb un codi curt. No cal compte.
 2. Qui crea la sala obté el codi i pinta l’esquerra; la segona persona l’introdueix des de la seva sessió i pinta la dreta. La ronda és per a dues persones, amb assignació fixa de costats.
-3. Cada persona aporta una idea. Falta concretar la confirmació de les idees, quan poden editar-se i què inicia la generació.
+3. Cada persona escriu la seva idea en text lliure, prem «Fet» o «Confirmar» i fa una segona confirmació de la idea pròpia. No es pot confirmar text buit. El tractament del text incomprensible, la possible edició posterior i el desencadenant de generació encara s’han de concretar.
 4. S’espera una única generació compartida que combini totes dues idees en una il·lustració en blanc i negre per pintar.
 5. Quan apareix la imatge, es mostren les dues idees. Des d’aquest primer moment cadascú només veu el seu 50% del dibuix; no hi ha vista completa inicial.
 6. Cadascú pinta la seva meitat amb cubell o pinzell i pot desfer o netejar la pintura pròpia, conservant el dibuix base.
@@ -27,7 +27,7 @@ Font: `scope.md > The Core Loop` i `What "Working" Looks Like`.
 Superfícies conegudes del recorregut; no impliquen una pàgina separada per a cada estat:
 
 - **Home:** informació breu de Half & Half, acció principal per crear sala i entrada per codi curt. L’usuari ha acceptat aquesta proposta d’inici. No s’ha definit cap opció concreta de configuració.
-- **Sala i idees:** codi per comunicar a l’altra persona i aportació d’una idea cadascú. Controls de confirmació i distribució exacta pendents.
+- **Sala i idees:** codi per comunicar a l’altra persona, entrada de text per a la idea pròpia, botó «Fet» o «Confirmar» i segona confirmació. No es confirma una entrada buida. Presentació exacta i tractament d’una aportació incomprensible pendents.
 - **Generació:** estat d’espera comprensible; un error no s’ha de presentar com una imatge generada correctament. L’acció de recuperació està pendent.
 - **Pintura:** meitat pròpia com a element central, dues idees visibles, selecció de color, cubell, pinzell, desfer, netejar i acció per acabar. Distribució dels controls i dispositiu prioritari pendents.
 - **Espera final:** la meitat pròpia desada es pot mirar sense editar-la, amb el missatge «La teva part està desada. Esperem l’altra persona». No s’ensenya pintura aliena ni el resultat complet. No s’afegeix un altre editor o activitat mentre s’espera.
@@ -53,6 +53,16 @@ No cal registre ni inici de sessió. Crear una sala dona un codi curt, que l’a
 En aquesta primera versió, qui crea la sala té l’esquerra i qui s’hi uneix té la dreta. No s’afegeix una elecció manual de costat. Aquesta assignació s’ha de mantenir durant tota la ronda; la recuperació de la mateixa plaça en tornar encara s’ha de concretar.
 
 Criteri: dues sessions independents entren a la mateixa ronda mitjançant el codi, sense compartir una sessió de navegador ni ocupar una tercera plaça. Format, caducitat i recuperació de l’entrada pendents.
+
+### Escriure i confirmar les idees
+
+Font: `scope.md > The Core Loop`, concretada durant l’entrevista.
+
+Cada persona introdueix una idea en text lliure i la confirma en dos passos. La segona confirmació revisa la idea pròpia; no anticipa la revelació de l’aportació de l’altra persona. L’etiqueta exacta del botó encara pot ser «Fet» o «Confirmar».
+
+Una entrada buida, inclòs text format només per espais, no pot quedar confirmada ni iniciar generació. L’usuari també vol detectar aportacions incomprensibles, com una seqüència aleatòria de lletres. Ha proposat condicionar el prompt perquè en aquests casos faci alguna cosa diferent; l’acció alternativa encara no està definida ni aprovada. No s’assumeix detecció semàntica perfecta ni una substitució automàtica per una idea inventada.
+
+Criteris coneguts: no hi ha confirmació de text buit; el text propi es pot revisar en el segon pas; una única persona llesta no basta per generar la composició de dues aportacions. Cal concretar el comportament davant text incomprensible, fins quan s’editen les idees i què inicia la generació després de les dues confirmacions.
 
 ### Dibuix compartit i visibilitat
 
@@ -103,6 +113,7 @@ Confirmades durant l’entrevista:
 
 - Inici sense compte, amb crear sala i codi curt com a via principal d’entrada; l’usuari vol poder comunicar-lo fàcilment des d’ordinadors.
 - Assignació fixa: creador de sala a l’esquerra, persona que s’uneix a la dreta. L’usuari ha proposat aquest repartiment i ha considerat poc important l’elecció manual alternativa; s’adopta el repartiment simple per a la primera versió.
+- Idea en text lliure amb botó «Fet» o «Confirmar» i segona confirmació de la idea pròpia. Les entrades buides no s’accepten. Es demana tractar les aportacions incomprensibles; l’acció en aquest cas continua pendent.
 - Direcció visual neta i minimalista, amb aire de taller creatiu i interès per imatges generades pròpies.
 - Imatge de ronda en blanc i negre amb estil de llibre per pintar.
 - Cubell i pinzell dins de la primera versió, més desfer i netejar.
@@ -136,7 +147,7 @@ No demostrar la integració d’IA amb una imatge fixa presentada com si s’hag
 
 Abans d’aprovar el PRD i passar a spec cal resoldre els punts de comportament que afecten la ronda:
 
-1. Com es confirmen les idees, fins quan poden canviar i què inicia la generació? Què poden fer si falla o el contingut no és acceptable?
+1. Què passa si una idea és incomprensible? Fins quan poden canviar les idees i què inicia la generació quan totes dues estan confirmades? Què poden fer si la generació falla o el contingut no és acceptable?
 2. Què es conserva si es recarrega la pàgina, es perd la connexió o algú abandona?
 3. Quin és el dispositiu prioritari i quin idioma tindrà la interfície?
 4. Quin mínim de controls de color, gruix i correcció necessita la primera versió?
