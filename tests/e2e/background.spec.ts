@@ -69,7 +69,7 @@ test("reduced-motion default can be overridden from the visible sticky header", 
   const enable = page.getByRole("button", { name: "Enable background motion", exact: true });
   await expect(enable).toBeEnabled();
   await expect(enable).toHaveAttribute("aria-pressed", "false");
-  expect(await figure.evaluate(el => getComputedStyle(el).animationName)).toBe("none");
+  expect(await figure.evaluate(el => getComputedStyle(el).animationPlayState)).toBe("paused");
   await expect(enable).toBeInViewport();
   await enable.focus();
   await page.keyboard.press("Enter");
@@ -91,7 +91,7 @@ test("reduced-motion default can be overridden from the visible sticky header", 
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     await pause.click();
     await expect(enable).toBeInViewport();
-    expect(await figure.evaluate(el => getComputedStyle(el).animationName)).toBe("none");
+    expect(await figure.evaluate(el => getComputedStyle(el).animationPlayState)).toBe("paused");
     await page.evaluate(() => scrollTo(0, 0));
     await page.screenshot({ path: `.local/screenshots/motion-control-${width}.png`, fullPage: true });
     await enable.click();
@@ -99,7 +99,7 @@ test("reduced-motion default can be overridden from the visible sticky header", 
   await pause.click();
   await page.reload();
   await expect(enable).toBeEnabled();
-  expect(await figure.evaluate(el => getComputedStyle(el).animationName)).toBe("none");
+  expect(await figure.evaluate(el => getComputedStyle(el).animationPlayState)).toBe("paused");
 
   // Without a site preference, changes to the device setting still apply live.
   await page.evaluate(() => localStorage.removeItem("hh-background-motion"));
@@ -110,3 +110,65 @@ test("reduced-motion default can be overridden from the visible sticky header", 
   await page.emulateMedia({ reducedMotion: "reduce" });
   await expect(enable).toBeEnabled();
 });
+
+for (const reducedMotion of ["reduce", "no-preference"] as const) {
+  test(`pause freezes position and resumes the same background timeline (${reducedMotion})`, async ({ page }) => {
+    await page.emulateMedia({ reducedMotion });
+    await page.goto("/");
+    const enable = page.getByRole("button", { name: "Enable background motion", exact: true });
+    const pause = page.getByRole("button", { name: "Pause background motion", exact: true });
+    if (reducedMotion === "reduce") await enable.click();
+    await expect(pause).toBeEnabled();
+    // Advance to a distinct point, so a restart cannot resemble a valid resume.
+    await page.evaluate(() => {
+      const animations = document.querySelector(".atmosphere")!.getAnimations({ subtree: true });
+      (window as any).__backgroundAnimations = animations;
+      for (const animation of animations) animation.currentTime = 8000;
+    });
+    for (let cycle = 0; cycle < 2; cycle++) {
+      await pause.click();
+      await expect(enable).toBeEnabled();
+      const frozen = await page.evaluate(async () => {
+        const animations: Animation[] = (window as any).__backgroundAnimations;
+        await Promise.all(animations.map(animation => animation.ready));
+        const current = document.querySelector(".atmosphere")!.getAnimations({ subtree: true });
+        return animations.map(animation => ({
+          sameAnimation: current.includes(animation),
+          state: animation.playState,
+          time: Number(animation.currentTime),
+          transform: getComputedStyle((animation.effect as KeyframeEffect).target!).transform,
+        }));
+      });
+      expect(frozen).toHaveLength(20); // 16 figures, two washes and two sketches.
+      expect(frozen.every(item => item.sameAnimation && item.state === "paused")).toBe(true);
+      const held = await page.evaluate(async () => {
+        for (let frame = 0; frame < 5; frame++) await new Promise(requestAnimationFrame);
+        const animations: Animation[] = (window as any).__backgroundAnimations;
+        return animations.map(animation => ({
+          time: Number(animation.currentTime),
+          transform: getComputedStyle((animation.effect as KeyframeEffect).target!).transform,
+        }));
+      });
+      expect(held).toEqual(frozen.map(({ time, transform }) => ({ time, transform })));
+      const frozenFigure = await page.locator(".ambient-figure").first()
+        .evaluate(el => getComputedStyle(el).transform);
+      await enable.click();
+      await expect(pause).toBeEnabled();
+      const resumed = await page.evaluate(() => {
+        const current = document.querySelector(".atmosphere")!.getAnimations({ subtree: true });
+        const animations: Animation[] = (window as any).__backgroundAnimations;
+        return animations.map(animation => ({
+          sameAnimation: current.includes(animation),
+          time: Number(animation.currentTime),
+        }));
+      });
+      resumed.forEach((animation, i) => {
+        expect(animation.sameAnimation).toBe(true);
+        expect(animation.time).toBeGreaterThanOrEqual(frozen[i].time);
+        expect(animation.time).toBeLessThan(frozen[i].time + 1000);
+      });
+      await expect.poll(() => page.locator(".ambient-figure").first().evaluate(el => getComputedStyle(el).transform))
+        .not.toBe(frozenFigure);
+    }
+  });
+}

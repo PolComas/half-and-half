@@ -56,7 +56,7 @@ Feedback real de la revisió final: primer l’usuari confirma cubell i pinzell.
 
 ## Final Review
 
-- [ ] Final review complete — feedback resolved and learner confirms ready to ship
+- [x] Final review complete — feedback resolved and learner confirms ready to ship
 
 Revisió del MVP inicial completada: l’usuari confirma que tot el tram sol·licitat funciona, després de provar les correccions de pintura. Les 29 proves mecàniques inicials i la ronda real de l’agent consten a `verification.md`; la confirmació manual és evidència separada. La casella global es va reobrir per a la iteració posterior i es torna a tancar amb la confirmació del 2026-10-23 registrada a continuació. Aquesta acceptació tanca la prova de concepte, sense autoritzar desplegament o candidatura.
 
@@ -76,9 +76,13 @@ Verificació: typecheck/build i proves d’entrada i sessió afectades; dos cont
 
 Després de confirmar la iteració anterior, l’usuari demana més figures que es moguin contínuament entrant i sortint de pantalla. També pregunta per responsive i accessibilitat. Es reobre només aquesta revisió; les aprovacions i el mapa anteriors es conserven.
 
-- [ ] Figures addicionals amb bucles sense salts visibles, menor densitat al mòbil i decoració sense interacció; pausa manual i reducció de moviment del sistema respectades. Verificar recorreguts fora del viewport, persistència de pausa, control amb teclat i layouts 390/768/1440, typecheck/build i e2e afectats; obtenir comentari manual abans de tancar.
+- [x] Figures addicionals amb bucles sense salts visibles, menor densitat al mòbil i decoració sense interacció; pausa manual i reducció de moviment del sistema respectades. Verificar recorreguts fora del viewport, persistència de pausa, control amb teclat i layouts 390/768/1440, typecheck/build i e2e afectats; obtenir comentari manual abans de tancar.
 
 Feedback real: «Vale si surten figures però no es mouen, i surt nomes reduced motion enabled, però no deixa canviar-ho, a més si estas a dalt de tot de la pàgina no es veu el peu de pàgina». El sistema reduïa el moviment i el control desactivat impedia canviar-lo. S’ajusta a preferència inicial del sistema amb elecció explícita local i control a la capçalera sticky, també visible en desplaçar-se. La comprovació manual de la correcció continua pendent.
+
+Feedback posterior: l’usuari confirma que ara funciona i demana que en pausar/activar es conservi la posició de les figures. S’elimina la substitució per una composició estàtica amb moviment reduït: es congela i reprèn la mateixa animació, incloent figures, xarxa i camps de color. La confirmació anterior valida l’activació, no aquesta correcció posterior; prova manual de continuïtat pendent.
+
+Confirmació manual posterior: en resposta a la prova de seguir una figura, pausar i reprendre sense salt, l’usuari diu «Vale si, ja funciona». Es tanca la segona revisió del fons i la revisió global; les notes de pendent anteriors descriuen l’estat d’aquell moment. Sis e2e, typecheck i build superats. `5-build` completat; `6-ship` no iniciat.
 
 ## Code Tour and App Map
 

@@ -34,7 +34,6 @@ export default function Atmosphere({ paused = false }: { paused?: boolean }) {
             "--flight-delay": `${delay}s`,
             "--drift-x": `${drift}vw`,
             "--turn": `${i % 2 ? -110 : 140}deg`,
-            "--rest-y": `${(i * 29) % 100}vh`,
             animationDirection: i % 2 ? "reverse" : "normal",
           } as CSSProperties}
         >

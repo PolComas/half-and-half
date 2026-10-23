@@ -158,3 +158,15 @@ Corregit: sense preferència pròpia, el fons segueix el sistema. «Motion off»
 Verificacions: typecheck i build passen. Les dues proves del fons comproven el cas de sistema reduït abans d’obrir l’app, activació amb teclat, transformacions que canvien realment, pausa/represa, recàrrega, prioritat de l’elecció manual, seguiment dels canvis del sistema sense elecció pròpia i control dins del viewport a dalt i al final en 320/390/768/1440 px. Captures d’escriptori i mòbil inspeccionades. La primera prova integrada va detectar que la capçalera tapava el punt de toc del canvas després del desplaçament; `scroll-padding-top` reserva espai i les dues proves preexistents tornen a passar, inclosa la ronda completa i el toc amb canvi de píxels verificat. La revisió té quatre e2e superats; no s’han repetit tests de backend ni fet crides d’OpenAI.
 
 Aquest feedback es registra com una incidència resolta mecànicament, no com una aprovació manual de la correcció. Es demana recarregar i provar el control nou; la casella de revisió continua pendent. Cap desplegament ni inici de `6-ship`.
+
+
+### Continuïtat de posició en pausar i reprendre
+
+Feedback posterior: l’usuari confirma que l’activació ja funciona i demana que els objectes es quedin on són en pausar i continuïn des d’allí. La regla de moviment reduït eliminava les animacions i imposava una posició/rotació estàtica; en reprendre, es creava una animació nova. S’eliminen aquesta substitució i la variable de posició de repòs. El fons manté les mateixes animacions i només canvia `animation-play-state`; la reducció de moviment inicial continua deixant-les pausades, sense moviment previ, i la resta del contingut conserva la seva reducció.
+
+Typecheck i build superats. Quatre proves del fons passen. Les dues proves de regressió noves comproven, amb i sense reducció del sistema, les 20 animacions (16 figures, dues xarxes i dos camps de color): mateixa identitat, temps i transformacions estables durant diversos fotogrames pausats, i represa amb temps continu i moviment real. Es repeteix dues vegades el cicle pausa/represa. S’actualitza l’assert de la ronda perquè el moviment reduït comprovi una animació pausada, en lloc d’eliminada. Les dues proves preexistents també tornen a passar, inclosa la ronda completa amb dues sessions i el toc: sis e2e superats en total. No es repeteixen tests de backend perquè no canvia.
+
+La comprovació manual de la continuïtat encara està pendent; no es reutilitza l’acceptació del control anterior. Sense generacions d’OpenAI, desplegament ni inici de `6-ship`.
+
+
+Confirmació manual posterior: a la petició de recarregar, seguir una figura, pausar i reprendre des del mateix punt, l’usuari respon «Vale si, ja funciona». Es tanca aquesta revisió i la casella global; els estats pendents anteriors es conserven com a història. No s’atribueixen a l’usuari els tests interns ni dispositius concrets. `5-build` completat; `6-ship` no iniciat. No es modifica més codi ni es repeteixen proves per aquest tancament documental.

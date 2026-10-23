@@ -53,7 +53,7 @@ Font: `scope.md > Inspiration & Identity`, concretada per les respostes de l’u
 
 ## Features and Behavior
 
-Refinament posterior demanat el 2026-10-23: més figures discretes al fons amb moviment continu d’entrada i sortida de pantalla. La il·lustració i les eines conserven protagonisme. L’ampliació inclou control manual del fons accessible a la capçalera: inicialment segueix la reducció de moviment del dispositiu i permet activar-lo explícitament. L’elecció es recorda en aquest navegador; no es canvia la ronda ni la privacitat.
+Refinament posterior demanat el 2026-10-23: més figures discretes al fons amb moviment continu d’entrada i sortida de pantalla. La il·lustració i les eines conserven protagonisme. L’ampliació inclou control manual del fons accessible a la capçalera: inicialment segueix la reducció de moviment del dispositiu i permet activar-lo explícitament. L’elecció es recorda en aquest navegador; pausar congela les figures on són i reprendre les fa continuar des de la mateixa posició i rotació; no es canvia la ronda ni la privacitat.
 
 ### Entrada amb codi curt
 

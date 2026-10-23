@@ -48,6 +48,10 @@ Cap etapa consta com a completada. No hi ha perfil d’aprenent, plans, checklis
 
 **Feedback de la segona revisió:** l’usuari veu les figures estàtiques i «Reduced motion enabled» desactivat; el control al peu no és visible des de dalt. Es corregeix a preferència inicial del sistema, amb elecció explícita local i control a la capçalera sticky. La nova prova manual continua pendent; no es considera aprovada per les acceptacions anteriors.
 
+**Feedback posterior del fons:** l’usuari confirma que el moviment ja funciona i demana congelar els objectes on són en pausar i continuar des d’allí en reprendre. S’elimina la substitució per una composició estàtica amb preferència de moviment reduït; no es tracta aquest feedback com a aprovació dels canvis nous.
+
+**Confirmació de la continuïtat del fons:** en resposta a la prova de pausar i reprendre seguint una figura, l’usuari diu «Vale si, ja funciona». Es tanca la revisió amb sis e2e, typecheck i build superats, sense més generacions. `5-build` completat; `6-ship` no iniciat.
+
 ## Aplicació al nostre projecte
 
 El context evita haver de repetir acords, però no substitueix les converses de planificació. Proposar un stack no l’aprova. La frase històrica sobre una “segona decisió” no autoritza inventar-la.

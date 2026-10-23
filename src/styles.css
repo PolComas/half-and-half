@@ -1451,11 +1451,6 @@ dialog p.idea-quote {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .atmosphere[data-paused="true"] .ambient-figure {
-    top: var(--rest-y);
-    transform: rotate(18deg);
-  }
-  .atmosphere[data-paused="true"] *,
   .app-shell > :not(.atmosphere),
   .app-shell > :not(.atmosphere) *,
   .app-shell > :not(.atmosphere) *:before,

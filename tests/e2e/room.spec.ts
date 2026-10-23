@@ -213,11 +213,7 @@ test("home, independent room sessions, shared generation and private halves", as
   ).toBeVisible();
   expect(await digest(A)).toBe(filledA);
   await A.emulateMedia({ reducedMotion: "reduce" });
-  expect(
-    await A.locator(".sketch-one").evaluate(
-      (el) => getComputedStyle(el).animationName,
-    ),
-  ).toBe("none");
+  await expect(A.locator(".sketch-one")).toHaveCSS("animation-play-state", "paused");
   // Only one active tab for this participant, and a successor reloads the saved colors.
   const twin = await a.newPage();
   await twin.goto("/");
