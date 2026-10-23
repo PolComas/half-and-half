@@ -23,7 +23,7 @@ Iniciat explícitament per l’usuari el **2026-10-23**. És un registre tècnic
 
 Consulta de lectura a la quota interna del projecte: 5 intents reservats de 20; en queden 15. És capacitat interna de l’aplicació, no saldo verificat d’OpenAI. No s’ha reiniciat el comptador ni modificat infraestructura.
 
-El skill real `6-ship` (`.agents/skills/6-ship/SKILL.md`, instal·lat només en local) exigeix autoria humana dels textos i de l’enquesta. L’agent pot identificar buits i corregir ortografia/gramàtica; no redactar, traduir o reescriure respostes finals ni la narració del vídeo. L’usuari informa posteriorment que ja ha omplert tots els camps de Devpost i només li falten vídeo i fitxers. No es continua l’entrevista del relat ni se’n reescriu el contingut. Intercanvi pendent: identificar el camp exacte de fitxers i després concretar què vol mostrar al vídeo.
+El skill real `6-ship` (`.agents/skills/6-ship/SKILL.md`, instal·lat només en local) exigeix autoria humana dels textos i de l’enquesta. L’agent pot identificar buits i corregir ortografia/gramàtica; no redactar, traduir o reescriure respostes finals ni la narració del vídeo. L’usuari informa posteriorment que ja ha omplert tots els camps de Devpost i només li falten vídeo i fitxers. No es continua l’entrevista del relat ni se’n reescriu el contingut. L’usuari confirma que els fitxers corresponen a Image gallery, que vol destacar el dibuix final i que utilitza el gravador integrat. S’ha preparat una guia tècnica local de captura; encara no s’ha gravat ni rebut cap vídeo.
 
 ## Camps confirmats a partir del formulari mostrat per l’usuari
 
@@ -35,3 +35,12 @@ El skill real `6-ship` (`.agents/skills/6-ship/SKILL.md`, instal·lat només en 
 - **Video demo link:** obligatori, incrustat al capdamunt de la pàgina. El fragment del formulari no afegeix durada; s’apliquen les indicacions actuals de portada i bases.
 
 Hi ha una plantilla local amb els apartats reals a `.local/ship/project-story.md`. Encara no conté el relat final. Les notes personals i les reflexions no s’afegeixen al repositori públic per defecte.
+
+
+## Preparació del vídeo i galeria
+
+La llicència MIT i les instruccions angleses han quedat publicades al commit `d12a4a1`. Verificació GET sense autenticació: `LICENSE` retorna HTTP 200 i identificació SPDX MIT; `docs/SETUP.en.md` retorna HTTP 200. Cap canvi de visibilitat del repositori.
+
+L’usuari vol donar protagonisme al dibuix final i farà servir el gravador integrat. Guia mecànica a `.local/ship/recording-checklist.md`: ronda real, dues sessions independents, primera finalització en espera i revelació amb la segona; escurçar esperes/pintura mantenint la seqüència real, i reservar espai al resultat i descàrrega. Aquesta guia no redacta narració ni respostes de candidatura. Captures proposades durant la ronda: resultat final, Home i meitat amb eines; l’usuari encara no les ha aportat ni carregat. Els originals de verificacions anteriors s’han inspeccionat, sense presentar-los com a captures dels últims retocs ni modificar-los.
+
+Pendent següent: gravació de l’usuari, durada final, enllaç públic comprovable, galeria, confirmació de l’enquesta i enviament. La disponibilitat per al jurat continua per concretar; no es declara que s’hagi desplegat l’app.
