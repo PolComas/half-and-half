@@ -46,6 +46,8 @@ Cap etapa consta com a completada. No hi ha perfil d’aprenent, plans, checklis
 
 **Segona revisió del fons, 2026-10-23:** l’usuari demana més figures que entrin i surtin contínuament i pregunta per mancances, possibilitats de guanyar, responsive i accessibilitat. S’amplia només l’ambient decoratiu, amb pausa manual i reducció de moviment prioritària; revisió manual nova pendent. No s’inventa una probabilitat de guanyar ni es confonen proves Chrome/toc emulat amb dispositius físics, altres motors o una auditoria WCAG. `6-ship` no iniciat.
 
+**Feedback de la segona revisió:** l’usuari veu les figures estàtiques i «Reduced motion enabled» desactivat; el control al peu no és visible des de dalt. Es corregeix a preferència inicial del sistema, amb elecció explícita local i control a la capçalera sticky. La nova prova manual continua pendent; no es considera aprovada per les acceptacions anteriors.
+
 ## Aplicació al nostre projecte
 
 El context evita haver de repetir acords, però no substitueix les converses de planificació. Proposar un stack no l’aprova. La frase històrica sobre una “segona decisió” no autoritza inventar-la.

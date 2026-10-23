@@ -219,34 +219,48 @@ export default function App() {
         <a className="wordmark" href="#home" aria-label="Half and Half home">
           half <span>&</span> half<span className="brand-dot">.</span>
         </a>
-        {room ? (
-          <div className="room-details">
-            <a className="header-home" href={showHome ? "#room" : "#home"}>
-              {showHome ? "Back to room" : "Home"}
+        <div className="header-actions">
+          {room ? (
+            <div className="room-details">
+              <a className="header-home" href={showHome ? "#room" : "#home"}>
+                {showHome ? "Back to room" : "Home"}
+              </a>
+              <span className="side-tag">Your side · {room.side}</span>
+              <button
+                className="code-button"
+                onClick={() => {
+                  void navigator.clipboard
+                    ?.writeText(room.code)
+                    .then(() => {
+                      setCopied(true);
+                      setTimeout(() => setCopied(false), 2000);
+                    })
+                    .catch(() => {});
+                }}
+                aria-label={`Copy room code ${room.code}`}
+              >
+                {copied ? "Copied!" : room.code}
+                <span aria-hidden="true"> ⧉</span>
+              </button>
+            </div>
+          ) : (
+            <a href="#how-it-works" className="nav-link">
+              How it works <span aria-hidden="true">↗</span>
             </a>
-            <span className="side-tag">Your side · {room.side}</span>
-            <button
-              className="code-button"
-              onClick={() => {
-                void navigator.clipboard
-                  ?.writeText(room.code)
-                  .then(() => {
-                    setCopied(true);
-                    setTimeout(() => setCopied(false), 2000);
-                  })
-                  .catch(() => {});
-              }}
-              aria-label={`Copy room code ${room.code}`}
-            >
-              {copied ? "Copied!" : room.code}
-              <span aria-hidden="true"> ⧉</span>
-            </button>
-          </div>
-        ) : (
-          <a href="#how-it-works" className="nav-link">
-            How it works <span aria-hidden="true">↗</span>
-          </a>
-        )}
+          )}
+          <button
+            className="motion-control"
+            aria-label={motion.paused ? "Enable background motion" : "Pause background motion"}
+            aria-pressed={!motion.paused}
+            title={motion.followsSystem && motion.reduced
+              ? "Your device prefers reduced motion. You can enable background motion here."
+              : motion.paused ? "Enable background motion" : "Pause background motion"}
+            onClick={motion.toggle}
+          >
+            <span aria-hidden="true">{motion.paused ? "▷" : "Ⅱ"}</span>
+            <span className="motion-label">Motion {motion.paused ? "off" : "on"}</span>
+          </button>
+        </div>
       </header>
       {error && (
         <div className="notice" role="alert">
@@ -324,18 +338,6 @@ export default function App() {
       )}
       <footer className="site-footer">
         <span>A little color. A little connection.</span>
-        <button
-          className="motion-control"
-          aria-pressed={motion.paused}
-          disabled={motion.reduced}
-          onClick={motion.toggle}
-        >
-          {motion.reduced
-            ? "Reduced motion enabled"
-            : motion.paused
-              ? "Resume background motion"
-              : "Pause background motion"}
-        </button>
         <span>
           Made for two <span aria-hidden="true">✳</span>
         </span>

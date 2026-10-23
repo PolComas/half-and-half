@@ -17,6 +17,9 @@
 body {
   margin: 0;
 }
+html {
+  scroll-padding-top: 140px;
+}
 button,
 input,
 textarea {
@@ -62,8 +65,20 @@ a {
   margin: 0 6vw;
 }
 .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #faf7f0f5;
   height: 110px;
   border-bottom: 1px solid var(--line);
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 22px;
+  flex-wrap: wrap;
+  min-width: 0;
 }
 .wordmark {
   font:
@@ -823,19 +838,21 @@ dialog p.idea-quote {
   animation-play-state: paused !important;
 }
 .motion-control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  flex-shrink: 0;
   padding: 10px 8px;
   min-height: 44px;
+  min-width: 44px;
   background: transparent;
   border: 0;
   color: var(--ink);
   font-size: 12px;
-  text-decoration: underline;
-  text-underline-offset: 4px;
 }
-.motion-control:disabled {
-  opacity: 1;
-  color: #655e54;
-  text-decoration: none;
+.motion-control > span:first-child {
+  font-size: 19px;
 }
 @keyframes figure-crossing {
   from {
@@ -1434,15 +1451,44 @@ dialog p.idea-quote {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ambient-figure {
+  .atmosphere[data-paused="true"] .ambient-figure {
     top: var(--rest-y);
     transform: rotate(18deg);
   }
-  *,
-  *:before,
-  *:after {
+  .atmosphere[data-paused="true"] *,
+  .app-shell > :not(.atmosphere),
+  .app-shell > :not(.atmosphere) *,
+  .app-shell > :not(.atmosphere) *:before,
+  .app-shell > :not(.atmosphere) *:after {
     animation: none !important;
     transition: none !important;
     scroll-behavior: auto !important;
+  }
+  html {
+    scroll-behavior: auto !important;
+  }
+}
+@media (max-width: 560px) {
+  .site-header {
+    height: auto;
+    min-height: 86px;
+    padding-block: 12px;
+    gap: 10px;
+  }
+  .wordmark {
+    flex-shrink: 0;
+  }
+  .header-actions {
+    gap: 4px 10px;
+  }
+  .motion-label {
+    display: none;
+  }
+  .motion-control {
+    padding: 8px;
+  }
+  .room-details {
+    flex-wrap: wrap;
+    justify-content: flex-end;
   }
 }

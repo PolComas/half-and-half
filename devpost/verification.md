@@ -147,3 +147,14 @@ Abast real del suport: responsive i toc emulat de Chrome; sense nova prova físi
 Fonts revisades per a les respostes: [criteris del hackathon](https://learn-ai-basics.devpost.com/rules), [pack real](https://github.com/challengepost/learn-ai-basics), [pausa del moviment](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html) i [operació amb teclat](https://www.w3.org/WAI/WCAG22/Understanding/keyboard.html). No hi ha dades per estimar una probabilitat de victòria ni es presenta una opinió com a puntuació del jurat.
 
 Plans i mapa actualitzats; ancoratges del mapa contrastats amb els fitxers. Revisió manual del nou fons pendent: no es reutilitza «Funciona tot bé» per aprovar canvis posteriors a aquella resposta. `6-ship` no iniciat, cap desplegament o candidatura publicada.
+
+
+### Correcció després del feedback de moviment bloquejat
+
+L’usuari confirma que veu figures, però no es mouen; veu només «Reduced motion enabled» desactivat i no troba el control des de dalt perquè era al peu. La primera implementació tractava la preferència del dispositiu com un bloqueig permanent, massa restrictiu per a l’elecció explícita demanada.
+
+Corregit: sense preferència pròpia, el fons segueix el sistema. «Motion off» / ▷ permet activar-lo explícitament i «Motion on» / Ⅱ permet pausar-lo; l’elecció es conserva localment quan Storage està disponible. Aquesta excepció s’aplica només al fons: les animacions de contingut continuen reduïdes si el dispositiu ho demana. El botó ja no es desactiva. Capçalera sticky, control visible des del principi i en desplaçar-se, nom accessible complet i estat `aria-pressed` coherent amb moviment activat. En mòbil es mostra la icona compacta amb el mateix nom accessible.
+
+Verificacions: typecheck i build passen. Les dues proves del fons comproven el cas de sistema reduït abans d’obrir l’app, activació amb teclat, transformacions que canvien realment, pausa/represa, recàrrega, prioritat de l’elecció manual, seguiment dels canvis del sistema sense elecció pròpia i control dins del viewport a dalt i al final en 320/390/768/1440 px. Captures d’escriptori i mòbil inspeccionades. La primera prova integrada va detectar que la capçalera tapava el punt de toc del canvas després del desplaçament; `scroll-padding-top` reserva espai i les dues proves preexistents tornen a passar, inclosa la ronda completa i el toc amb canvi de píxels verificat. La revisió té quatre e2e superats; no s’han repetit tests de backend ni fet crides d’OpenAI.
+
+Aquest feedback es registra com una incidència resolta mecànicament, no com una aprovació manual de la correcció. Es demana recarregar i provar el control nou; la casella de revisió continua pendent. Cap desplegament ni inici de `6-ship`.

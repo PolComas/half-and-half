@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 const preferenceKey = "hh-background-motion";
 
 export function useBackgroundMotion() {
-  const [paused, setPaused] = useState(() => {
+  const [preference, setPreference] = useState<"paused" | "playing" | null>(() => {
     try {
-      return localStorage.getItem(preferenceKey) === "paused";
+      const saved = localStorage.getItem(preferenceKey);
+      return saved === "paused" || saved === "playing" ? saved : null;
     } catch {
-      return false;
+      return null;
     }
   });
   const [reduced, setReduced] = useState(
@@ -20,14 +21,15 @@ export function useBackgroundMotion() {
     return () => media.removeEventListener("change", changed);
   }, []);
 
+  const paused = preference === null ? reduced : preference === "paused";
   function toggle() {
-    const next = !paused;
-    setPaused(next);
+    const next = paused ? "playing" : "paused";
+    setPreference(next);
     try {
-      localStorage.setItem(preferenceKey, next ? "paused" : "playing");
+      localStorage.setItem(preferenceKey, next);
     } catch {
       // The control still works for this visit if browser storage is unavailable.
     }
   }
-  return { paused: paused || reduced, reduced, toggle };
+  return { paused, reduced, followsSystem: preference === null, toggle };
 }

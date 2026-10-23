@@ -78,6 +78,8 @@ Després de confirmar la iteració anterior, l’usuari demana més figures que 
 
 - [ ] Figures addicionals amb bucles sense salts visibles, menor densitat al mòbil i decoració sense interacció; pausa manual i reducció de moviment del sistema respectades. Verificar recorreguts fora del viewport, persistència de pausa, control amb teclat i layouts 390/768/1440, typecheck/build i e2e afectats; obtenir comentari manual abans de tancar.
 
+Feedback real: «Vale si surten figures però no es mouen, i surt nomes reduced motion enabled, però no deixa canviar-ho, a més si estas a dalt de tot de la pàgina no es veu el peu de pàgina». El sistema reduïa el moviment i el control desactivat impedia canviar-lo. S’ajusta a preferència inicial del sistema amb elecció explícita local i control a la capçalera sticky, també visible en desplaçar-se. La comprovació manual de la correcció continua pendent.
+
 ## Code Tour and App Map
 
 - [x] Learning activity complete — guided route, focused alternative, prior practice connected, or brief recap
