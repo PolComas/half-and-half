@@ -7,12 +7,13 @@ Iniciat explícitament per l’usuari el **2026-10-23**. És un registre tècnic
 - [x] Repositori públic verificat sense autenticació: https://github.com/PolComas/half-and-half. Auditoria de `main` al commit `778a1b5`: 29 commits, 249 blobs, cap coincidència dels patrons de credencial revisats ni rutes privades excloses a la història. No és una garantia absoluta de detecció. La còpia privada no és el repositori de lliurament.
 - [x] MIT aprovada explícitament per l’usuari amb «PolComas» com a titular, aplicada a `LICENSE` i a les metadades npm. Dependències i material aliè conserven els seus drets.
 - [x] Instruccions tècniques en anglès disponibles a [`docs/SETUP.en.md`](../docs/SETUP.en.md), amb execució real i fixture sintètica clarament diferenciades.
-- [ ] Vídeo curt amb funcionament real, pujat a YouTube/Vimeo i accessible sense autenticació. L’usuari confirma que encara no el té preparat.
-- [ ] Formulari real complet revisat. L’usuari ha mostrat General info, Project Story i Project Media; l’enquesta i qualsevol pas posterior encara no s’han vist. Límit exacte del tagline no proporcionat. La vista pública de My projects no permet accedir al formulari amb sessió; els camps confirmats es registren més avall.
+- [x] Enllaç de vídeo rebut: https://youtu.be/U4B9bVnwe8U. Comprovació sense autenticació: oEmbed i watch HTTP 200, reproductor `OK`, títol «Devpost half & half».
+- [x] Revisió de durada i confirmació del contingut: el reproductor indica 182 segons (3:02). L’usuari confirma que mostra generació, espera amb una sola persona acabada i revelació abans del minut tres. L’agent ha comprovat metadades, no ha visionat el vídeo. Es manté la recomanació de retallar uns segons, sense afirmar desqualificació automàtica ni donar el retall per fet.
+- [x] Camps compartits del formulari registrats i emplenament confirmat per l’usuari, ara al pas de Submit. General info, Project Story i Project Media s’han revisat a partir del fragment proporcionat; no es presenta la resta del contingut ni les respostes personals com a llegides per l’agent.
 - [x] Nom i tagline breu escrits per l’usuari. Es conserva el nom indicat **Half & Half**; l’usuari ha escrit una frase anglesa de 47 caràcters i se n’ha comprovat la gramàtica sense modificar-la. No es dona per confirmat el desament al formulari. El text es conserva només en local.
 - [x] L’usuari confirma que ha omplert la resta de camps i textos de Devpost; l’agent no n’ha llegit ni validat el contingut. Vídeo i fitxers continuen pendents. Cal comprovar llengua i requisits abans d’enviar.
-- [ ] Enquesta de sortida completada per l’usuari. Preguntes exactes encara no disponibles.
-- [ ] Disponibilitat de comprovació per al jurat fins al final de l’avaluació revisada. Sense desplegament triat ni URL pública de l’app; hi ha instruccions locals i una fixture gratuïta explícitament sintètica. La generació real requereix els serveis configurats i no es presenta la fixture com a substitut de la prova real.
+- [x] Enquesta de sortida completada segons confirmació explícita de l’usuari («Si»). No s’han redactat ni inspeccionat les seves respostes personals.
+- [x] Opcions de comprovació documentades: repositori i vídeo accessibles, instruccions locals i fixture gratuïta explícitament sintètica. No hi ha desplegament ni URL pública de l’app. La generació real requereix serveis configurats; no es promet accés a les claus del propietari ni es presenta la fixture com a prova d’IA. Cal mantenir repositori i vídeo disponibles durant l’avaluació.
 - [ ] Lliurament confirmat a Devpost per l’usuari. No s’ha enviat ni publicat cap candidatura.
 
 ## Fonts consultades el 2026-10-23
@@ -23,7 +24,7 @@ Iniciat explícitament per l’usuari el **2026-10-23**. És un registre tècnic
 
 Consulta de lectura a la quota interna del projecte: 5 intents reservats de 20; en queden 15. És capacitat interna de l’aplicació, no saldo verificat d’OpenAI. No s’ha reiniciat el comptador ni modificat infraestructura.
 
-El skill real `6-ship` (`.agents/skills/6-ship/SKILL.md`, instal·lat només en local) exigeix autoria humana dels textos i de l’enquesta. L’agent pot identificar buits i corregir ortografia/gramàtica; no redactar, traduir o reescriure respostes finals ni la narració del vídeo. L’usuari informa posteriorment que ja ha omplert tots els camps de Devpost i només li falten vídeo i fitxers. No es continua l’entrevista del relat ni se’n reescriu el contingut. L’usuari confirma que els fitxers corresponen a Image gallery, que vol destacar el dibuix final i que utilitza el gravador integrat. S’ha preparat una guia tècnica local de captura; encara no s’ha gravat ni rebut cap vídeo.
+El skill real `6-ship` (`.agents/skills/6-ship/SKILL.md`, instal·lat només en local) exigeix autoria humana dels textos i de l’enquesta. L’agent pot identificar buits i corregir ortografia/gramàtica; no redactar, traduir o reescriure respostes finals ni la narració del vídeo. L’usuari informa posteriorment que ja ha omplert tots els camps de Devpost i només li falten vídeo i fitxers. No es continua l’entrevista del relat ni se’n reescriu el contingut. L’usuari confirma que els fitxers corresponen a Image gallery, que vol destacar el dibuix final i que utilitza el gravador integrat. S’ha preparat una guia tècnica local de captura; posteriorment l’usuari aporta el vídeo i diu que és al pas de Submit. L’enviament encara no està confirmat.
 
 ## Camps confirmats a partir del formulari mostrat per l’usuari
 
@@ -43,4 +44,9 @@ La llicència MIT i les instruccions angleses han quedat publicades al commit `d
 
 L’usuari vol donar protagonisme al dibuix final i farà servir el gravador integrat. Guia mecànica a `.local/ship/recording-checklist.md`: ronda real, dues sessions independents, primera finalització en espera i revelació amb la segona; escurçar esperes/pintura mantenint la seqüència real, i reservar espai al resultat i descàrrega. Aquesta guia no redacta narració ni respostes de candidatura. Captures proposades durant la ronda: resultat final, Home i meitat amb eines; l’usuari encara no les ha aportat ni carregat. Els originals de verificacions anteriors s’han inspeccionat, sense presentar-los com a captures dels últims retocs ni modificar-los.
 
-Pendent següent: gravació de l’usuari, durada final, enllaç públic comprovable, galeria, confirmació de l’enquesta i enviament. La disponibilitat per al jurat continua per concretar; no es declara que s’hagi desplegat l’app.
+Estat posterior: vídeo gravat i enllaç públic rebut. Contingut i enquesta confirmats posteriorment per l’usuari. El retall curt continua sent una recomanació no executada. Galeria sense confirmació explícita de càrrega; revisar la previsualització final. Enviament encara pendent, sense desplegament.
+
+
+## Comprovació anterior a Submit
+
+L’usuari diu que ha gravat el vídeo i és al pas d’enviament. No es pren com a confirmació d’haver premut Submit. Enllaç guardat també a la spec i a les instruccions de compartició. L’usuari respon «Si» a la comprovació d’enquesta i del flux visible abans del minut tres; es registra com a confirmació seva, sense atribuir un visionat a l’agent. No es tornen a executar proves de l’app per aquesta actualització documental. La càrrega concreta de galeria no s’ha confirmat, i no es converteix en un requisit obligatori no marcat al formulari. Es deixa una comprovació de previsualització. `6-ship` continua pendent de l’enviament real; estar al pas de Submit no n’és la confirmació.

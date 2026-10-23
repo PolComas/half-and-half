@@ -97,7 +97,7 @@ Render queda com a preferència futura: un sol Web Service podria servir React c
 
 ### Sharing instructions — preparació de `6-ship`
 
-Repositori públic: https://github.com/PolComas/half-and-half, comprovat sense autenticació el 2026-10-23. Codi original sota MIT amb aprovació explícita de l’usuari; claus, perfil d’aprenent i fonts privades excloses. Instruccions tècniques en anglès a [`docs/SETUP.en.md`](../docs/SETUP.en.md), amb execució local i fixture de test diferenciades. El vídeo públic de funcionament real encara no té URL; tampoc hi ha desplegament ni enviament confirmat. Registrar l’enllaç del vídeo i verificar permisos quan l’usuari el proporcioni. Estat real a [`ship-checklist.md`](ship-checklist.md).
+Repositori públic: https://github.com/PolComas/half-and-half, comprovat sense autenticació el 2026-10-23. Codi original sota MIT amb aprovació explícita de l’usuari; claus, perfil d’aprenent i fonts privades excloses. Instruccions tècniques en anglès a [`docs/SETUP.en.md`](../docs/SETUP.en.md), amb execució local i fixture de test diferenciades. Vídeo proporcionat per l’usuari: https://youtu.be/U4B9bVnwe8U. Comprovació sense autenticació el 2026-10-23: oEmbed i pàgina pública retornen HTTP 200; el reproductor indica `OK` i durada de 182 segons (3:02). Es recomana escurçar-lo per sota de tres minuts segons les bases; l’usuari confirma el flux fins a la revelació abans del minut tres i l’enquesta completada. El retall recomanat encara no s’ha confirmat i l’agent no afirma haver visionat el vídeo. No hi ha desplegament ni enviament confirmat. Estat real a [`ship-checklist.md`](ship-checklist.md).
 
 ## Look and Feel
 

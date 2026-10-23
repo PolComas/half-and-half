@@ -89,7 +89,7 @@ node --import tsx tests/support/e2e-server.ts
 
 Open **http://localhost:5179** in two separate profiles. The banner says **Test fixture — no AI was called**. This fixture exercises the interaction with a synthetic image; it does **not** demonstrate real image generation and must not be presented as such in the demo. Stop the fixture with `Ctrl+C`, then run `npm run test:db:stop`. Do not run it concurrently with the automated browser suite, which uses the same ports.
 
-Real integration evidence and limitations are recorded in [`devpost/verification.md`](../devpost/verification.md). The required final demo video link has not yet been supplied. Deployment is optional; arrangements for any requested real-service judging access remain to be finalized without publishing credentials.
+Real integration evidence and limitations are recorded in [`devpost/verification.md`](../devpost/verification.md). The owner has supplied a [demo video](https://youtu.be/U4B9bVnwe8U). Its public player reports 182 seconds (3:02); access and metadata were checked without authentication on 23 October 2026. The owner confirms that generation, the first participant waiting, and the final reveal appear before minute three. Shortening the video remains recommended; no edit is confirmed and the footage has not been reviewed by the agent. Deployment is optional; arrangements for any requested real-service judging access remain to be finalized without publishing credentials.
 
 ## License
 

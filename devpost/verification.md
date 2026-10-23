@@ -184,3 +184,13 @@ Fonts actuals: portada, bases oficials i pack real. La vista pública de My proj
 
 
 Verificació posterior al push de preparació `d12a4a1`: consultes GitHub sense autenticació retornen HTTP 200 per a `LICENSE` (SPDX MIT detectat) i `docs/SETUP.en.md`. L’usuari confirma que els fitxers pendents són Image gallery, que vol destacar el dibuix final al vídeo i que utilitza el gravador integrat. S’ha deixat una guia tècnica local; sense vídeo, galeria definitiva o enllaç públic rebut, no es marquen completats aquests requisits. No s’ha publicat cap candidatura ni escrit cap narració.
+
+
+## Vídeo rebut i comprovació prèvia a Submit — 2026-10-23
+
+URL aportada per l’usuari: https://youtu.be/U4B9bVnwe8U; títol públic «Devpost half & half». L’eina de cerca no ha pogut recuperar les pàgines curta/canònica. La consulta HTTP directa sense credencials a oEmbed i watch funciona (200); `ytInitialPlayerResponse` informa `playabilityStatus: OK`, `lengthSeconds: 182` i no és una emissió en directe. Això acredita l’accés i les metadades observades, no un visionat del contingut.
+
+Durada 3:02: s’ha indicat que les bases recomanen menys de tres minuts i que el jurat no està obligat a mirar més enllà. Es recomana un retall curt que conservi la revelació, sense inventar desqualificació automàtica. S’ha demanat confirmació de l’enquesta i del flux visible abans del minut tres. No es marca enviament ni `6-ship` completat només perquè l’usuari sigui a la pantalla de Submit. Cap canvi de codi ni noves proves de l’app per aquest registre.
+
+
+Confirmació posterior: l’usuari respon «Si» a si ha completat l’enquesta de sortida i si el vídeo mostra generació, espera amb un sol participant acabat i revelació abans del minut tres. Es registra com a evidència de l’usuari, separada de la consulta tècnica d’accés i durada. No es dona per fet cap retall de 3:02, càrrega de galeria o enviament. El repositori i el vídeo estan disponibles; el desplegament continua sent opcional. `6-ship` queda pendent de la confirmació real de Submit.
