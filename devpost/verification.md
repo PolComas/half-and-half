@@ -194,3 +194,10 @@ Durada 3:02: s’ha indicat que les bases recomanen menys de tres minuts i que e
 
 
 Confirmació posterior: l’usuari respon «Si» a si ha completat l’enquesta de sortida i si el vídeo mostra generació, espera amb un sol participant acabat i revelació abans del minut tres. Es registra com a evidència de l’usuari, separada de la consulta tècnica d’accés i durada. No es dona per fet cap retall de 3:02, càrrega de galeria o enviament. El repositori i el vídeo estan disponibles; el desplegament continua sent opcional. `6-ship` queda pendent de la confirmació real de Submit.
+
+
+## Lliurament confirmat i tancament de `6-ship` — 2026-10-23
+
+L’usuari aporta el rebut de recepció de Devpost i l’enllaç canònic https://devpost.com/software/half-half-62fdrc, després de confirmar camps, vídeo i enquesta. L’eina web no pot recuperar la pàgina; GET directe sense autenticació retorna HTTP 403. Es registra la confirmació de l’usuari, sense atribuir una inspecció del contingut publicat a l’agent. No es desen el correu original, dades personals ni URL de seguiment.
+
+`6-ship` i el procés guiat queden completats; els estats pendents anteriors es conserven com a història. Sense canvis de codi, noves generacions o desplegament. No es repeteixen proves de l’app per canvis exclusivament documentals; es comproven diff, manifest de sumes i absència de credencials o dades privades entre els fitxers públics.

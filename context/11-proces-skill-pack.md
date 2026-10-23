@@ -54,6 +54,8 @@ Cap etapa consta com a completada. No hi ha perfil d’aprenent, plans, checklis
 
 **Inici posterior de `6-ship`, 2026-10-23:** petició explícita de l’usuari després de confirmar la revisió del fons. Prerequisits del pack comprovats als arxius, suite existent executada i repositori públic verificat sense autenticació. Auditoria dels blobs de la història pública, MIT aprovada expressament amb «PolComas» com a titular i instruccions tècniques en anglès preparades. L’usuari encara no havia preparat vídeo, esborrany ni enquesta; després mostra General info i escriu el seu propi tagline. Només s’ha revisat gramàtica, sense redactar ni reescriure text de candidatura. Formulari complet, vídeo, enquesta i enviament pendents. No s’ha desplegat ni presentat cap candidatura.
 
+**Lliurament confirmat i tancament de `6-ship`, 2026-10-23:** després d’aportar vídeo i confirmar formulari i enquesta, l’usuari comparteix el rebut d’enviament de Devpost i https://devpost.com/software/half-half-62fdrc. La consulta de l’agent retorna HTTP 403; el rebut és l’evidència del lliurament, sense afirmar una lectura de la pàgina publicada. Es registra només l’estat i l’enllaç canònic, sense correu ni seguiment. `1-start`–`6-ship` completats; no hi ha desplegament ni activitats addicionals obligatòries. Les limitacions tècniques i l’autoria humana dels textos es mantenen documentades.
+
 ## Aplicació al nostre projecte
 
 El context evita haver de repetir acords, però no substitueix les converses de planificació. Proposar un stack no l’aprova. La frase històrica sobre una “segona decisió” no autoritza inventar-la.

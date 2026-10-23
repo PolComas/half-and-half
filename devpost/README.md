@@ -1,4 +1,6 @@
-# Estat de planificació
+# Estat del procés
+
+**Estat actual, 2026-10-23:** `1-start`–`6-ship` completats. L’usuari confirma el lliurament amb el rebut de Devpost i l’[enllaç del projecte](https://devpost.com/software/half-half-62fdrc). La consulta de l’agent retorna HTTP 403; no s’afirma haver revisat la pàgina publicada. Detalls a [ship-checklist.md](ship-checklist.md). No hi ha desplegament. Els paràgrafs següents conserven la història del procés.
 
 Estat del 2026-10-22: `1-start` completat i perfil d’aprenent creat en local, exclòs dels commits per `.gitignore`. El pack real està instal·lat. [scope.md](scope.md) s’ha revisat en text i l’usuari l’ha aprovat explícitament per a la primera versió; consta com a `status: approved` i `2-scope` està completat. El format de revisió acordat és text al xat o Markdown, sense acompanyant HTML.
 
