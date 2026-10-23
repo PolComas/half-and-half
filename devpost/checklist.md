@@ -56,7 +56,7 @@ Feedback real de la revisió final: primer l’usuari confirma cubell i pinzell.
 
 ## Final Review
 
-- [x] Final review complete — feedback resolved and learner confirms ready to ship
+- [ ] Final review complete — feedback resolved and learner confirms ready to ship
 
 Revisió del MVP inicial completada: l’usuari confirma que tot el tram sol·licitat funciona, després de provar les correccions de pintura. Les 29 proves mecàniques inicials i la ronda real de l’agent consten a `verification.md`; la confirmació manual és evidència separada. La casella global es va reobrir per a la iteració posterior i es torna a tancar amb la confirmació del 2026-10-23 registrada a continuació. Aquesta acceptació tanca la prova de concepte, sense autoritzar desplegament o candidatura.
 
@@ -71,6 +71,12 @@ La revisió anterior continua registrada com a completada per al MVP inicial. Es
 Confirmació manual del 2026-10-23: després de demanar recarregar, tornar a Home des del resultat, trobar el PNG desat, començar una sala nova i valorar composició i moviment de fons, l’usuari respon «Funciona tot bé». Es tanca aquesta iteració; no s’atribueixen a l’usuari els tests interns ni comprovacions més detallades que no hagi relatat. `5-build` completat; `6-ship` no iniciat.
 
 Verificació: typecheck/build i proves d’entrada i sessió afectades; dos contextos independents per tornar a home/reprendre, acabar, començar nova sala i unir-s’hi. Provar resposta perduda i entrada fallida sense perdre sala anterior, polling entre identitats, topall global compartit, històric de màxim tres sense duplicats i absència d’arxius abans de revelar. No fer una generació de pagament només per provar navegació o desament.
+
+### Segona revisió de fons — 2026-10-23
+
+Després de confirmar la iteració anterior, l’usuari demana més figures que es moguin contínuament entrant i sortint de pantalla. També pregunta per responsive i accessibilitat. Es reobre només aquesta revisió; les aprovacions i el mapa anteriors es conserven.
+
+- [ ] Figures addicionals amb bucles sense salts visibles, menor densitat al mòbil i decoració sense interacció; pausa manual i reducció de moviment del sistema respectades. Verificar recorreguts fora del viewport, persistència de pausa, control amb teclat i layouts 390/768/1440, typecheck/build i e2e afectats; obtenir comentari manual abans de tancar.
 
 ## Code Tour and App Map
 

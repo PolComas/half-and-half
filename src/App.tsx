@@ -8,7 +8,9 @@ import Atmosphere from "./components/Atmosphere";
 import Home from "./components/Home";
 import IdeaRoom from "./components/IdeaRoom";
 import GenerationStatus from "./components/GenerationStatus";
+import { useBackgroundMotion } from "./lib/useBackgroundMotion";
 export default function App() {
+  const motion = useBackgroundMotion();
   const [room, setRoom] = useState<RoomView | null>(null),
     [ready, setReady] = useState(false),
     [loading, setLoading] = useState(true),
@@ -207,7 +209,7 @@ export default function App() {
     mutate(path, "POST", operation(roomRef.current!.version));
   return (
     <div className="app-shell">
-      <Atmosphere />
+      <Atmosphere paused={motion.paused} />
       {testFixture && (
         <div className="notice" role="status">
           Test fixture — no AI was called.
@@ -322,6 +324,18 @@ export default function App() {
       )}
       <footer className="site-footer">
         <span>A little color. A little connection.</span>
+        <button
+          className="motion-control"
+          aria-pressed={motion.paused}
+          disabled={motion.reduced}
+          onClick={motion.toggle}
+        >
+          {motion.reduced
+            ? "Reduced motion enabled"
+            : motion.paused
+              ? "Resume background motion"
+              : "Pause background motion"}
+        </button>
         <span>
           Made for two <span aria-hidden="true">✳</span>
         </span>

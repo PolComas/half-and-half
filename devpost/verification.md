@@ -132,3 +132,18 @@ Comprovació addicional al servidor real existent: home oberta a 1440 i 390 px, 
 S’ha demanat recarregar Half & Half, tornar a Home des del resultat, trobar-hi el PNG desat i començar una sala nova, i valorar la composició i el moviment de fons. L’usuari respon «Funciona tot bé». Es registra com a confirmació de les parts modificades i es tanca la revisió reoberta de `5-build`, sense inventar detalls sobre dispositius o comprovacions internes.
 
 Només s’actualitza la documentació de l’estat i el peu del mapa; el codi de l’app continua al commit `7c8897e`, amb les 30 proves, typecheck i build ja superats. No es repeteixen proves de l’app ni generacions de pagament per aquest tancament documental. El resum d’aprenentatge i mapa ja lliurats continuen completats. `6-ship` no s’ha iniciat; cap desplegament ni candidatura publicada.
+
+
+## Segona revisió del fons — 2026-10-23
+
+Petició posterior a l’acceptació anterior: més figures que entrin i surtin de pantalla contínuament. Implementades 16 figures SVG (10 visibles a menys de 561 px), cinc formes, dues direccions, rotació lenta i durades de 68–118 segons. El reinici de cada trajecte té lloc fora del viewport. Sense timers, dependències o crides a OpenAI. El fons és decoratiu i no captura clics ni apareix a l’arbre accessible.
+
+Botó de pausa al peu amb nom i estat accessibles, accionable amb teclat i preferència en localStorage quan és disponible. Pausa figures, xarxa i camps de color. La reducció de moviment del sistema té prioritat, també si canvia durant la visita: decoració estàtica distribuïda i botó que explica aquesta preferència. No s’atura el desament o la sincronització de la ronda.
+
+Verificació executada: typecheck/build passen. Els dos e2e preexistents passen, inclosa la ronda completa en dos contextos independents i el toc emulat; una prova e2e nova passa després de corregir-ne el mostreig temporal (es retira el delay negatiu només de l’animació inspeccionada). Comprova entrada i sortida fora de pantalla, posicions distribuïdes, teclat/pausa, recàrrega, represa, canvis de preferència del sistema, recompte de figures i layouts 1440/768/390 sense overflow. Captures finals d’escriptori i mòbil inspeccionades amb la decoració pausada realment, en lloc de desactivar-la des del capturador. No s’han repetit els tests de backend, que no canvia. PostgreSQL temporal aturat després de les proves.
+
+Abast real del suport: responsive i toc emulat de Chrome; sense nova prova física, Safari/WebKit o Firefox. Els binaris compatibles de Playwright per als altres motors no estan instal·lats (les versions locals són anteriors a les requerides), i no s’han descarregat per aquesta revisió de fons. Hi ha formularis i diàlegs natius, etiquetes de colors, focus visible general, missatges d’estat i reducció de moviment. Això no és una auditoria completa: el canvas no té alternativa de teclat per al cubell, la seva descripció és genèrica i falten comprovacions de contrast/zoom i lector de pantalla. No es declara conformitat WCAG.
+
+Fonts revisades per a les respostes: [criteris del hackathon](https://learn-ai-basics.devpost.com/rules), [pack real](https://github.com/challengepost/learn-ai-basics), [pausa del moviment](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html) i [operació amb teclat](https://www.w3.org/WAI/WCAG22/Understanding/keyboard.html). No hi ha dades per estimar una probabilitat de victòria ni es presenta una opinió com a puntuació del jurat.
+
+Plans i mapa actualitzats; ancoratges del mapa contrastats amb els fitxers. Revisió manual del nou fons pendent: no es reutilitza «Funciona tot bé» per aprovar canvis posteriors a aquella resposta. `6-ship` no iniciat, cap desplegament o candidatura publicada.

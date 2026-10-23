@@ -53,6 +53,8 @@ Font: `scope.md > Inspiration & Identity`, concretada per les respostes de l’u
 
 ## Features and Behavior
 
+Refinament posterior demanat el 2026-10-23: més figures discretes al fons amb moviment continu d’entrada i sortida de pantalla. La il·lustració i les eines conserven protagonisme. L’ampliació inclou pausa manual del fons i respecte per la reducció de moviment del dispositiu; no es canvia la ronda ni la privacitat.
+
 ### Entrada amb codi curt
 
 Font: `scope.md > The POC Boundary`, concretada durant l’entrevista.

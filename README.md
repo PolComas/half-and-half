@@ -75,6 +75,10 @@ Els tests de navegador mostren «Test fixture — no AI was called». No són el
 
 **Iteració posterior del 23 d’octubre:** a petició de l’usuari es va reobrir `5-build` per Home/nova sala, tres PNG locals i refinament visual professional amb moviment de xarxa inspirat en el referent indicat. Implementat, verificat mecànicament i confirmat per l’usuari amb «Funciona tot bé» després de la prova sol·licitada. Aquesta revisió queda tancada. La finalització anterior del MVP queda registrada, no es reinicia el procés ni es considera iniciat `6-ship`.
 
+**Segona revisió del fons, 23 d’octubre:** més figures amb trajectes continus d’entrada i sortida; pausa al peu amb preferència local i reducció de moviment del sistema prioritària. Aquesta petició posterior reobre només la revisió afectada de `5-build`; el comentari manual sobre el nou fons encara està pendent. Sense generacions noves ni desplegament.
+
+**Responsive i accessibilitat:** layouts comprovats a 390/768/1024/1440 px i toc emulat en Chrome. No equival a proves en mòbil/tauleta físics ni a suport verificat de Safari/WebKit/Firefox. Hi ha etiquetes, focus visible, diàlegs natius, estats anunciats i preferències de moviment. El canvas encara depèn del punter: el cubell no té alternativa amb teclat i la descripció de la imatge és genèrica. Queden pendents auditoria de contrast/zoom i proves amb lector de pantalla; no s’afirma conformitat WCAG.
+
 ## Què està acordat
 
 Dues persones aporten una idea cadascuna. La IA combina les idees en una sola il·lustració en blanc i negre per pintar. Les dues idees es fan visibles quan apareix la il·lustració. La divisió és vertical, exactament al 50%: esquerra i dreta. Durant la pintura cadascú veu només la seva meitat, sense veure com pinta l’altra persona. L’obra completa es revela quan tots dos han acabat.

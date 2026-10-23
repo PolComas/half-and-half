@@ -44,6 +44,8 @@ Cap etapa consta com a completada. No hi ha perfil d’aprenent, plans, checklis
 
 **Confirmació posterior de la iteració del 2026-10-23:** a la petició de provar Home des del resultat, PNG desat i sala nova, i valorar composició i moviment de fons, l’usuari respon «Funciona tot bé». Es tanca la revisió reoberta i es marquen els elements corresponents de la checklist. Les 30 proves mecàniques ja registrades són evidència de l’agent; no s’atribueixen a l’usuari. `5-build` completat de nou, sense repetir el resum ni el mapa ja lliurats. `6-ship` no iniciat.
 
+**Segona revisió del fons, 2026-10-23:** l’usuari demana més figures que entrin i surtin contínuament i pregunta per mancances, possibilitats de guanyar, responsive i accessibilitat. S’amplia només l’ambient decoratiu, amb pausa manual i reducció de moviment prioritària; revisió manual nova pendent. No s’inventa una probabilitat de guanyar ni es confonen proves Chrome/toc emulat amb dispositius físics, altres motors o una auditoria WCAG. `6-ship` no iniciat.
+
 ## Aplicació al nostre projecte
 
 El context evita haver de repetir acords, però no substitueix les converses de planificació. Proposar un stack no l’aprova. La frase històrica sobre una “segona decisió” no autoritza inventar-la.
