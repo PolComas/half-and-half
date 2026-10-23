@@ -38,6 +38,8 @@ Cap etapa consta com a completada. No hi ha perfil d’aprenent, plans, checklis
 
 **Confirmació posterior de la revisió final:** l’usuari confirma primer que pot pintar amb les dues eines, i després, en resposta a la prova de recàrrega, espera, revelació i descàrrega, diu «Si tot funciona ja». Es tanca la revisió de la prova de concepte i es registra l’últim increment. El resum d’aprenentatge i mapa corresponen al final de `5-build`; desplegament i candidatura continuen fora de l’autorització actual.
 
+**Tancament del 2026-10-23:** represes les tasques interrompudes, els tres increments queden desats. Revisió manual final confirmada per l’usuari, resum tècnic de la crida d’API explicat al xat i mapa autònom del codi generat, comprovat offline i mostrat. `5-build` completat; `6-ship` no iniciat. No s’ha desplegat ni publicat la candidatura.
+
 ## Aplicació al nostre projecte
 
 El context evita haver de repetir acords, però no substitueix les converses de planificació. Proposar un stack no l’aprova. La frase històrica sobre una “segona decisió” no autoritza inventar-la.

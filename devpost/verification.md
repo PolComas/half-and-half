@@ -100,3 +100,11 @@ Resposta real rebuda: «Ara si molt millor ja puc pintar amb el cubell fent fill
 ### Confirmació de la revisió final
 
 Després de la confirmació inicial de cubell i pinzell, s’ha demanat provar a la mateixa sala la recuperació després de «Saved», espera amb un sol final, revelació amb dos i descàrrega. L’usuari respon «Si tot funciona ja». Es registra com a confirmació manual del tram final i de la prova de concepte, sense inventar comprovacions més detallades que no hagi relatat. No s’han fet noves generacions ni canvis de codi després de les verificacions registrades.
+
+## Tancament de `5-build` — 2026-10-23
+
+Després de la interrupció de sessió, s’ha reprès el tancament sense modificar codi de l’app ni repetir generacions de pagament. El tercer increment està desat al commit `75fdcb1`; els tres increments i la revisió final estan marcats completats.
+
+Mapa `devpost/app-map.html` generat a partir d’aquest commit: camins i ancoratges de codi comprovats, sense scripts ni recursos externs. Obert en Chrome sense JavaScript i amb xarxa desactivada a 1440 i 390 px; contingut i desplegable natiu visibles, cap petició externa ni desbordament horitzontal. Captura estreta inspeccionada. S’ha mostrat l’enllaç i explicat com reobrir-lo. El resum connecta el problema real de dos personatges amb el prompt híbrid, el contracte `n: 1`, la petició autenticada al servidor i el tall exacte; no es presenta com una pràctica guiada o un domini adquirit per l’usuari.
+
+No s’han tornat a executar els 29 tests de l’app: el codi coincideix amb el que ja els havia passat i l’usuari ha confirmat funcional. La comprovació nova és proporcional als canvis exclusivament documentals del mapa. `5-build` completat; `6-ship`, desplegament i candidatura continuen pendents i fora d’aquesta execució.

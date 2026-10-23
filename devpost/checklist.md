@@ -7,7 +7,7 @@ status: approved
 
 Build mode: fast — triat explícitament per l’usuari: «Em va bé aquest mode ràpid, a sobre m’agrada testejar-ho i provar-ho». Ordre de construcció aprovat en aquesta resposta després de mostrar els tres passos. Es mantenen prova manual primerenca i revisió final, amb explicació pràctica de la crida a OpenAI.
 
-Scope, PRD i spec estan aprovats. La resposta «Em sembla tot bé, podem seguir endevant» aprova la spec i autoritza passar a `5-build`; aquesta checklist recull l’ordre de construcció posteriorment revisat i aprovat per l’usuari. Els increments 1 i 2 estan verificats i desats en Git; el primer checkpoint ha recollit feedback real amb captures. El tercer increment està implementat i verificat mecànicament, amb una ronda real completada per l’agent; l’usuari acaba de confirmar que tot el tram final funciona i es pot registrar el commit i la marca de completat. Cada pas ha de deixar una app executable, passar les seves comprovacions i quedar registrat en un commit abans de continuar.
+Scope, PRD i spec estan aprovats. La resposta «Em sembla tot bé, podem seguir endevant» aprova la spec i autoritza passar a `5-build`; aquesta checklist recull l’ordre de construcció posteriorment revisat i aprovat per l’usuari. Els tres increments estan implementats, verificats i desats en Git. El primer checkpoint va recollir captures i correccions reals; al checkpoint final l’usuari confirma que tot el tram funciona. Resum de la integració d’API explicat al xat i mapa autònom generat, verificat i mostrat. `5-build` queda completat el 2026-10-23. Cada pas ha de deixar una app executable, passar les seves comprovacions i quedar registrat en un commit abans de continuar.
 
 En tots els passos: conservar el context original, excloure perfil i secrets, respectar els 7 USD de crèdits existents i 0 USD addicionals, sense desplegar ni publicar la candidatura. Les proves sintètiques s’identifiquen com a tests i no substitueixen l’evidència de generació real. No donar per configurats els comptes, el saldo, les quotes o els permisos.
 
@@ -33,7 +33,7 @@ En tots els passos: conservar el context original, excloure perfil i secrets, re
   Learner check: Obrir la sala existent en els dos perfils, pintar amb cubell i pinzell, canviar color i gruix, desfer i netejar. Esperar «Saved on this device», recarregar i comprovar que els colors tornen. Confirmar que les eines s’entenen i que cap perfil permet veure com pinta l’altre. En learn, fer aquesta prova abans del commit; en fast, l’agent la verifica i l’usuari la provarà al recorregut final, tret que aparegui una incertesa que necessiti comentaris abans.
   Commit: `feat: add private painting with persistent browser drafts`
 
-- [ ] **3. Dues finalitzacions desades revelen la mateixa obra i permeten descarregar-la**
+- [x] **3. Dues finalitzacions desades revelen la mateixa obra i permeten descarregar-la**
   Becomes usable: Ronda completa: confirmar «I’m done» desa i congela la capa pròpia; qui acaba primer només veu la seva meitat en espera. Només dues finalitzacions vàlides permeten revelar i descarregar el mateix PNG complet en tots dos perfils. Recarregar o repetir una petició no canvia el resultat ni compta una persona dues vegades.
   Why now: Uneix les dues pintures ja recuperables amb una condició de revelació verificable. La ronda completa es prova amb generació i pintura reals, sense crear galeria, nous modes o desplegament. La revisió final pot valorar el producte sencer i resoldre només els ajustos observats.
   PRD ref: `prd.md > The Core Journey` (passos 7–8), `Acabar, esperar i revelar`, `Descarregar el resultat`, `Generació i recuperació de la ronda`, `States and Boundaries`, `What We're Building`.
@@ -62,19 +62,21 @@ Revisió final completada: l’usuari confirma que tot el tram sol·licitat func
 
 ## Code Tour and App Map
 
-- [ ] Learning activity complete — guided route, focused alternative, prior practice connected, or brief recap
-- [ ] Optional edit and transfer reflection addressed — offered/declined/already covered/not applicable as appropriate
-- [ ] `devpost/app-map.html` generated from finished code, checked, and shown, including a project-grounded practice to reuse
+- [x] Learning activity complete — guided route, focused alternative, prior practice connected, or brief recap
+- [x] Optional edit and transfer reflection addressed — offered/declined/already covered/not applicable as appropriate
+- [x] `devpost/app-map.html` generated from finished code, checked, and shown, including a project-grounded practice to reuse
 
-Activity and evidence: pendent. Proposta centrada en l’objectiu declarat: seguir una petició real d’imatges i relacionar el prompt, l’autenticació al servidor, la resposta i la reserva de cost amb l’evidència registrada durant el build. La pràctica ja feta durant la construcció compta i no s’ha de repetir com un examen.
+Activity and evidence: resum breu basat en un cas real del build, relacionat amb la crida d’imatges. La revisió de captures va detectar que una sola imatge contenia dos subjectes separats. L’usuari va concretar un sol híbrid; es va corregir el prompt i comprovar una generació real. S’ha explicat al xat la distinció entre `n: 1` i el contingut del prompt, on viatja l’autenticació i com es valida/retalla la resposta. És un resum tècnic, sense afirmar domini o aprenentatge personal no declarat.
 
-Route and stops: pendents de codi real; es preveu seguir els contractes de `server/generationService.ts`, `server/openaiImages.ts` i `server/imageService.ts`, sense afirmar que existeixen encara. Ajustar les rutes a la implementació acabada.
+Route and stops: ruta de referència al mapa — `server/generationService.ts > GenerationService.run`, `server/openaiImages.ts > imagePrompt / generateImage` i `server/imageService.ts > prepareImage`. Els noms i camins coincideixen amb el codi del commit `75fdcb1`. No s’ha fet un recorregut interactiu nou per l’editor ni s’atribueix a l’usuari.
 
-Edit outcome: encara no proposat ni executat; una edició pràctica és opcional, no una aprovació addicional.
+Edit outcome: no aplicable a l’alternativa de resum escollida; no s’ha proposat un canvi cosmètic addicional. El cas reutilitzat és la correcció real del prompt després del feedback, amb comprovació registrada.
 
-Reflection: encara no oferta. La resposta personal, si n’hi ha, queda al perfil local ignorat, no en aquest fitxer públic ni al mapa.
+Reflection: pregunta de transferència opcional no plantejada; no és requisit de sign-off. No hi ha resposta personal a registrar ni text de candidatura redactat.
 
-Activity mode: pendent; per l’experiència de planificació declarada, una investigació breu sobre la crida real pot ser més útil que un recorregut genèric de tot el codi. El mapa del pack es farà a partir de l’app acabada; no és un acompanyant HTML d’aquesta checklist, que continua en Markdown.
+Activity mode: recap basat en evidència existent, dins del mode fast aprovat. El mapa complementa les revisions de planificació en Markdown; no és un acompanyant HTML de la checklist ni una pàgina de l’app.
+
+Map and checks: `devpost/app-map.html`, mostrat amb enllaç al xat i instruccions per reobrir-lo com a fitxer local. Camins i ancoratges de codi comprovats. Chrome sense JavaScript i en mode offline, amplades 1440 i 390: contingut i desplegable natiu accessibles, sense peticions externes ni overflow. Captura estreta inspeccionada visualment. Sense dependències remotes, credencials, dades de participants o contingut personal.
 
 ## Revisions
 
