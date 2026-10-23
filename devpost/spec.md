@@ -95,6 +95,10 @@ El pla local demostra dues persones i el protocol de sala; no dona per si sol un
 
 Render queda com a preferència futura: un sol Web Service podria servir React compilat i la API, amb dades duradores a Supabase. El seu [pla gratuït](https://render.com/docs/free) pot dormir o reiniciar-se; no s’hi desaran arxius duradors al disc local. Netlify és una alternativa suggerida per l’usuari, encara no seleccionada ni comprovada per a aquesta càrrega. No crear serveis, desplegar ni publicar la candidatura durant `4-spec`.
 
+### Sharing instructions — preparació de `6-ship`
+
+Repositori públic: https://github.com/PolComas/half-and-half, comprovat sense autenticació el 2026-10-23. Codi original sota MIT amb aprovació explícita de l’usuari; claus, perfil d’aprenent i fonts privades excloses. Instruccions tècniques en anglès a [`docs/SETUP.en.md`](../docs/SETUP.en.md), amb execució local i fixture de test diferenciades. El vídeo públic de funcionament real encara no té URL; tampoc hi ha desplegament ni enviament confirmat. Registrar l’enllaç del vídeo i verificar permisos quan l’usuari el proporcioni. Estat real a [`ship-checklist.md`](ship-checklist.md).
+
 ## Look and Feel
 
 Implementa `prd.md > Look and Feel`, `Screens and Layout` i `Prioritat de dispositius`.

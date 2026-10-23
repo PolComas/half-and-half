@@ -8,6 +8,8 @@ Actualització del **22 d’octubre de 2026**: el Devpost Learn Skill Pack s’h
 
 Per reinstal·lar els skills en un clon nou, amb Node.js i Git disponibles, executa `npx skills add challengepost/learn-ai-basics --all -y`. `skills-lock.json` registra la instal·lació inicial; les còpies locals dels skills queden fora dels commits.
 
+Instruccions tècniques en anglès: [Installation and verification](docs/SETUP.en.md). Codi original sota [MIT](LICENSE).
+
 ## Executar l’app local
 
 Requisit: **Node.js 24**, npm i Internet. Amb les dependències ja instal·lades i `.env` configurat:
@@ -71,7 +73,7 @@ Els tests de navegador mostren «Test fixture — no AI was called». No són el
 
 ## Estat del procés
 
-`1-start` → `2-scope` → `3-prd` → `4-spec` completats. `5-build` completat el **23 d’octubre de 2026**: construcció, proves mecàniques, revisió manual real, resum de la integració d’API i [mapa de l’app](devpost/app-map.html). El mapa es pot obrir directament com a fitxer local, sense servidor ni connexió. `6-ship` encara no s’ha iniciat. Desplegament i candidatura continuen fora d’aquesta fase.
+`1-start` → `2-scope` → `3-prd` → `4-spec` completats. `5-build` completat el **23 d’octubre de 2026**: construcció, proves mecàniques, revisió manual real, resum de la integració d’API i [mapa de l’app](devpost/app-map.html). El mapa es pot obrir directament com a fitxer local, sense servidor ni connexió. `6-ship` iniciat posteriorment el mateix dia per petició explícita: verificació tècnica i auditoria del repositori completades, MIT aprovada i aplicades instruccions en anglès. Vídeo, formulari complet, enquesta i enviament encara pendents; seguiment a [ship-checklist.md](devpost/ship-checklist.md). No s’ha desplegat ni enviat cap candidatura.
 
 **Iteració posterior del 23 d’octubre:** a petició de l’usuari es va reobrir `5-build` per Home/nova sala, tres PNG locals i refinament visual professional amb moviment de xarxa inspirat en el referent indicat. Implementat, verificat mecànicament i confirmat per l’usuari amb «Funciona tot bé» després de la prova sol·licitada. Aquesta revisió queda tancada. La finalització anterior del MVP queda registrada, no es reinicia el procés ni es considera iniciat `6-ship`.
 
@@ -128,4 +130,4 @@ Els documents de `context/` no substitueixen `devpost/scope.md`, `devpost/prd.md
 
 ## Publicació i idioma
 
-El context de treball és en català. L’arxiu històric conté text en català i anglès, en l’estat retornat. Consulta els requisits lingüístics de la candidatura a [08](context/08-hackathon-verificat.md). Aquest paquet no inclou una llicència triada en nom de l’usuari: la selecció i l’autoria s’han de concretar abans de publicar la candidatura. La documentació històrica pot contenir material de tercers i no queda automàticament sota la futura llicència del codi.
+El context de treball és en català. L’arxiu històric conté text en català i anglès, en l’estat retornat. Consulta els requisits lingüístics de la candidatura a [08](context/08-hackathon-verificat.md). L’usuari ha aprovat explícitament [MIT](LICENSE) per al codi original, amb «PolComas» com a titular. Les dependències conserven les seves llicències. La documentació històrica pot contenir material de tercers i no queda automàticament sota la llicència del codi.

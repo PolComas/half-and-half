@@ -52,6 +52,8 @@ Cap etapa consta com a completada. No hi ha perfil d’aprenent, plans, checklis
 
 **Confirmació de la continuïtat del fons:** en resposta a la prova de pausar i reprendre seguint una figura, l’usuari diu «Vale si, ja funciona». Es tanca la revisió amb sis e2e, typecheck i build superats, sense més generacions. `5-build` completat; `6-ship` no iniciat.
 
+**Inici posterior de `6-ship`, 2026-10-23:** petició explícita de l’usuari després de confirmar la revisió del fons. Prerequisits del pack comprovats als arxius, suite existent executada i repositori públic verificat sense autenticació. Auditoria dels blobs de la història pública, MIT aprovada expressament amb «PolComas» com a titular i instruccions tècniques en anglès preparades. L’usuari encara no havia preparat vídeo, esborrany ni enquesta; després mostra General info i escriu el seu propi tagline. Només s’ha revisat gramàtica, sense redactar ni reescriure text de candidatura. Formulari complet, vídeo, enquesta i enviament pendents. No s’ha desplegat ni presentat cap candidatura.
+
 ## Aplicació al nostre projecte
 
 El context evita haver de repetir acords, però no substitueix les converses de planificació. Proposar un stack no l’aprova. La frase històrica sobre una “segona decisió” no autoritza inventar-la.
