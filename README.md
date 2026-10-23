@@ -73,7 +73,7 @@ Els tests de navegador mostren «Test fixture — no AI was called». No són el
 
 `1-start` → `2-scope` → `3-prd` → `4-spec` completats. `5-build` completat el **23 d’octubre de 2026**: construcció, proves mecàniques, revisió manual real, resum de la integració d’API i [mapa de l’app](devpost/app-map.html). El mapa es pot obrir directament com a fitxer local, sense servidor ni connexió. `6-ship` encara no s’ha iniciat. Desplegament i candidatura continuen fora d’aquesta fase.
 
-**Iteració posterior del 23 d’octubre:** a petició de l’usuari es reobre `5-build` per Home/nova sala, tres PNG locals i refinament visual professional amb moviment de xarxa inspirat en el referent indicat. Implementat i verificat mecànicament; pendent que l’usuari provi els canvis abans de tancar aquesta revisió. La finalització anterior del MVP queda registrada, no es reinicia el procés ni es considera iniciat `6-ship`.
+**Iteració posterior del 23 d’octubre:** a petició de l’usuari es va reobrir `5-build` per Home/nova sala, tres PNG locals i refinament visual professional amb moviment de xarxa inspirat en el referent indicat. Implementat, verificat mecànicament i confirmat per l’usuari amb «Funciona tot bé» després de la prova sol·licitada. Aquesta revisió queda tancada. La finalització anterior del MVP queda registrada, no es reinicia el procés ni es considera iniciat `6-ship`.
 
 ## Què està acordat
 

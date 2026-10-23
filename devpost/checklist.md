@@ -56,17 +56,19 @@ Feedback real de la revisió final: primer l’usuari confirma cubell i pinzell.
 
 ## Final Review
 
-- [ ] Final review complete — feedback resolved and learner confirms ready to ship
+- [x] Final review complete — feedback resolved and learner confirms ready to ship
 
-Revisió del MVP inicial completada: l’usuari confirma que tot el tram sol·licitat funciona, després de provar les correccions de pintura. La casella global es reobre per a la iteració posterior sol·licitada; la seva nova prova manual continua pendent. No demana més ajustos. Les 29 proves mecàniques i la ronda real de l’agent ja consten a `verification.md`; la confirmació manual és evidència separada. Aquesta acceptació tanca la prova de concepte, sense autoritzar desplegament o candidatura.
+Revisió del MVP inicial completada: l’usuari confirma que tot el tram sol·licitat funciona, després de provar les correccions de pintura. Les 29 proves mecàniques inicials i la ronda real de l’agent consten a `verification.md`; la confirmació manual és evidència separada. La casella global es va reobrir per a la iteració posterior i es torna a tancar amb la confirmació del 2026-10-23 registrada a continuació. Aquesta acceptació tanca la prova de concepte, sense autoritzar desplegament o candidatura.
 
 ### Iteració posterior sol·licitada el 2026-10-23
 
 La revisió anterior continua registrada com a completada per al MVP inicial. Es reobre `5-build` per petició explícita; `6-ship` no s’inicia.
 
-- [ ] Home navegable i recuperació de la sala activa; nova sala només després de revelar, amb canvi segur i recuperable de credencial i sense reiniciar quota global.
-- [ ] Tres PNG revelats conservats i descarregables en aquest navegador, desament local honest i prova després de començar una sala nova.
-- [ ] Refinament visual segons la preferència que indiqui l’usuari; actualització del mapa i prova manual de les parts modificades abans de tancar la iteració.
+- [x] Home navegable i recuperació de la sala activa; nova sala només després de revelar, amb canvi segur i recuperable de credencial i sense reiniciar quota global.
+- [x] Tres PNG revelats conservats i descarregables en aquest navegador, desament local honest i prova després de començar una sala nova.
+- [x] Refinament visual segons la preferència que indiqui l’usuari; actualització del mapa i prova manual de les parts modificades abans de tancar la iteració.
+
+Confirmació manual del 2026-10-23: després de demanar recarregar, tornar a Home des del resultat, trobar el PNG desat, començar una sala nova i valorar composició i moviment de fons, l’usuari respon «Funciona tot bé». Es tanca aquesta iteració; no s’atribueixen a l’usuari els tests interns ni comprovacions més detallades que no hagi relatat. `5-build` completat; `6-ship` no iniciat.
 
 Verificació: typecheck/build i proves d’entrada i sessió afectades; dos contextos independents per tornar a home/reprendre, acabar, començar nova sala i unir-s’hi. Provar resposta perduda i entrada fallida sense perdre sala anterior, polling entre identitats, topall global compartit, històric de màxim tres sense duplicats i absència d’arxius abans de revelar. No fer una generació de pagament només per provar navegació o desament.
 
@@ -103,6 +105,6 @@ Map and checks: `devpost/app-map.html`, mostrat amb enllaç al xat i instruccion
 
 - El botó de desactivar generació ara també protegeix la recuperació de reserves després de reiniciar el servidor. Les reserves queden pendents mentre estigui desactivat; no s’envia cap petició de pagament. Prova d’integració específica afegida.
 
-- Iteració 2026-10-23: el logo només recarregava i la cookie restaurava la sala, cosa que impedia obrir la home. L’usuari amplia explícitament l’abast amb nova sala després de la ronda i tres PNG locals. La preferència visual s’ha aclarit: aparença professional i moviment suau de fons com el referent MazeMind; implementació preparada per a nova prova manual.
+- Iteració 2026-10-23: el logo només recarregava i la cookie restaurava la sala, cosa que impedia obrir la home. L’usuari amplia explícitament l’abast amb nova sala després de la ronda i tres PNG locals. La preferència visual s’ha aclarit: aparença professional i moviment suau de fons com el referent MazeMind; implementació verificada i confirmada manualment.
 
-- Verificació de la iteració: 30 proves passen i build/typecheck correctes. Home real comprovada a 1440/390 px, moviment observat, reducció de moviment estàtica, cap overflow ni errors de navegador i cap petició de nova sala/generació en obrir-la. Els elements de revisió nous continuen sense marcar fins al retorn de l’usuari.
+- Verificació de la iteració: 30 proves passen i build/typecheck correctes. Home real comprovada a 1440/390 px, moviment observat, reducció de moviment estàtica, cap overflow ni errors de navegador i cap petició de nova sala/generació en obrir-la. La resposta posterior «Funciona tot bé» completa el checkpoint manual; els elements nous queden marcats.

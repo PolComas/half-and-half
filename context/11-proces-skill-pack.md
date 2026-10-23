@@ -42,6 +42,8 @@ Cap etapa consta com a completada. No hi ha perfil d’aprenent, plans, checklis
 
 **Iteració posterior del 2026-10-23:** després del tancament inicial, l’usuari demana continuar millorant Home/nova partida i presentació; confirma que vol tres PNG locals si és possible, i aporta MazeMind com a referent de moviment professional. Es reobre `5-build` per aquesta revisió, mantenint la història de les aprovacions anteriors. S’han actualitzat els plans i implementat els canvis; comprovacions mecàniques superades i nova prova manual pendent. No es passa a candidatura ni s’amplia a una galeria pública.
 
+**Confirmació posterior de la iteració del 2026-10-23:** a la petició de provar Home des del resultat, PNG desat i sala nova, i valorar composició i moviment de fons, l’usuari respon «Funciona tot bé». Es tanca la revisió reoberta i es marquen els elements corresponents de la checklist. Les 30 proves mecàniques ja registrades són evidència de l’agent; no s’atribueixen a l’usuari. `5-build` completat de nou, sense repetir el resum ni el mapa ja lliurats. `6-ship` no iniciat.
+
 ## Aplicació al nostre projecte
 
 El context evita haver de repetir acords, però no substitueix les converses de planificació. Proposar un stack no l’aprova. La frase històrica sobre una “segona decisió” no autoritza inventar-la.

@@ -126,3 +126,9 @@ Captures de home a 1280 i 390 px inspeccionades: composició llegible, imatge d�
 Fonts actuals consultades: [regles oficials](https://learn-ai-basics.devpost.com/rules) i [repositori del Skill Pack](https://github.com/challengepost/learn-ai-basics). El refinament es manté dins del procés de revisió i proves de `5-build`; cap candidatura publicada ni desplegament.
 
 Comprovació addicional al servidor real existent: home oberta a 1440 i 390 px, moviment de la xarxa verificat per transformacions diferents entre fotogrames, `pointer-events: none` al fons i animació aturada amb reducció de moviment. Sense errors del navegador, overflow ni cap petició de crear sala o generar imatge en obrir-la. El mapa s’ha actualitzat amb els punts d’entrada de la nova sala i dels PNG locals, i els ancoratges s’han contrastat amb el codi.
+
+### Confirmació manual i tancament de la iteració — 2026-10-23
+
+S’ha demanat recarregar Half & Half, tornar a Home des del resultat, trobar-hi el PNG desat i començar una sala nova, i valorar la composició i el moviment de fons. L’usuari respon «Funciona tot bé». Es registra com a confirmació de les parts modificades i es tanca la revisió reoberta de `5-build`, sense inventar detalls sobre dispositius o comprovacions internes.
+
+Només s’actualitza la documentació de l’estat i el peu del mapa; el codi de l’app continua al commit `7c8897e`, amb les 30 proves, typecheck i build ja superats. No es repeteixen proves de l’app ni generacions de pagament per aquest tancament documental. El resum d’aprenentatge i mapa ja lliurats continuen completats. `6-ship` no s’ha iniciat; cap desplegament ni candidatura publicada.
