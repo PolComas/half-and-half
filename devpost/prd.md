@@ -22,7 +22,7 @@ Font: `scope.md > The Core Loop` i `What "Working" Looks Like`.
 5. Quan apareix la imatge, es mostren les dues idees. Des d’aquest primer moment cadascú només veu el seu 50% del dibuix; no hi ha vista completa inicial.
 6. Cadascú pinta la seva meitat amb cubell o pinzell i pot desfer o netejar la pintura pròpia, conservant el dibuix base. La pintura es desa automàticament abans d’acabar, perquè es pugui recuperar en recarregar la mateixa sessió.
 7. Cada persona prem «I’m done» i confirma que vol tancar la seva pintura. Només després d’un desament correcte es confirma la finalització i es bloqueja l’edició per a aquesta ronda. Qui acaba primer pot mirar la seva meitat desada mentre espera, sense veure el resultat complet.
-8. Amb dues finalitzacions vàlides de la mateixa ronda, totes dues sessions veuen la mateixa obra completa i poden descarregar-la. No hi ha galeria.
+8. Amb dues finalitzacions vàlides de la mateixa ronda, totes dues sessions veuen la mateixa obra completa i poden descarregar-la. No hi ha galeria pública; l’iteració posterior conserva tres PNG locals.
 
 ## Screens and Layout
 
@@ -158,7 +158,13 @@ Criteris: la primera finalització no revela res de l’altra pintura; un error 
 
 Font: `scope.md > The POC Boundary`, actualitzada per la petició posterior explícita de l’usuari.
 
-Després de la revelació, cadascú pot descarregar l’obra completa. L’arxiu correspon al resultat compartit, amb les dues meitats alineades i el dibuix base. La descàrrega completa no pot anticipar la revelació. No s’afegeix galeria ni publicació automàtica. Format del fitxer pendent de la spec.
+Després de la revelació, cadascú pot descarregar l’obra completa. L’arxiu correspon al resultat compartit, amb les dues meitats alineades i el dibuix base. La descàrrega completa no pot anticipar la revelació. No s’afegeix galeria pública ni publicació automàtica. Format del fitxer pendent de la spec.
+
+### Home, partida nova i tres records locals — iteració posterior
+
+Petició explícita posterior al MVP: el logo i «Home» obren la home sense oblidar la plaça. Mentre la ronda és activa es pot reprendre; la creació/entrada a una altra sala s’habilita després de la revelació per conservar el recorregut compartit. Una partida nova crea una nova sala/codi o entra al codi aportat; no reutilitza la base anterior. S’explica que la credencial d’accés canvia en començar-la i l’anterior es conserva com a PNG.
+
+Guardar automàticament, només després de `revealed`, els tres últims PNG complets en aquest navegador. Mostrar-los a «Recent on this device», amb vista i descàrrega, sense càrrega al núvol ni galeria pública. Cap meitat o pintura pendent entra a l’historial. Una fallada de desament local es comunica i permet reintentar o descarregar i continuar explícitament sense còpia local. Esborrar dades del navegador o canviar de dispositiu elimina aquesta recuperació. Una partida nova manté el pressupost i topall globals.
 
 ## States and Boundaries
 
@@ -193,7 +199,7 @@ Confirmades durant l’entrevista:
 - Cubell i pinzell dins de la primera versió, més desfer i netejar.
 - Paleta de cercles de colors i selector amb degradat; barra horitzontal per fer més gran o petita la previsualització circular del pinzell i el seu gruix. Colors exactes i rang de mida pendents de spec.
 - Veure només el 50% propi des de l’aparició del dibuix, també abans del primer traç; cap vista completa inicial.
-- Descàrrega de l’obra final dins de la primera versió; la galeria continua fora. És una modificació explícita de l’ajornament inicial de l’exportació al scope.
+- Descàrrega de l’obra final dins de la primera versió; la galeria pública continua fora. És una modificació explícita de l’ajornament inicial de l’exportació al scope.
 - Confirmar «I’m done», desar correctament i després bloquejar la pintura per a la ronda. Durant l’espera només es contempla la meitat pròpia desada. L’usuari ha acceptat explícitament aquesta recomanació després d’explorar altres possibles activitats; no s’hi afegeix un segon editor.
 
 Les quatre regles del nucli ja estaven acordades abans de l’entrevista. L’aprovació del PRD complet valida també la concreció numèrica dels intents, «Undo» i la confirmació de «Clear colors». El control global de cost està acceptat; la spec en concretarà la xifra, així com la persistència de la pintura i la frontera observable del desament automàtic.
@@ -206,7 +212,7 @@ Una ronda completa de dues persones en sessions independents: entrada amb codi, 
 
 Font: `scope.md > Later` i `Explicitly Cut`.
 
-Mode individual i rondes addicionals: es prioritza completar la ronda compartida. Galeria, xarxa social, xat, videotrucada, pagaments i gamificació queden fora perquè afegeixen recorreguts independents. Les quotes diàries per persona s’ajornen per acord explícit; es manté el topall global de generació de la demo.
+Mode individual i múltiples rondes dins d’una sala continuen ajornats. L’iteració posterior incorpora obrir una altra sala i tres PNG locals després de revelar. Galeria pública, xarxa social, xat, videotrucada, pagaments i gamificació queden fora perquè afegeixen recorreguts independents. Les quotes diàries per persona s’ajornen per acord explícit; es manté el topall global de generació de la demo.
 
 Elecció manual del costat: alternativa explorada però poc important segons l’usuari; el repartiment fix evita afegir un pas a l’entrada.
 
@@ -216,7 +222,7 @@ Iterar sobre el nucli si hi ha temps després que funcioni. Els extres ajornats 
 
 ## Non-Goals
 
-No demostrar la integració d’IA amb una imatge fixa presentada com si s’hagués generat en directe. No convertir la descàrrega en una galeria ni en compartició pública automàtica. No afegir arquitectura o funcionalitats de comptes sense una decisió nova.
+No demostrar la integració d’IA amb una imatge fixa presentada com si s’hagués generat en directe. No convertir la descàrrega en una galeria pública ni en compartició automàtica. No afegir arquitectura o funcionalitats de comptes sense una decisió nova.
 
 ## Open Questions
 

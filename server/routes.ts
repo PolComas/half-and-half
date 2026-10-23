@@ -2,7 +2,14 @@ import { FinalService } from "./finalService.js";
 import express from "express";
 import { randomUUID } from "node:crypto";
 import { assert, AppError } from "./errors.js";
-import { establishSession, identity } from "./session.js";
+import {
+  establishSession,
+  identity,
+  readToken,
+  replacementToken,
+  setSession,
+  tokenHash,
+} from "./session.js";
 import { basePath, type PrivateStorage } from "./storage.js";
 import type { RoomService } from "./roomService.js";
 import type { GenerationService } from "./generationService.js";
@@ -43,7 +50,10 @@ export function createApp(
           new AppError("invalid_request", "Please refresh and try again.", 415),
         );
     }
-    if (req.method === "POST" && ["/rooms", "/rooms/join"].includes(req.path)) {
+    if (
+      req.method === "POST" &&
+      ["/rooms", "/rooms/join", "/rooms/restart"].includes(req.path)
+    ) {
       if (rate.size > 5000) {
         const now = Date.now();
         for (const [k, v] of rate) if (now - v.since > 60_000) rate.delete(k);
@@ -55,7 +65,7 @@ export function createApp(
           ? old
           : { since: Date.now(), count: 0 };
       rate.set(key, v);
-      if (++v.count > (req.path === "/rooms" ? 5 : 10))
+      if (++v.count > (req.path === "/rooms/join" ? 10 : 5))
         return next(
           new AppError(
             "too_many_requests",
@@ -125,6 +135,46 @@ export function createApp(
         operationId: req.body.operationId,
       }),
     );
+  });
+  app.post("/api/rooms/restart", async (req, res) => {
+    const { previousRoomId, operationId, code } = req.body ?? {};
+    assert(
+      typeof previousRoomId === "string" &&
+        typeof operationId === "string" &&
+        /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i.test(
+          operationId,
+        ),
+      "invalid_request",
+      "Please refresh and try again.",
+    );
+    const current = await rooms!.state(identity(req));
+    assert(current, "room_missing", "Please reconnect to your room.", 404);
+    // A retry after the Set-Cookie header arrived should return that new room.
+    if (current.roomId !== previousRoomId) {
+      res.json(current);
+      return;
+    }
+    assert(
+      current.phase === "revealed",
+      "round_active",
+      "Finish this drawing together before starting another room.",
+      409,
+    );
+    const join = typeof code === "string";
+    const cleanCode = join ? code.trim().toUpperCase() : rooms!.code();
+    assert(
+      /^[A-HJ-NP-Z2-9]{6}$/.test(cleanCode),
+      "invalid_code",
+      "Enter the six-character room code.",
+    );
+    const token = replacementToken(readToken(req)!, operationId);
+    const view = await rooms!.command(
+      tokenHash(token),
+      join ? "join" : "create",
+      { code: cleanCode, operationId },
+    );
+    setSession(res, token, config.secureCookies);
+    res.status(join ? 200 : 201).json(view);
   });
   for (const [path, action, method] of [
     ["/api/room/idea", "save", "put"],
@@ -216,6 +266,12 @@ export function createApp(
     app.get(`/api/room/${path}`, async (req, res) => {
       const view = await rooms!.state(identity(req));
       assert(view, "room_missing", "Please reconnect to your room.", 404);
+      assert(
+        req.query.base === undefined || req.query.base === view.baseId,
+        "result_unavailable",
+        "Please reload to open the correct drawing.",
+        409,
+      );
       const bytes = await finals!.result(view);
       if (path === "download")
         res.set(

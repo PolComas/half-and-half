@@ -20,9 +20,13 @@ Obre **http://localhost:5173**. Per aturar els dos processos, `Ctrl+C`. Obre la 
 
 Pinta amb **Fill** (cubell) o **Brush**, tria color i gruix, desfés amb **Undo** o neteja amb **Clear colors**. Espera «Saved on this device» abans de recarregar o tancar. El color es conserva a IndexedDB d’aquest navegador; només una pestanya pot editar aquella meitat alhora. Les regions amb contorns oberts es poden omplir juntes: desfés i utilitza el pinzell si passa.
 
-Quan estiguis satisfet, prem **I’m done** i confirma: es desa i congela la teva capa. Si falla, **Retry finishing** conserva el mateix final; no crearà una segona finalització. La primera persona espera veient només la seva meitat. Amb dues finalitzacions vàlides apareix l’obra completa i **Download your artwork** descarrega el mateix PNG en tots dos perfils. Les bases ja generades no canvien amb el prompt nou. Per provar el nou híbrid cal una altra ronda en dos perfils nous; consumirà una generació.
+Quan estiguis satisfet, prem **I’m done** i confirma: es desa i congela la teva capa. Si falla, **Retry finishing** conserva el mateix final; no crearà una segona finalització. La primera persona espera veient només la seva meitat. Amb dues finalitzacions vàlides apareix l’obra completa i **Download your artwork** descarrega el mateix PNG en tots dos perfils. Les bases ja generades no canvien amb el prompt nou. Per provar una nova combinació, torna a Home després de revelar i crea una nova sala; consumirà una generació quan tots dos confirmin les idees.
 
-La il·lustració de la home és un exemple SVG estàtic; les de les sales es generen amb l’API d’OpenAI. L’ambient del fons no fa crides d’IA i respecta la reducció de moviment del navegador.
+La il·lustració de la home és un PNG híbrid d’exemple reutilitzat d’una generació de prova ja registrada; obrir-la no genera cap imatge ni exposa una partida privada. Les il·lustracions de les sales es generen amb l’API d’OpenAI. L’ambient del fons no fa crides d’IA i respecta la reducció de moviment del navegador.
+
+**Home i partida nova:** el logo i l’enllaç Home obren la home sense perdre la sala activa; «Resume your room» torna al dibuix. Després de revelar, «Create a new room» o el formulari de codi permeten començar una altra sala amb credencial nova. La parella conserva el seu propi accés a la sala anterior. Si falla l’entrada, es conserva la sessió existent; repetir una resposta perduda recupera la mateixa operació. La quota global no es reinicia.
+
+**Recent on this device:** els tres últims PNG revelats es desen automàticament a IndexedDB i es poden veure/descarregar des de la home. Només en aquest navegador i origen; esborrar-ne les dades o canviar de dispositiu no els recupera. Si no es pot desar una còpia local, s’explica l’error i es pot descarregar abans de continuar explícitament sense aquella còpia. Cap meitat pendent entra a l’historial.
 
 En un clon nou:
 
@@ -68,6 +72,8 @@ Els tests de navegador mostren «Test fixture — no AI was called». No són el
 ## Estat del procés
 
 `1-start` → `2-scope` → `3-prd` → `4-spec` completats. `5-build` completat el **23 d’octubre de 2026**: construcció, proves mecàniques, revisió manual real, resum de la integració d’API i [mapa de l’app](devpost/app-map.html). El mapa es pot obrir directament com a fitxer local, sense servidor ni connexió. `6-ship` encara no s’ha iniciat. Desplegament i candidatura continuen fora d’aquesta fase.
+
+**Iteració posterior del 23 d’octubre:** a petició de l’usuari es reobre `5-build` per Home/nova sala, tres PNG locals i refinament visual professional amb moviment de xarxa inspirat en el referent indicat. Implementat i verificat mecànicament; pendent que l’usuari provi els canvis abans de tancar aquesta revisió. La finalització anterior del MVP queda registrada, no es reinicia el procés ni es considera iniciat `6-ship`.
 
 ## Què està acordat
 

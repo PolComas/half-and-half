@@ -17,6 +17,8 @@ Precisió explícita de l’usuari al primer checkpoint de `5-build`: les dues i
 
 Les dues persones aporten una idea cadascuna. La IA les combina en una única il·lustració en blanc i negre per pintar; després cadascú hi aporta color sense veure com pinta l’altra persona. La sorpresa és descobrir la combinació de les dues aportacions en una mateixa obra.
 
+Iteració sol·licitada el 2026-10-23 després de completar la ronda: tornar a la home, reprendre la sala activa i crear o entrar en una sala nova després de revelar l’anterior. L’usuari demana conservar els tres últims dibuixos al navegador, a més de descarregar el PNG. Aquesta excepció afegeix un historial **local limitat a tres resultats ja revelats**; la galeria pública, comptes i sincronització entre dispositius continuen fora. Cada partida segueix sent una ronda de dues persones en una sala independent, amb el mateix topall global.
+
 ## Who It's For
 
 Parelles que volen compartir una activitat creativa, incloses les que estan a distància. La necessitat és una hipòtesi de lleure, no una demanda validada ni una promesa de millora de la relació.
@@ -51,7 +53,7 @@ La primera versió inclou la descàrrega del resultat final. Les decisions de pi
 
 ## Later
 
-Ajornats per a aquesta primera versió: mode individual i rondes addicionals, fins que funcioni la ronda de dues persones. L’usuari vol iterar i millorar l’app si després hi ha temps; aquests extres no són funcionalitats promeses per aquesta prova de concepte. La descàrrega del resultat final ja no està ajornada, per petició posterior explícita.
+Ajornats: mode individual i sistema de múltiples rondes dins d’una mateixa sala. Després del MVP funcional, la petició del 2026-10-23 incorpora poder obrir una altra sala des del mateix navegador i conservar tres PNG revelats en local. L’usuari vol iterar i millorar l’app si després hi ha temps; aquests extres no són funcionalitats promeses per aquesta prova de concepte. La descàrrega del resultat final ja no està ajornada, per petició posterior explícita.
 
 ## Explicitly Cut
 

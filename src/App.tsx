@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { RoomView } from "../shared/contracts";
 import { api, ApiError, ensureSession, loadRoom, operation } from "./lib/api";
+import NewRoomDialog from "./components/NewRoomDialog";
 import ResultRoom from "./components/ResultRoom";
 import PaintWorkspace from "./components/PaintWorkspace";
 import Atmosphere from "./components/Atmosphere";
@@ -13,6 +14,23 @@ export default function App() {
     [loading, setLoading] = useState(true),
     [busy, setBusy] = useState(false),
     [error, setError] = useState("");
+  const [showHome, setShowHome] = useState(() => location.hash === "#home");
+  const [entry, setEntry] = useState<{
+      room: RoomView;
+      code?: string;
+      operationId: string;
+    } | null>(null),
+    [entryError, setEntryError] = useState("");
+  const identityEpoch = useRef(0);
+  function goToRoom() {
+    setShowHome(false);
+    location.hash = "room";
+  }
+  useEffect(() => {
+    const changed = () => setShowHome(location.hash === "#home");
+    window.addEventListener("hashchange", changed);
+    return () => window.removeEventListener("hashchange", changed);
+  }, []);
   const roomRef = useRef(room);
   roomRef.current = room;
   const [copied, setCopied] = useState(false),
@@ -57,11 +75,17 @@ export default function App() {
     async function refresh() {
       if (!live || inFlight || document.hidden || busy) return;
       inFlight = true;
+      const epoch = identityEpoch.current;
       try {
         const view = await loadRoom();
-        if (live)
+        if (live && epoch === identityEpoch.current)
           setRoom((prev) =>
-            !prev || !view || view.version >= prev.version ? view : prev,
+            !prev ||
+            !view ||
+            view.roomId !== prev.roomId ||
+            view.version >= prev.version
+              ? view
+              : prev,
           );
       } catch (e) {
         if (live && roomRef.current) explain(e);
@@ -125,6 +149,60 @@ export default function App() {
       setBusy(false);
     }
   }
+  async function enterRoom(code?: string) {
+    const current = roomRef.current;
+    if (current) {
+      if (current.phase !== "revealed") {
+        goToRoom();
+        return;
+      }
+      setEntryError("");
+      setEntry({ room: current, code, operationId: crypto.randomUUID() });
+      return;
+    }
+    const ok = await mutate(code ? "/rooms/join" : "/rooms", "POST", {
+      operationId: crypto.randomUUID(),
+      ...(code ? { code } : {}),
+    });
+    if (ok) goToRoom();
+  }
+  async function confirmEntry() {
+    if (!entry || busy) return;
+    setBusy(true);
+    setEntryError("");
+    identityEpoch.current++;
+    const apply = (view: RoomView) => {
+      identityEpoch.current++;
+      roomRef.current = view;
+      setRoom(view);
+      setEntry(null);
+      goToRoom();
+    };
+    try {
+      apply(
+        await api<RoomView>("/rooms/restart", "POST", {
+          previousRoomId: entry.room.roomId,
+          operationId: entry.operationId,
+          ...(entry.code ? { code: entry.code } : {}),
+        }),
+      );
+    } catch (e) {
+      try {
+        const latest = await loadRoom();
+        if (latest && latest.roomId !== entry.room.roomId) {
+          apply(latest);
+          return;
+        }
+      } catch {}
+      setEntryError(
+        e instanceof ApiError
+          ? e.message
+          : "We couldn’t open the new room. Your current artwork is still here. Try again.",
+      );
+    } finally {
+      setBusy(false);
+    }
+  }
   const action = (path: string) =>
     mutate(path, "POST", operation(roomRef.current!.version));
   return (
@@ -136,11 +214,14 @@ export default function App() {
         </div>
       )}
       <header className="site-header">
-        <a className="wordmark" href="/" aria-label="Half and Half home">
+        <a className="wordmark" href="#home" aria-label="Half and Half home">
           half <span>&</span> half<span className="brand-dot">.</span>
         </a>
         {room ? (
           <div className="room-details">
+            <a className="header-home" href={showHome ? "#room" : "#home"}>
+              {showHome ? "Back to room" : "Home"}
+            </a>
             <span className="side-tag">Your side · {room.side}</span>
             <button
               className="code-button"
@@ -178,19 +259,14 @@ export default function App() {
           <span className="waiting-flower rotating">✳</span>
           <p>Finding your place…</p>
         </main>
-      ) : !room ? (
+      ) : !room || showHome ? (
         <Home
           ready={ready}
           busy={busy}
-          onCreate={() =>
-            void mutate("/rooms", "POST", { operationId: crypto.randomUUID() })
-          }
-          onJoin={(code) =>
-            void mutate("/rooms/join", "POST", {
-              code,
-              operationId: crypto.randomUUID(),
-            })
-          }
+          room={room}
+          onResume={goToRoom}
+          onCreate={() => void enterRoom()}
+          onJoin={(code) => void enterRoom(code)}
         />
       ) : (
         <main className="room-main">
@@ -208,7 +284,13 @@ export default function App() {
               onConfirm={() => action("/room/idea/confirm")}
             />
           ) : ["composing", "revealed"].includes(room.phase) ? (
-            <ResultRoom room={room} />
+            <ResultRoom
+              room={room}
+              onHome={() => {
+                setShowHome(true);
+                location.hash = "home";
+              }}
+            />
           ) : room.phase === "painting" ? (
             <PaintWorkspace
               key={room.baseId}
@@ -227,6 +309,16 @@ export default function App() {
             />
           )}
         </main>
+      )}
+      {entry && (
+        <NewRoomDialog
+          room={entry.room}
+          join={!!entry.code}
+          busy={busy}
+          error={entryError}
+          onCancel={() => setEntry(null)}
+          onConfirm={() => void confirmEntry()}
+        />
       )}
       <footer className="site-footer">
         <span>A little color. A little connection.</span>

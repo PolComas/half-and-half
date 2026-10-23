@@ -1,4 +1,4 @@
-import { createHash, randomBytes } from "node:crypto";
+import { createHash, createHmac, randomBytes } from "node:crypto";
 import type { Request, Response } from "express";
 import { AppError } from "./errors.js";
 export const COOKIE_NAME = "hh_session";
@@ -15,6 +15,14 @@ export function readToken(req: Request): string | null {
 }
 export function establishSession(req: Request, res: Response, secure: boolean) {
   const token = readToken(req) ?? randomBytes(32).toString("hex");
+  setSession(res, token, secure);
+}
+export function replacementToken(previous: string, operationId: string) {
+  return createHmac("sha256", previous)
+    .update(`half-and-half:new-room:${operationId}`)
+    .digest("hex");
+}
+export function setSession(res: Response, token: string, secure: boolean) {
   res.cookie(COOKIE_NAME, token, {
     httpOnly: true,
     sameSite: "lax",

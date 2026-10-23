@@ -40,6 +40,8 @@ Cap etapa consta com a completada. No hi ha perfil d’aprenent, plans, checklis
 
 **Tancament del 2026-10-23:** represes les tasques interrompudes, els tres increments queden desats. Revisió manual final confirmada per l’usuari, resum tècnic de la crida d’API explicat al xat i mapa autònom del codi generat, comprovat offline i mostrat. `5-build` completat; `6-ship` no iniciat. No s’ha desplegat ni publicat la candidatura.
 
+**Iteració posterior del 2026-10-23:** després del tancament inicial, l’usuari demana continuar millorant Home/nova partida i presentació; confirma que vol tres PNG locals si és possible, i aporta MazeMind com a referent de moviment professional. Es reobre `5-build` per aquesta revisió, mantenint la història de les aprovacions anteriors. S’han actualitzat els plans i implementat els canvis; comprovacions mecàniques superades i nova prova manual pendent. No es passa a candidatura ni s’amplia a una galeria pública.
+
 ## Aplicació al nostre projecte
 
 El context evita haver de repetir acords, però no substitueix les converses de planificació. Proposar un stack no l’aprova. La frase històrica sobre una “segona decisió” no autoritza inventar-la.

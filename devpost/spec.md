@@ -107,6 +107,8 @@ Refinament visual demanat al primer checkpoint: paper càlid amb línies de llap
 
 UI íntegrament en anglès. No afegir una previsualització completa, ni tan sols com a transició o miniatura. La il·lustració de la home, si s’explora durant el build, serà un asset d’exemple clarament diferenciat; no provocar una crida en obrir la pàgina. Qualsevol crida d’OpenAI per a aquest asset també consumirà el pressupost global; si no s’utilitza OpenAI caldrà indicar l’eina real. No hi ha asset generat encara.
 
+Refinament visual posterior (2026-10-23): l’usuari demana aparença professional, elements amb propòsit, moviment de fons suau com MazeMind i més profunditat. S’ha consultat el component de referència al seu projecte local: partícules connectades i moviment lent. Concreció d’implementació: conservar identitat paper/tinta/terracota, afegir una xarxa SVG pròpia amb camps de color subtils i una composició editorial més clara; il·lustració híbrida d’exemple ja generada durant les proves, sense cap nova crida de pagament. Hero amb imatge dominant i acció única de crear/reprendre; entrar per codi i historial local en regions diferenciades. Entrada suau, xarxa de fons lenta i resposta de botons; moviment reduït estàtic, sense interferir amb el llenç.
+
 ## Components
 
 ### Home, sala i identitat sense registre
@@ -189,11 +191,17 @@ Amb una sola finalització, continuar servint únicament la meitat pròpia. Amb 
 
 Implementa `prd.md > Descarregar el resultat` i `Dibuix compartit i visibilitat`.
 
-PNG complet de 1024 × 1024 amb `Content-Disposition: attachment`, nom `half-and-half.png`. Disponible només a participants de la sala amb dues finalitzacions vàlides i resultat desat. La vista de revelació i la descàrrega llegeixen el mateix objecte. No galeria, publicació automàtica ni URL pública permanent.
+PNG complet de 1024 × 1024 amb `Content-Disposition: attachment`, nom `half-and-half.png`. Disponible només a participants de la sala amb dues finalitzacions vàlides i resultat desat. La vista de revelació i la descàrrega llegeixen el mateix objecte. No galeria pública, publicació automàtica ni URL pública permanent.
 
 Storage privat, sense polítiques per a `anon` o `authenticated` per al bucket del projecte. Les taules exposades tenen RLS habilitat i sense permisos d’aquests rols; funcions `SECURITY INVOKER`, execució revocada a `PUBLIC`, `anon` i `authenticated`, concedida només al rol de servei. Declarar explícitament els permisos de servei necessaris. La clau secreta evita RLS: per això **la comprovació de cada participant a Node és obligatòria**, també quan retorna fitxers. No considerar RLS una comprovació d’identitat que el servidor pugui ometre.
 
 No lliurar l’original complet, la meitat aliena, rutes internes, hashes de credencials ni URL signades de tercers. Els fitxers viatgen pel servidor amb autorització i `Cache-Control: no-store`; no hi ha service worker ni precàrrega del resultat. Rebutjar requests que intentin canviar costat, participant, sala o ruta. El límit de la privacitat és entre participants de l’app; l’operador del servidor i els proveïdors que processen les dades no són destinataris exclosos per aquesta arquitectura.
+
+### Navegació i historial local — iteració del 2026-10-23
+
+Home navegable amb fragment `#home`, mantenint sala i credencial, i acció per reprendre. Després de revelar, `POST /api/rooms/restart` valida l’estat del participant; crea/uneix una sala amb credencial nova i només aleshores canvia la cookie HttpOnly. Derivar la nova credencial amb HMAC de la credencial anterior i `operationId` permet reprendre la mateixa operació si no arriba la resposta. Una entrada fallida no substitueix la sessió. Respostes de polling anteriors al canvi de sessió no sobreescriuen la sala nova; comparar versions només dins de la mateixa sala. No cal canviar l’esquema Supabase.
+
+IndexedDB separat `half-and-half-artworks`: fins a tres resultats, identificats per `baseId`, amb PNG Blob, idees i data. Transacció atòmica conserva tres entrades recents, sense duplicar una base quan es recarrega. Obtenir `/api/room/result` només després de l’autorització de revelació. URLs de Blob locals per miniatures i descàrregues, revocades en desmuntar; no servir aquestes còpies des de l’API ni consultar objectes de sales anteriors. La recuperació de la ronda antiga passa a ser el PNG local/descarregat quan es canvia de sala.
 
 ## Data Model
 
@@ -373,7 +381,7 @@ Els tests han de cobrir aquestes regles i fallades, no només repetir funcions d
 
 ## What Was Simplified and Why
 
-- Una ronda per sala i dues places fixes: preserva el nucli aprovat sense comptes, galeria o modes nous.
+- Una ronda per sala i dues places fixes: preserva el nucli aprovat sense comptes, galeria pública o modes nous.
 - Consulta d’estat cada 2 segons: prou per confirmacions, espera i revelació; la pintura aliena no s’ha de transmetre en directe.
 - Esborrany propi local i només capa final al servidor: compleix la recuperació al mateix navegador i redueix trànsit i exposició. No ofereix continuació entre dispositius.
 - Una API Node local: evita desplegament obligatori i serveis de pagament. La fase de generació en un procés té el compromís d’incertesa descrit; no s’oculta amb una recuperació fictícia.

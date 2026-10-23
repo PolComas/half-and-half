@@ -1,5 +1,31 @@
+import { useEffect, useState } from "react";
+import { archiveRoom } from "../painting/artworkStore";
 import type { RoomView } from "../../shared/contracts";
-export default function ResultRoom({ room }: { room: RoomView }) {
+export default function ResultRoom({
+  room,
+  onHome,
+}: {
+  room: RoomView;
+  onHome: () => void;
+}) {
+  const [stored, setStored] = useState<"saving" | "saved" | "error">("saving"),
+    [retry, setRetry] = useState(0);
+  useEffect(() => {
+    if (room.phase !== "revealed") return;
+    let live = true;
+    setStored("saving");
+    void archiveRoom(room).then(
+      () => {
+        if (live) setStored("saved");
+      },
+      () => {
+        if (live) setStored("error");
+      },
+    );
+    return () => {
+      live = false;
+    };
+  }, [room.phase, room.baseId, retry]);
   if (room.phase === "composing")
     return (
       <section className="room-content generation-room" role="status">
@@ -31,7 +57,7 @@ export default function ResultRoom({ room }: { room: RoomView }) {
         </p>
       </div>
       <img
-        src="/api/room/result"
+        src={`/api/room/result?base=${room.baseId}`}
         alt="Your complete shared artwork"
         className="result-art"
       />
@@ -39,15 +65,27 @@ export default function ResultRoom({ room }: { room: RoomView }) {
         <p>One drawing. Both of you.</p>
         <a
           className="button"
-          href="/api/room/download"
+          href={`/api/room/download?base=${room.baseId}`}
           download="half-and-half.png"
         >
           Download your artwork ↓
         </a>
       </div>
-      <p className="quiet-note">
-        Your colors are saved. Come back in this browser for up to 14 days.
+      <p className="quiet-note" role="status">
+        {stored === "saved"
+          ? "Kept with your last three drawings on this browser."
+          : stored === "saving"
+            ? "Keeping a local copy of your finished drawing…"
+            : "We couldn’t keep a local copy. You can still download the PNG."}
       </p>
+      {stored === "error" && (
+        <button className="text-button" onClick={() => setRetry((x) => x + 1)}>
+          Try keeping it again
+        </button>
+      )}
+      <button className="button secondary back-home" onClick={onHome}>
+        Back to home →
+      </button>
     </section>
   );
 }

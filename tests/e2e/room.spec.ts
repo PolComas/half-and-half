@@ -3,7 +3,7 @@ import { mkdir } from "node:fs/promises";
 test("home, independent room sessions, shared generation and private halves", async ({
   browser,
 }) => {
-  test.setTimeout(120000);
+  test.setTimeout(180000);
   const a = await browser.newContext({ hasTouch: true }),
     b = await browser.newContext(),
     c = await browser.newContext();
@@ -333,6 +333,171 @@ test("home, independent room sessions, shared generation and private halves", as
   ).toBeTruthy();
   await B.screenshot({
     path: ".local/screenshots/result-mobile.png",
+    fullPage: true,
+    animations: "disabled",
+  });
+
+  // Completed artworks remain local when the participant starts a fresh room.
+  await expect(
+    B.getByText("Kept with your last three drawings on this browser.", {
+      exact: true,
+    }),
+  ).toBeVisible();
+  const previousA = await (await a.request.get("/api/room")).json();
+  await twin.getByRole("link", { name: "Half and Half home" }).click();
+  await expect(
+    twin.getByRole("button", { name: "Create a new room", exact: true }),
+  ).toBeVisible();
+  await twin.reload();
+  await expect(
+    twin.getByRole("heading", { name: "Recent on this device." }),
+  ).toBeVisible();
+  await expect(twin.locator(".recent-grid img")).toHaveCount(1);
+  await twin.getByRole("button", { name: "View current artwork →" }).click();
+  await expect(
+    twin.getByRole("heading", { name: "Better together." }),
+  ).toBeVisible();
+  await twin.getByRole("button", { name: "Back to home →" }).click();
+  // A local history write failure is visible and has an explicit download fallback.
+  await twin.evaluate(async () => {
+    const request = indexedDB.open("half-and-half-artworks");
+    const db = await new Promise<IDBDatabase>((resolve, reject) => {
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+    await new Promise<void>((resolve, reject) => {
+      const tx = db.transaction("artworks", "readwrite");
+      tx.objectStore("artworks").clear();
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => reject(tx.error);
+    });
+    db.close();
+    const original = IDBDatabase.prototype.transaction;
+    (window as any).__archiveBlocked = true;
+    IDBDatabase.prototype.transaction = function (...args: any[]) {
+      if (
+        this.name === "half-and-half-artworks" &&
+        (window as any).__archiveBlocked &&
+        args[1] === "readwrite"
+      )
+        throw Error("Simulated local history failure");
+      return original.apply(this, args as any);
+    };
+  });
+  await twin
+    .getByRole("button", { name: "Create a new room", exact: true })
+    .click();
+  await expect(
+    twin.getByRole("button", { name: "Continue without local copy" }),
+  ).toBeEnabled();
+  await expect(
+    twin.getByRole("link", { name: "Download current artwork ↓" }),
+  ).toBeVisible();
+  await twin.evaluate(() => {
+    (window as any).__archiveBlocked = false;
+  });
+  await twin.getByRole("button", { name: "Try keeping it again" }).click();
+  await expect(
+    twin.getByRole("button", { name: "Yes, start new room" }),
+  ).toBeEnabled();
+  await twin.getByRole("button", { name: "Stay here" }).click();
+  // A failed join preserves the original identity and artwork.
+  await twin.getByLabel("Room code", { exact: true }).fill("ZZZZZZ");
+  await twin.getByRole("button", { name: "Join room", exact: true }).click();
+  await twin.getByRole("button", { name: "Yes, join new room" }).click();
+  await expect(twin.getByRole("dialog").getByRole("alert")).toBeVisible();
+  expect((await (await a.request.get("/api/room")).json()).roomId).toBe(
+    previousA.roomId,
+  );
+  await twin.getByRole("button", { name: "Stay here" }).click();
+  // Lose the new-room response after the cookie arrives; the state recovers that room.
+  await twin.route("**/api/rooms/restart", async (route) => {
+    await route.fetch();
+    await route.abort("failed");
+  });
+  await twin
+    .getByRole("button", { name: "Create a new room", exact: true })
+    .click();
+  await twin.getByRole("button", { name: "Yes, start new room" }).click();
+  await expect(twin.getByRole("heading", { name: /What’s on/ })).toBeVisible();
+  await twin.unroute("**/api/rooms/restart");
+  const nextA = await (await a.request.get("/api/room")).json();
+  expect(nextA.roomId).not.toBe(previousA.roomId);
+  expect(nextA.participantId).not.toBe(previousA.participantId);
+  expect(nextA.attemptsUsed).toBe(0);
+  expect(
+    (await (await a.request.get("http://127.0.0.1:3188/__tests/calls")).json())
+      .calls,
+  ).toBe(1);
+  expect(
+    (await a.request.get(`/api/room/result?base=${previousA.baseId}`)).ok(),
+  ).toBe(false);
+  expect((await (await b.request.get("/api/room")).json()).phase).toBe(
+    "revealed",
+  );
+  await B.getByRole("button", { name: "Back to home →" }).click();
+  await B.getByLabel("Room code", { exact: true }).fill(nextA.code);
+  await B.getByRole("button", { name: "Join room", exact: true }).click();
+  await B.getByRole("button", { name: "Yes, join new room" }).click();
+  await expect(B.getByRole("heading", { name: /What’s on/ })).toBeVisible();
+  const nextB = await (await b.request.get("/api/room")).json();
+  expect(nextB.roomId).toBe(nextA.roomId);
+  expect(nextB.side).toBe("right");
+  await twin.getByRole("link", { name: "Half and Half home" }).click();
+  await expect(
+    twin.getByRole("button", { name: "Resume your room" }),
+  ).toBeVisible();
+  await expect(twin.locator(".recent-grid img")).toHaveCount(1);
+  const localPng = await twin
+    .locator(".artwork-card img")
+    .evaluate(async (img) =>
+      Array.from(
+        new Uint8Array(
+          await (await fetch((img as HTMLImageElement).src)).arrayBuffer(),
+        ),
+      ),
+    );
+  expect(Buffer.from(localPng).equals(await resultA.body())).toBe(true);
+  await twin.getByRole("button", { name: "Resume your room" }).click();
+  await expect(twin.getByRole("heading", { name: /What’s on/ })).toBeVisible();
+  // Neither an active room nor an unconfirmed image can enter the local archive.
+  const activeRestart = await a.request.post("/api/rooms/restart", {
+    headers: { Origin: "http://localhost:5179" },
+    data: { previousRoomId: nextA.roomId, operationId: crypto.randomUUID() },
+  });
+  expect(activeRestart.status()).toBe(409);
+  await twin.evaluate(async () => {
+    const module = await import("/src/painting/artworkStore.ts" as string);
+    const png = (await module.recentArtworks())[0].png;
+    for (let i = 1; i <= 4; i++)
+      await module.saveArtwork({
+        id: `history-${i}`,
+        png,
+        ideas: { left: `History ${i}`, right: "Test" },
+        savedAt: Date.now() + i,
+      });
+    const before = await module.recentArtworks();
+    await module.saveArtwork({ ...before[0], savedAt: Date.now() + 10000 });
+    const after = await module.recentArtworks();
+    if (
+      after.length !== 3 ||
+      after[0].id !== "history-4" ||
+      after.some((a: any) => a.id === "history-1")
+    )
+      throw Error("Local history limit failed");
+    let rejected = false;
+    try {
+      await module.archiveRoom({ phase: "painting", baseId: "unrevealed" });
+    } catch {
+      rejected = true;
+    }
+    if (!rejected) throw Error("Unrevealed archive accepted");
+  });
+  await twin.getByRole("link", { name: "Half and Half home" }).click();
+  await twin.reload();
+  await expect(twin.locator(".recent-grid img")).toHaveCount(3);
+  await twin.screenshot({
+    path: ".local/screenshots/home-recent.png",
     fullPage: true,
     animations: "disabled",
   });
